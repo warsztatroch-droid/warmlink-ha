@@ -11,58 +11,49 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .api import is_device_online
-from .const import DOMAIN, CONF_LANGUAGE, SWITCH_PARAMS
+from .const import DOMAIN, CONF_LANGUAGE, ALL_SWITCH_PARAMS
 from .coordinator import WarmLinkCoordinator
 
 _LOGGER = logging.getLogger(__name__)
 
-# Translation keys for switch entities
+# Translation keys for switch entities (primary switches only)
 SWITCH_TRANSLATIONS = {
     "en": {
-        # System (H)
         "Power": "Power",
-        "H01": "Power-off Memory",
-        "H05": "Cooling Function",
-        "H22": "Silent Mode",
-        "H27": "EVI Function",
-        "H33": "Fan+Comp Driver Integrated",
-        "H36": "Weather Compensation",
-        # Disinfection (G)
-        "G05": "Disinfection",
-        # Protection (A)
-        "A11": "Low Pressure Sensor",
-        "A29": "High Pressure Sensor",
-        # Fan (F)
-        "F22": "Manual Fan Speed",
-        # Defrost (D)
-        "D21": "Electric Heater Defrost",
-        "D26": "Defrost Cascade Communication",
-        # Zone (Z)
-        "Z17": "Weather Comp Zone 2",
     },
     "pl": {
-        # System (H)
         "Power": "Zasilanie",
-        "H01": "Pamięć po wyłączeniu",
-        "H05": "Funkcja chłodzenia",
-        "H22": "Tryb cichy",
-        "H27": "Funkcja EVI",
-        "H33": "Zintegrowany sterownik wentyl.+sprężarki",
-        "H36": "Kompensacja pogodowa",
-        # Dezynfekcja (G)
-        "G05": "Dezynfekcja",
-        # Zabezpieczenie (A)
-        "A11": "Czujnik niskiego ciśnienia",
-        "A29": "Czujnik wysokiego ciśnienia",
-        # Wentylator (F)
-        "F22": "Ręczna prędkość wentylatora",
-        # Odszranianie (D)
-        "D21": "Grzałka odszraniania",
-        "D26": "Komunikacja kaskady odszraniania",
-        # Strefa (Z)
-        "Z17": "Kompensacja pogodowa strefa 2",
     },
 }
+
+# Icons by category prefix
+SWITCH_ICONS = {
+    "Power": "mdi:power",
+    "H": "mdi:cog",           # System
+    "G": "mdi:bacteria",      # Disinfection
+    "A": "mdi:shield-check",  # Protection
+    "F": "mdi:fan",           # Fan
+    "D": "mdi:snowflake",     # Defrost
+    "Z": "mdi:home-floor-1",  # Zone
+    "P": "mdi:pump",          # Pump
+    "E": "mdi:valve",         # EEV
+    "L": "mdi:server",        # Central control
+    "M": "mdi:timer",         # Mode timers
+    "W": "mdi:water-pump",    # Water pump timers
+    "K": "mdi:clock-outline", # Schedule
+    "R": "mdi:thermometer",   # Thermostat
+    "S": "mdi:solar-power",   # SG Ready
+    "T": "mdi:thermometer",   # Thermostat
+}
+
+def get_switch_icon(code: str) -> str:
+    """Get icon for switch based on code or prefix."""
+    if code in SWITCH_ICONS:
+        return SWITCH_ICONS[code]
+    if code:
+        prefix = code[0].upper()
+        return SWITCH_ICONS.get(prefix, "mdi:toggle-switch")
+    return "mdi:toggle-switch"
 
 
 async def async_setup_entry(
@@ -78,10 +69,11 @@ async def async_setup_entry(
 
     entities = []
     for device_code, device_data in coordinator.data.items():
-        for param_code, param_info in SWITCH_PARAMS.items():
+        parsed_data = device_data.get("_parsed_data", {})
+        
+        for param_code, param_info in ALL_SWITCH_PARAMS.items():
             # Power switch is always available
             # Others only if device has this parameter
-            parsed_data = device_data.get("_parsed_data", {})
             if param_code == "Power" or param_code in parsed_data:
                 entities.append(
                     WarmLinkSwitch(
@@ -95,6 +87,7 @@ async def async_setup_entry(
                     )
                 )
 
+    _LOGGER.info("Setting up %d switch entities for Warmlink", len(entities))
     async_add_entities(entities)
 
 
@@ -131,11 +124,13 @@ class WarmLinkSwitch(CoordinatorEntity[WarmLinkCoordinator], SwitchEntity):
 
         self._attr_unique_id = f"{DOMAIN}_{device_code}_{param_code}_switch"
 
-        # Get translated name
+        # Get translated name with parameter code prefix
         translations = SWITCH_TRANSLATIONS.get(language, SWITCH_TRANSLATIONS["en"])
-        self._attr_name = translations.get(param_code, param_info.get("name", param_code))
+        base_name = translations.get(param_code, param_info.get("name", param_code))
+        # Add code prefix for identification (e.g., "[G05] Disinfection Enable")
+        self._attr_name = f"[{param_code}] {base_name}"
 
-        self._attr_icon = param_info.get("icon", "mdi:toggle-switch")
+        self._attr_icon = get_switch_icon(param_code)
 
         # Power switch gets special device class
         if param_code == "Power":

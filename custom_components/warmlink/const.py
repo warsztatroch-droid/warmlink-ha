@@ -1,6 +1,14 @@
 """Constants for the Warmlink integration."""
 from typing import Final
 
+# Import complete Modbus parameters from generated file
+from .modbus_params import (
+    WRITABLE_PARAMS as MODBUS_WRITABLE_PARAMS,
+    SENSOR_PARAMS as MODBUS_SENSOR_PARAMS,
+    SWITCH_PARAMS as MODBUS_SWITCH_PARAMS,
+    SELECT_PARAMS as MODBUS_SELECT_PARAMS,
+)
+
 DOMAIN: Final = "warmlink"
 DEFAULT_NAME: Final = "Warmlink"
 
@@ -812,3 +820,35 @@ SELECT_PARAMS: Final = {
         },
     },
 }
+
+# ============================================
+# COMPLETE PARAMETER SETS FROM MODBUS CSV
+# ============================================
+# Use the comprehensive parameters generated from modbus_kaisai_phnix.csv
+# Total: 303 writable, 167 sensors, 46 switches, 34 selects
+# These include all Modbus addresses, data types, ranges, and categories
+
+# All writable number parameters (sliders, inputs)
+ALL_WRITABLE_PARAMS: Final = MODBUS_WRITABLE_PARAMS
+
+# All sensor parameters (read-only values)
+ALL_SENSOR_PARAMS: Final = MODBUS_SENSOR_PARAMS
+
+# All switch parameters (binary on/off)
+ALL_SWITCH_PARAMS: Final = MODBUS_SWITCH_PARAMS
+
+# All select parameters (multi-option dropdowns)
+ALL_SELECT_PARAMS: Final = MODBUS_SELECT_PARAMS
+
+# Helper function to get entity name with parameter code prefix
+def get_entity_name_with_code(code: str, name: str, language: str = "en") -> str:
+    """Generate entity name with parameter code prefix like '[R01] DHW Target Temp'."""
+    return f"[{code}] {name}"
+
+# Combined list of all protocol codes to request from API
+ALL_PROTOCOL_CODES: Final = (
+    list(ALL_WRITABLE_PARAMS.keys()) +
+    list(ALL_SENSOR_PARAMS.keys()) +
+    list(ALL_SWITCH_PARAMS.keys()) +
+    list(ALL_SELECT_PARAMS.keys())
+)

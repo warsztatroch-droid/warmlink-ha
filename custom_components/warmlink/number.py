@@ -16,7 +16,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .api import is_device_online
-from .const import DOMAIN, CONF_LANGUAGE, WRITABLE_PARAMS
+from .const import DOMAIN, CONF_LANGUAGE, ALL_WRITABLE_PARAMS
 from .coordinator import WarmLinkCoordinator
 
 _LOGGER = logging.getLogger(__name__)
@@ -207,95 +207,32 @@ NUMBER_TRANSLATIONS = {
 
 # Icons for number entities by category
 NUMBER_ICONS = {
-    # Temperatures (R)
-    "R01": "mdi:water-thermometer",
-    "R02": "mdi:radiator",
-    "R03": "mdi:snowflake-thermometer",
-    "R70": "mdi:home-thermometer",
-    "R04": "mdi:thermometer-plus",
-    "R05": "mdi:thermometer-minus",
-    "R06": "mdi:thermometer-plus",
-    "R07": "mdi:thermometer-minus",
-    "R08": "mdi:thermometer-low",
-    "R09": "mdi:thermometer-high",
-    "R10": "mdi:thermometer-low",
-    "R11": "mdi:thermometer-high",
-    "R16": "mdi:thermometer-plus",
-    "R17": "mdi:thermometer-minus",
-    "R36": "mdi:thermometer-water",
-    "R37": "mdi:thermometer-water",
-    # Zones (Z)
-    "Z02": "mdi:home-thermometer-outline",
-    "Z03": "mdi:delta",
-    "Z04": "mdi:home-thermometer-outline",
-    "Z05": "mdi:delta",
-    "Z06": "mdi:thermometer-water",
-    "Z07": "mdi:thermometer-water",
-    "Z08": "mdi:valve",
-    "Z09": "mdi:timer-outline",
-    "Z10": "mdi:timer-outline",
-    "Z11": "mdi:tune",
-    "Z12": "mdi:tune",
-    "Z13": "mdi:timer-cog",
-    # Disinfection (G)
-    "G01": "mdi:bacteria-outline",
-    "G02": "mdi:timer-outline",
-    "G03": "mdi:clock-start",
-    "G04": "mdi:calendar-clock",
-    # Compressor (C)
-    "C01": "mdi:sine-wave",
-    "C02": "mdi:sine-wave",
-    "C03": "mdi:sine-wave",
-    # Pump (P)
-    "P02": "mdi:timer-outline",
-    "P10": "mdi:pump",
-    # Fan (F)
-    "F02": "mdi:thermometer",
-    "F03": "mdi:thermometer",
-    "F05": "mdi:thermometer",
-    "F06": "mdi:thermometer",
-    "F18": "mdi:fan-speed-1",
-    "F19": "mdi:fan-speed-1",
-    "F23": "mdi:fan",
-    "F25": "mdi:fan-speed-3",
-    "F26": "mdi:fan-speed-3",
-    "F28": "mdi:fan-minus",
-    "F29": "mdi:fan-off",
-    # Defrost (D)
-    "D01": "mdi:snowflake-thermometer",
-    "D02": "mdi:timer-sand",
-    "D03": "mdi:timer-sand",
-    "D17": "mdi:thermometer-check",
-    "D19": "mdi:timer-outline",
-    "D20": "mdi:sine-wave",
-    # Protection (A)
-    "A03": "mdi:power-plug-off",
-    "A04": "mdi:snowflake-alert",
-    "A05": "mdi:delta",
-    "A06": "mdi:thermometer-alert",
-    "A22": "mdi:snowflake-thermometer",
-    "A23": "mdi:water-thermometer",
-    "A24": "mdi:delta",
-    "A25": "mdi:thermometer-low",
-    "A27": "mdi:delta",
-    "A28": "mdi:delta",
-    "A30": "mdi:thermometer",
-    "A31": "mdi:heating-coil",
-    "A32": "mdi:timer-outline",
-    "A33": "mdi:delta",
-    "A34": "mdi:timer-outline",
-    "A35": "mdi:delta",
-    # EEV (E)
-    "E02": "mdi:thermometer-chevron-up",
-    "E03": "mdi:stairs-up",
-    "E07": "mdi:stairs-down",
-    "E08": "mdi:stairs-up",
-    # System (H)
-    "H10": "mdi:identifier",
-    "H18": "mdi:heating-coil",
-    "H29": "mdi:code-tags",
-    "H32": "mdi:timer-cog",
+    # Default icons by category (prefix-based)
+    "R": "mdi:thermometer",       # Setpoints
+    "Z": "mdi:home-floor-1",      # Zones
+    "G": "mdi:bacteria-outline",  # Disinfection
+    "C": "mdi:sine-wave",         # Compressor
+    "P": "mdi:pump",              # Pump
+    "F": "mdi:fan",               # Fan
+    "D": "mdi:snowflake",         # Defrost
+    "A": "mdi:shield-check",      # Protection
+    "E": "mdi:valve",             # EEV
+    "H": "mdi:cog",               # System
+    "L": "mdi:server",            # Central control
+    "M": "mdi:timer",             # Mode timers
+    "W": "mdi:water-pump",        # Water pump timers
+    "S": "mdi:solar-power",       # SG Ready
+    "K": "mdi:clock-outline",     # Schedule
 }
+
+# Get icon for parameter code
+def get_icon_for_param(code: str) -> str:
+    """Get icon for parameter based on its prefix."""
+    if not code:
+        return "mdi:cog"
+    # Extract first letter(s) for category
+    prefix = code[0].upper()
+    return NUMBER_ICONS.get(prefix, "mdi:cog")
 
 # Primary setpoints to show by default (others are diagnostics)
 PRIMARY_SETPOINTS = ["R01", "R02", "R03", "R70"]
@@ -314,9 +251,11 @@ async def async_setup_entry(
 
     entities = []
     for device_code, device_data in coordinator.data.items():
-        for param_code, param_info in WRITABLE_PARAMS.items():
-            # Check if device has this parameter
-            parsed_data = device_data.get("_parsed_data", {})
+        parsed_data = device_data.get("_parsed_data", {})
+        
+        # Add all writable parameters that exist in device data
+        for param_code, param_info in ALL_WRITABLE_PARAMS.items():
+            # Check if device has this parameter OR it's a primary setpoint
             if param_code in parsed_data or param_code in PRIMARY_SETPOINTS:
                 entities.append(
                     WarmLinkNumber(
@@ -330,6 +269,7 @@ async def async_setup_entry(
                     )
                 )
 
+    _LOGGER.info("Setting up %d number entities for Warmlink", len(entities))
     async_add_entities(entities)
 
 
@@ -366,20 +306,24 @@ class WarmLinkNumber(CoordinatorEntity[WarmLinkCoordinator], NumberEntity):
 
         self._attr_unique_id = f"{DOMAIN}_{device_code}_{param_code}"
         
-        # Get translated name
+        # Get translated name with parameter code prefix [CODE]
         translations = NUMBER_TRANSLATIONS.get(language, NUMBER_TRANSLATIONS["en"])
-        self._attr_name = translations.get(param_code, param_info.get("name", param_code))
+        base_name = translations.get(param_code, param_info.get("name", param_code))
+        # Add parameter code prefix for easy identification
+        self._attr_name = f"[{param_code}] {base_name}"
 
-        # Set number attributes
-        self._attr_native_min_value = param_info.get("min", 0)
-        self._attr_native_max_value = param_info.get("max", 100)
-        self._attr_native_step = param_info.get("step", 0.5)
+        # Set number attributes from param_info (includes Modbus data)
+        self._attr_native_min_value = float(param_info.get("min", 0))
+        self._attr_native_max_value = float(param_info.get("max", 100))
+        self._attr_native_step = float(param_info.get("step", 0.5))
         self._attr_mode = NumberMode.SLIDER if param_code in PRIMARY_SETPOINTS else NumberMode.BOX
-        self._attr_icon = NUMBER_ICONS.get(param_code, "mdi:thermometer")
+        self._attr_icon = get_icon_for_param(param_code)
 
         # Set device class and unit based on param type
         unit = param_info.get("unit", "")
-        if unit == "°C":
+        data_type = param_info.get("data_type", "")
+        
+        if unit == "°C" or data_type == "TEMP":
             self._attr_device_class = NumberDeviceClass.TEMPERATURE
             self._attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
         elif unit == "Hz":
@@ -390,6 +334,20 @@ class WarmLinkNumber(CoordinatorEntity[WarmLinkCoordinator], NumberEntity):
             self._attr_native_unit_of_measurement = "min"
         elif unit == "days":
             self._attr_native_unit_of_measurement = "days"
+        elif unit == "bar":
+            self._attr_native_unit_of_measurement = "bar"
+        elif unit == "A":
+            self._attr_native_unit_of_measurement = "A"
+        elif unit == "V":
+            self._attr_native_unit_of_measurement = "V"
+        elif unit == "steps":
+            self._attr_native_unit_of_measurement = "steps"
+        elif unit == "L/min":
+            self._attr_native_unit_of_measurement = "L/min"
+        elif unit == "%":
+            self._attr_native_unit_of_measurement = "%"
+        elif unit:
+            self._attr_native_unit_of_measurement = unit
 
         self._attr_device_info = {
             "identifiers": {(DOMAIN, device_code)},
