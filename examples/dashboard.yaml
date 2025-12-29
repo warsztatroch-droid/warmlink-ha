@@ -205,8 +205,6 @@ views:
             name: Wersja płyty głównej
           - entity: sensor.warmlink_DEVICE_CODE_display_version
             name: Wersja wyświetlacza
-
-
 # ============================================================
 # ENERGY DASHBOARD - Statistics for energy monitoring
 # ============================================================
@@ -222,7 +220,6 @@ views:
 #
 # Then add to Energy Dashboard:
 # Settings → Dashboards → Energy → Add consumption → Choose integrated sensor
-
 
 # ============================================================
 # AUTOMATIONS EXAMPLES

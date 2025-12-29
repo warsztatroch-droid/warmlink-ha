@@ -61,7 +61,7 @@ POST https://cloud.linked-go.com:449/crmservice/api/app/user/login?lang=en
   "error_msg": "Success",
   "objectResult": {
     "x-token": "token_string...",
-    "userId": "1989005379447537666",
+    "userId": "your_user_id",
     "appId": "16"
   }
 }
