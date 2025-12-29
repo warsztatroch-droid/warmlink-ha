@@ -120,6 +120,25 @@ PROTOCOL_CODES_ENERGY: Final = [
     "Capacity Out(Total)",  # Total Capacity Output kW (Modbus 2059)
     "COP/EER(Total)",       # COP/EER (Modbus 2060)
     "Comsuption Power",     # Consumption kWh (Modbus 2078+2079)
+    "Power In(ODU)",        # ODU Power Input kW (Modbus 2137)
+    "Capacity Out(ODU)",    # ODU Capacity Output kW (Modbus 2138)
+    "Heating Con.(ODU)",    # Heating Consumption kWh (Modbus 2117+8)
+    "Heating Gen.(ODU)",    # Heating Generated kWh (Modbus 2119+8)
+    "Cooling Con.(ODU)",    # Cooling Consumption kWh (Modbus 2121+8)
+    "Cooling Gen.(ODU)",    # Cooling Generated kWh (Modbus 2123+8)
+    "DHW Con.(ODU)",        # DHW Consumption kWh (Modbus 2125+8)
+    "DHW Gen.(ODU)",        # DHW Generated kWh (Modbus 2127+8)
+]
+
+# Zone and Indoor Climate sensors - from Modbus CSV
+PROTOCOL_CODES_CLIMATE: Final = [
+    "Zone 1 Room Temp",     # Zone 1 Room Temperature (Modbus 2160)
+    "Zone 2 Room Temp",     # Zone 2 Room Temperature (Modbus 2162)
+    "Zone 2 Mixing Temp",   # Zone 2 Mixing Temperature (Modbus 2161)
+    "Zone 2 Mixing Valve",  # Zone 2 Mixing Valve % (Modbus 2163)
+    "DP4",                  # Indoor Temperature (Modbus 2178)
+    "DP5",                  # Indoor Humidity (Modbus 2179)
+    "DP6",                  # Dew Point Temperature
 ]
 
 # Configuration parameters - from Modbus CSV
@@ -245,6 +264,7 @@ PROTOCOL_CODES_ALL: Final = (
     PROTOCOL_CODES_TEMPS + 
     PROTOCOL_CODES_SETPOINTS +
     PROTOCOL_CODES_ENERGY +
+    PROTOCOL_CODES_CLIMATE +          # Zone temps, indoor temp/humidity, dew point
     PROTOCOL_CODES_VERSION +
     PROTOCOL_CODES_CONFIG +           # H01, H05, H07, H21, H22, H25, H27, H36 etc.
     PROTOCOL_CODES_DISINFECTION +     # G01-G05
@@ -418,6 +438,31 @@ DATA_TYPE_MAP: Final = {
     
     # Energy (DIGI1 - kWh)
     "Comsuption Power": ("DIGI1", 1),
+    
+    # ODU Power (DIGI5 - 0.1 kW)
+    "Power In(ODU)": ("DIGI5", 10),
+    "Capacity Out(ODU)": ("DIGI5", 10),
+    
+    # ODU Energy consumption/generation (DIGI1 - kWh)
+    "Heating Con.(ODU)": ("DIGI1", 1),
+    "Heating Gen.(ODU)": ("DIGI1", 1),
+    "Cooling Con.(ODU)": ("DIGI1", 1),
+    "Cooling Gen.(ODU)": ("DIGI1", 1),
+    "DHW Con.(ODU)": ("DIGI1", 1),
+    "DHW Gen.(ODU)": ("DIGI1", 1),
+    
+    # Zone sensors (TEMP type)
+    "Zone 1 Room Temp": ("TEMP", 1),
+    "Zone 2 Room Temp": ("TEMP", 1),
+    "Zone 2 Mixing Temp": ("TEMP", 1),
+    
+    # Zone valve (DIGI1 - percentage)
+    "Zone 2 Mixing Valve": ("DIGI1", 1),
+    
+    # Indoor climate sensors
+    "DP4": ("TEMP", 1),  # Indoor Temp
+    "DP5": ("TEMP", 1),  # Indoor Humidity (uses TEMP type in Modbus but it's %)
+    "DP6": ("TEMP", 1),  # Dew Point Temp
     
     # ENUM types (discrete values)
     "Power": ("ENUM", 1),
