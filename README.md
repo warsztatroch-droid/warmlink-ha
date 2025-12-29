@@ -240,20 +240,24 @@ Some entities only appear if your heat pump model supports them. The integration
 ## Changelog
 
 ### v1.8.2 (2024-12-29)
+
 - 🇵🇱 All binary_sensor names in Polish (Online, Power, Fault → Status połączenia, Status zasilania, Status awarii)
 
 ### v1.8.1 (2024-12-29)
+
 - 🇵🇱 Fixed H20 options to Polish (CWU - ZAŁ/WYŁ)
 - 🇵🇱 Fixed water_heater name to "Zasobnik CWU"
 - 🇵🇱 Fixed climate name to "Pompa ciepła"
 - 🇵🇱 Fixed Mode options to Polish (Grzanie, Chłodzenie, CWU, Grzanie+CWU, Chłodzenie+CWU)
 
 ### v1.8.0 (2024-12-29)
+
 - ✨ Added protocol code prefixes to all entity names: `(T02) Temperatura wody wylotowej`
 - 📊 Prefixes allow better sorting and organization in Home Assistant UI
 - 📝 Updated translations (en.json, pl.json)
 
 ### v1.7.0 (2024-12-28)
+
 - ✨ 550+ entities with full Modbus parameter coverage
 - 🌡️ Temperature sensors T01-T55
 - ⚡ Energy sensors (COP, power input/output)

@@ -1,851 +1,501 @@
-# Dashboard Warmlink - Pogrupowany według kodów protokołu
-# Użycie: Skopiuj do dashboardu w Home Assistant
-# Zamień 0c7fedc122c1 na kod urządzenia
-#
-# Kategorie:
-#   T - Temperatury (odczyty)
-#   R - Temperatury zadane (setpoints)
-#   A - Parametry ochrony
-#   C - Sprężarka (częstotliwość)
-#   D - Odszranianie
-#   E - Zawór EEV
-#   F - Wentylator
-#   G - Dezynfekcja (Anti-Legionella)
-#   H - Konfiguracja systemu
-#   O - Wyjścia (Outputs)
-#   P - Pompa obiegowa
-#   Z - Strefy
+# Dashboard Warmlink - Grupy według kodów protokołu
+# DEVICE_CODE: 0c7fedc122c1 (zamień na swój kod urządzenia)
+# 
+# Entity ID format: {domain}.{device_code}_{translation_key}
+# np. sensor.0c7fedc122c1_t01, switch.0c7fedc122c1_power
 
-title: Pompa Ciepła - Grupy Parametrów
+title: Pompa Ciepła Warmlink
 views:
   # ============================================================================
-  # PRZEGLĄD - Główne sterowanie i status
+  # PRZEGLĄD
   # ============================================================================
   - title: Przegląd
     path: przeglad
     icon: mdi:heat-pump
     cards:
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "## 🎛️ Główne sterowanie"
-          - type: entities
-            entities:
-              - entity: switch.0c7fedc122c1_zasilanie
-                name: "⚡ Zasilanie (Power)"
-              - entity: select.0c7fedc122c1_tryb_pracy
-                name: "🔄 Tryb pracy (Mode)"
-              - entity: climate.0c7fedc122c1_pompa_ciepla
-                name: "🌡️ Klimat"
-              - entity: water_heater.0c7fedc122c1_zasobnik_cwu
-                name: "🚿 Zasobnik CWU"
+      # Główne sterowanie
+      - type: entities
+        title: "🎛️ Sterowanie"
+        entities:
+          - entity: switch.0c7fedc122c1_power
+            name: Zasilanie
+          - entity: select.0c7fedc122c1_mode
+            name: Tryb pracy
+          - entity: climate.warmlink_0c7fedc122c1_climate
+            name: Klimat
+          - entity: water_heater.warmlink_0c7fedc122c1_water_heater
+            name: CWU
 
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "## 📊 Status systemu"
-          - type: glance
-            entities:
-              - entity: binary_sensor.0c7fedc122c1_status_polaczenia
-                name: Online
-              - entity: binary_sensor.0c7fedc122c1_status_zasilania
-                name: Zasilanie
-              - entity: binary_sensor.0c7fedc122c1_status_awarii
-                name: Awaria
-              - entity: binary_sensor.0c7fedc122c1_odszranianie_aktywne
-                name: Odszranianie
-            columns: 4
+      # Status
+      - type: glance
+        title: "📊 Status"
+        entities:
+          - entity: binary_sensor.0c7fedc122c1_online
+            name: Online
+          - entity: binary_sensor.0c7fedc122c1_power
+            name: Zasilanie
+          - entity: binary_sensor.0c7fedc122c1_fault
+            name: Awaria
+          - entity: binary_sensor.0c7fedc122c1_defrost
+            name: Odszranianie
+        columns: 4
 
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "## ⚡ Wydajność"
-          - type: glance
-            entities:
-              - entity: sensor.0c7fedc122c1_calkowity_pobor_mocy_power_in_total
-                name: Pobór mocy
-              - entity: sensor.0c7fedc122c1_calkowita_moc_grzewcza_capacity_out_total
-                name: Moc grzewcza
-              - entity: sensor.0c7fedc122c1_wspolczynnik_wydajnosci_cop_eer
-                name: COP/EER
-              - entity: sensor.0c7fedc122c1_czestotliwosc_sprezarki_t30
-                name: Sprężarka Hz
-            columns: 4
+      # Temperatury główne
+      - type: glance
+        title: "🌡️ Temperatury"
+        entities:
+          - entity: sensor.0c7fedc122c1_t01
+            name: Wlot T01
+          - entity: sensor.0c7fedc122c1_t02
+            name: Wylot T02
+          - entity: sensor.0c7fedc122c1_t04
+            name: Zewn. T04
+          - entity: sensor.0c7fedc122c1_t08
+            name: CWU T08
+        columns: 4
 
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "## 🌡️ Kluczowe temperatury"
-          - type: glance
-            entities:
-              - entity: sensor.0c7fedc122c1_temperatura_wody_wlotowej_t01
-                name: Wlot T01
-              - entity: sensor.0c7fedc122c1_temperatura_wody_wylotowej_t02
-                name: Wylot T02
-              - entity: sensor.0c7fedc122c1_temperatura_zewnetrzna_t04
-                name: Zewn. T04
-              - entity: sensor.0c7fedc122c1_temperatura_zasobnika_cwu_t08
-                name: CWU T08
-            columns: 4
+      # Wydajność
+      - type: glance
+        title: "⚡ Wydajność"
+        entities:
+          - entity: sensor.0c7fedc122c1_power_in_total
+            name: Pobór kW
+          - entity: sensor.0c7fedc122c1_capacity_out_total
+            name: Moc grz. kW
+          - entity: sensor.0c7fedc122c1_cop_eer_total
+            name: COP
+          - entity: sensor.0c7fedc122c1_t30
+            name: Sprężarka Hz
+        columns: 4
 
   # ============================================================================
-  # T - TEMPERATURY (odczyty z czujników)
+  # T - TEMPERATURY
   # ============================================================================
-  - title: "T - Temperatury"
+  - title: T - Temperatury
     path: t-temperatury
     icon: mdi:thermometer
     cards:
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: |
-              ## 🌡️ Grupa T - Temperatury
-              *Odczyty z czujników temperatury*
-
       # Woda
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 💧 Temperatury wody"
-          - type: entities
-            entities:
-              - entity: sensor.0c7fedc122c1_temperatura_wody_wlotowej_t01
-                name: "T01 - Woda wlotowa"
-              - entity: sensor.0c7fedc122c1_temperatura_wody_wylotowej_t02
-                name: "T02 - Woda wylotowa"
-              - entity: sensor.0c7fedc122c1_temperatura_wezownicy_t03
-                name: "T03 - Wężownica"
-              - entity: sensor.0c7fedc122c1_temperatura_przeciwzamrozeniowa_t06
-                name: "T06 - Przeciwzamrożeniowa"
-              - entity: sensor.0c7fedc122c1_temperatura_bufora_t07
-                name: "T07 - Bufor"
-              - entity: sensor.0c7fedc122c1_temperatura_zasobnika_cwu_t08
-                name: "T08 - Zasobnik CWU"
-              - entity: sensor.0c7fedc122c1_temp_za_grzalka_t55
-                name: "T55 - Za grzałką"
+      - type: entities
+        title: "💧 Temperatury wody"
+        entities:
+          - entity: sensor.0c7fedc122c1_t01
+            name: T01 - Woda wlotowa
+          - entity: sensor.0c7fedc122c1_t02
+            name: T02 - Woda wylotowa
+          - entity: sensor.0c7fedc122c1_t03
+            name: T03 - Wężownica
+          - entity: sensor.0c7fedc122c1_t06
+            name: T06 - Przeciwzamrożeniowa
+          - entity: sensor.0c7fedc122c1_t07
+            name: T07 - Bufor
+          - entity: sensor.0c7fedc122c1_t08
+            name: T08 - Zasobnik CWU
+          - entity: sensor.0c7fedc122c1_t55
+            name: T55 - Za grzałką
 
       # Środowisko
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 🏠 Temperatury środowiskowe"
-          - type: entities
-            entities:
-              - entity: sensor.0c7fedc122c1_temperatura_zewnetrzna_t04
-                name: "T04 - Zewnętrzna (AT)"
-              - entity: sensor.0c7fedc122c1_temperatura_pokojowa_t09
-                name: "T09 - Pokojowa"
-              - entity: sensor.0c7fedc122c1_temperatura_wewnetrzna_dp4
-                name: "DP4 - Wewnętrzna"
-              - entity: sensor.0c7fedc122c1_wilgotnosc_wewnetrzna_dp5
-                name: "DP5 - Wilgotność wewnętrzna"
-              - entity: sensor.0c7fedc122c1_temperatura_punktu_rosy_dp6
-                name: "DP6 - Punkt rosy"
+      - type: entities
+        title: "🏠 Temperatury środowiskowe"
+        entities:
+          - entity: sensor.0c7fedc122c1_t04
+            name: T04 - Zewnętrzna (AT)
+          - entity: sensor.0c7fedc122c1_t09
+            name: T09 - Pokojowa
+          - entity: sensor.0c7fedc122c1_indoor_temp
+            name: DP4 - Wewnętrzna
+          - entity: sensor.0c7fedc122c1_indoor_humidity
+            name: DP5 - Wilgotność
+          - entity: sensor.0c7fedc122c1_dew_point_temp
+            name: DP6 - Punkt rosy
 
       # Układ chłodniczy
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### ❄️ Układ chłodniczy"
-          - type: entities
-            entities:
-              - entity: sensor.0c7fedc122c1_temperatura_ssania_t05
-                name: "T05 - Ssanie"
-              - entity: sensor.0c7fedc122c1_temperatura_tloczenia_t12
-                name: "T12 - Tłoczenie"
-              - entity: sensor.0c7fedc122c1_temperatura_parowania_t49
-                name: "T49 - Parowanie"
-              - entity: sensor.0c7fedc122c1_przegrzew_t51
-                name: "T51 - Przegrzew"
-              - entity: sensor.0c7fedc122c1_przegrzew_tloczenia_t50
-                name: "T50 - Przegrzew tłoczenia"
-              - entity: sensor.0c7fedc122c1_temperatura_wlotu_evi_t10
-                name: "T10 - Wlot EVI"
-              - entity: sensor.0c7fedc122c1_temperatura_wylotu_evi_t11
-                name: "T11 - Wylot EVI"
+      - type: entities
+        title: "❄️ Układ chłodniczy"
+        entities:
+          - entity: sensor.0c7fedc122c1_t05
+            name: T05 - Ssanie
+          - entity: sensor.0c7fedc122c1_t12
+            name: T12 - Tłoczenie
+          - entity: sensor.0c7fedc122c1_t49
+            name: T49 - Parowanie
+          - entity: sensor.0c7fedc122c1_t51
+            name: T51 - Przegrzew
+          - entity: sensor.0c7fedc122c1_t50
+            name: T50 - Przegrzew tłoczenia
+          - entity: sensor.0c7fedc122c1_t10
+            name: T10 - Wlot EVI
+          - entity: sensor.0c7fedc122c1_t11
+            name: T11 - Wylot EVI
 
-      # Sprężarka i elektryka
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### ⚡ Sprężarka i elektryka"
-          - type: entities
-            entities:
-              - entity: sensor.0c7fedc122c1_czestotliwosc_sprezarki_t30
-                name: "T30 - Częstotliwość sprężarki"
-              - entity: sensor.0c7fedc122c1_robocza_czestotliwosc_sprezarki_t31
-                name: "T31 - Częstotliwość robocza"
-              - entity: sensor.0c7fedc122c1_max_czestotliwosc_sprezarki_t32
-                name: "T32 - Max częstotliwość"
-              - entity: sensor.0c7fedc122c1_napiecie_wejsciowe_ac_t34
-                name: "T34 - Napięcie AC"
-              - entity: sensor.0c7fedc122c1_prad_wejsciowy_ac_t35
-                name: "T35 - Prąd AC"
-              - entity: sensor.0c7fedc122c1_prad_fazowy_sprezarki_t36
-                name: "T36 - Prąd sprężarki"
-              - entity: sensor.0c7fedc122c1_napiecie_szyny_dc_t37
-                name: "T37 - Napięcie DC"
-              - entity: sensor.0c7fedc122c1_temperatura_ipm_t38
-                name: "T38 - Temperatura IPM"
+      # Elektryka i sprężarka
+      - type: entities
+        title: "⚡ Elektryka"
+        entities:
+          - entity: sensor.0c7fedc122c1_t30
+            name: T30 - Częstotliwość sprężarki
+          - entity: sensor.0c7fedc122c1_t31
+            name: T31 - Częst. robocza
+          - entity: sensor.0c7fedc122c1_t32
+            name: T32 - Max częstotliwość
+          - entity: sensor.0c7fedc122c1_t34
+            name: T34 - Napięcie AC
+          - entity: sensor.0c7fedc122c1_t35
+            name: T35 - Prąd AC
+          - entity: sensor.0c7fedc122c1_t36
+            name: T36 - Prąd sprężarki
+          - entity: sensor.0c7fedc122c1_t37
+            name: T37 - Napięcie DC
+          - entity: sensor.0c7fedc122c1_t38
+            name: T38 - Temp. IPM
 
-      # Wentylator
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 🌀 Wentylator"
-          - type: entities
-            entities:
-              - entity: sensor.0c7fedc122c1_predkosc_wentylatora_1_t27
-                name: "T27 - Prędkość wentylatora 1"
-              - entity: sensor.0c7fedc122c1_predkosc_wentylatora_2_t28
-                name: "T28 - Prędkość wentylatora 2"
-              - entity: sensor.0c7fedc122c1_docelowa_predkosc_wentylatora_t29
-                name: "T29 - Docelowa prędkość"
-
-      # Przepływ
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 💧 Przepływ"
-          - type: entities
-            entities:
-              - entity: sensor.0c7fedc122c1_przeplyw_wody_t39
-                name: "T39 - Przepływ wody"
+      # Wentylator i przepływ
+      - type: entities
+        title: "🌀 Wentylator i przepływ"
+        entities:
+          - entity: sensor.0c7fedc122c1_t27
+            name: T27 - Prędkość wentylatora 1
+          - entity: sensor.0c7fedc122c1_t28
+            name: T28 - Prędkość wentylatora 2
+          - entity: sensor.0c7fedc122c1_t29
+            name: T29 - Docelowa prędkość
+          - entity: sensor.0c7fedc122c1_t39
+            name: T39 - Przepływ wody
 
   # ============================================================================
-  # R - TEMPERATURY ZADANE (setpoints)
+  # R - SETPOINTS (Temperatury zadane)
   # ============================================================================
-  - title: "R - Setpoints"
+  - title: R - Setpoints
     path: r-setpoints
     icon: mdi:target
     cards:
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: |
-              ## 🎯 Grupa R - Temperatury zadane
-              *Nastawy temperatur (setpoints)*
+      - type: entities
+        title: "🎯 Temperatury zadane"
+        entities:
+          - entity: number.0c7fedc122c1_r01
+            name: R01 - CWU
+          - entity: number.0c7fedc122c1_r02
+            name: R02 - Ogrzewanie
+          - entity: number.0c7fedc122c1_r03
+            name: R03 - Chłodzenie
+          - entity: number.0c7fedc122c1_r70
+            name: R70 - Pokój
 
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 🌡️ Główne setpoints"
-          - type: entities
-            entities:
-              - type: custom:slider-entity-row
-                entity: number.0c7fedc122c1_temperatura_zadana_cwu_r01
-                name: "R01 - CWU"
-                full_row: false
-              - type: custom:slider-entity-row
-                entity: number.0c7fedc122c1_temperatura_zadana_ogrzewania_r02
-                name: "R02 - Ogrzewanie"
-                full_row: false
-              - type: custom:slider-entity-row
-                entity: number.0c7fedc122c1_temperatura_zadana_chlodzenia_r03
-                name: "R03 - Chłodzenie"
-                full_row: false
-              - type: custom:slider-entity-row
-                entity: number.0c7fedc122c1_temperatura_zadana_pokoju_r70
-                name: "R70 - Pokój"
-                full_row: false
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 📊 Zakresy temperatur"
-          - type: entities
-            entities:
-              - entity: number.0c7fedc122c1_min_temp_ogrzewania_r10
-                name: "R10 - Min temp. ogrzewania"
-              - entity: number.0c7fedc122c1_max_temp_ogrzewania_r11
-                name: "R11 - Max temp. ogrzewania"
-              - entity: number.0c7fedc122c1_min_temp_chlodzenia_r08
-                name: "R08 - Min temp. chłodzenia"
-              - entity: number.0c7fedc122c1_max_temp_chlodzenia_r09
-                name: "R09 - Max temp. chłodzenia"
-              - entity: number.0c7fedc122c1_min_temp_cwu_r36
-                name: "R36 - Min temp. CWU"
-              - entity: number.0c7fedc122c1_max_temp_cwu_r37
-                name: "R37 - Max temp. CWU"
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### ⚙️ Parametry regulacji"
-          - type: entities
-            entities:
-              - entity: number.0c7fedc122c1_histereza_ogrzewania_r04
-                name: "R04 - Histereza ogrzewania"
-              - entity: number.0c7fedc122c1_histereza_chlodzenia_r05
-                name: "R05 - Histereza chłodzenia"
-              - entity: number.0c7fedc122c1_histereza_cwu_r06
-                name: "R06 - Histereza CWU"
-              - entity: number.0c7fedc122c1_delta_temp_r07
-                name: "R07 - Delta temperatury"
-
-  # ============================================================================
-  # A - PARAMETRY OCHRONY
-  # ============================================================================
-  - title: "A - Ochrona"
-    path: a-ochrona
-    icon: mdi:shield-check
-    cards:
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: |
-              ## 🛡️ Grupa A - Parametry ochrony
-              *Zabezpieczenia temperaturowe i ciśnieniowe*
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 🌡️ Ochrona temperaturowa"
-          - type: entities
-            entities:
-              - entity: number.0c7fedc122c1_temp_wylaczenia_at_a03
-                name: "A03 - Temp. wyłączenia AT"
-              - entity: number.0c7fedc122c1_temp_przeciwzamrozeniowa_a04
-                name: "A04 - Temp. przeciwzamrożeniowa"
-              - entity: number.0c7fedc122c1_max_temp_tloczenia_a06
-                name: "A06 - Max temp. tłoczenia"
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 📊 Czujniki ciśnienia"
-          - type: entities
-            entities:
-              - entity: switch.0c7fedc122c1_czujnik_niskiego_cisnienia_a11
-                name: "A11 - Czujnik LP"
-              - entity: switch.0c7fedc122c1_czujnik_wysokiego_cisnienia_a29
-                name: "A29 - Czujnik HP"
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### ❄️ Czynnik chłodniczy"
-          - type: entities
-            entities:
-              - entity: select.0c7fedc122c1_typ_czynnika_chlodniczego_a26
-                name: "A26 - Typ czynnika"
-
-  # ============================================================================
-  # C - SPRĘŻARKA (sterowanie częstotliwością)
-  # ============================================================================
-  - title: "C - Sprężarka"
-    path: c-sprezarka
-    icon: mdi:cog-sync
-    cards:
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: |
-              ## ⚙️ Grupa C - Sprężarka
-              *Sterowanie częstotliwością sprężarki*
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 📊 Status sprężarki"
-          - type: entities
-            entities:
-              - entity: sensor.0c7fedc122c1_czestotliwosc_sprezarki_t30
-                name: "T30 - Aktualna częstotliwość"
-              - entity: sensor.0c7fedc122c1_robocza_czestotliwosc_sprezarki_t31
-                name: "T31 - Częstotliwość robocza"
-              - entity: sensor.0c7fedc122c1_max_czestotliwosc_sprezarki_t32
-                name: "T32 - Max częstotliwość"
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 🎚️ Ustawienia częstotliwości"
-          - type: entities
-            entities:
-              - entity: number.0c7fedc122c1_reczna_czestotliwosc_sprezarki_c01
-                name: "C01 - Ręczna częstotliwość"
-              - entity: number.0c7fedc122c1_min_czestotliwosc_sprezarki_c02
-                name: "C02 - Min częstotliwość"
-              - entity: number.0c7fedc122c1_max_czestotliwosc_sprezarki_c03
-                name: "C03 - Max częstotliwość"
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### ⚙️ Konfiguracja"
-          - type: entities
-            entities:
-              - entity: select.0c7fedc122c1_wybor_modelu_c04
-                name: "C04 - Wybór modelu"
-              - entity: select.0c7fedc122c1_tryb_sterowania_czestotliwoscia_c06
-                name: "C06 - Tryb sterowania"
-
-  # ============================================================================
-  # D - ODSZRANIANIE
-  # ============================================================================
-  - title: "D - Odszranianie"
-    path: d-odszranianie
-    icon: mdi:snowflake-melt
-    cards:
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: |
-              ## ❄️ Grupa D - Odszranianie
-              *Parametry cyklu odszraniania*
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 📊 Status"
-          - type: entities
-            entities:
-              - entity: binary_sensor.0c7fedc122c1_odszranianie_aktywne
-                name: "Status odszraniania"
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 🌡️ Temperatury odszraniania"
-          - type: entities
-            entities:
-              - entity: number.0c7fedc122c1_temp_startu_odszraniania_d01
-                name: "D01 - Temp. startu"
-              - entity: number.0c7fedc122c1_temp_wyjscia_z_odszraniania_d17
-                name: "D17 - Temp. wyjścia"
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### ⏱️ Czasy odszraniania"
-          - type: entities
-            entities:
-              - entity: number.0c7fedc122c1_czas_grzania_przed_odszranianiem_d02
-                name: "D02 - Czas przed odszranianiem"
-              - entity: number.0c7fedc122c1_interwal_odszraniania_d03
-                name: "D03 - Interwał"
-              - entity: number.0c7fedc122c1_max_czas_odszraniania_d19
-                name: "D19 - Max czas"
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 🔘 Opcje"
-          - type: entities
-            entities:
-              - entity: switch.0c7fedc122c1_grzalka_odszraniania_d21
-                name: "D21 - Grzałka odszraniania"
-              - entity: switch.0c7fedc122c1_odszranianie_kaskadowe_d26
-                name: "D26 - Odszranianie kaskadowe"
-
-  # ============================================================================
-  # E - ZAWÓR EEV
-  # ============================================================================
-  - title: "E - EEV"
-    path: e-eev
-    icon: mdi:valve
-    cards:
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: |
-              ## 🔧 Grupa E - Zawór rozprężny EEV
-              *Parametry elektronicznego zaworu rozprężnego*
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### ⚙️ Konfiguracja EEV"
-          - type: entities
-            entities:
-              - entity: select.0c7fedc122c1_tryb_regulacji_eev_e01
-                name: "E01 - Tryb regulacji"
-              - entity: number.0c7fedc122c1_przegrzew_docelowy_e02
-                name: "E02 - Przegrzew docelowy"
-              - entity: number.0c7fedc122c1_kroki_eev_reczne_e03
-                name: "E03 - Kroki EEV ręczne"
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 📊 Odczyty EEV"
-          - type: entities
-            entities:
-              - entity: sensor.0c7fedc122c1_kroki_eev_t40
-                name: "T40 - Aktualne kroki EEV"
-              - entity: sensor.0c7fedc122c1_przegrzew_t51
-                name: "T51 - Przegrzew aktualny"
-
-  # ============================================================================
-  # F - WENTYLATOR
-  # ============================================================================
-  - title: "F - Wentylator"
-    path: f-wentylator
-    icon: mdi:fan
-    cards:
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: |
-              ## 🌀 Grupa F - Wentylator
-              *Parametry silnika wentylatora*
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 📊 Status wentylatora"
-          - type: entities
-            entities:
-              - entity: sensor.0c7fedc122c1_predkosc_wentylatora_1_t27
-                name: "T27 - Prędkość wentylatora 1"
-              - entity: sensor.0c7fedc122c1_predkosc_wentylatora_2_t28
-                name: "T28 - Prędkość wentylatora 2"
-              - entity: sensor.0c7fedc122c1_docelowa_predkosc_wentylatora_t29
-                name: "T29 - Docelowa prędkość"
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### ⚙️ Konfiguracja"
-          - type: entities
-            entities:
-              - entity: select.0c7fedc122c1_typ_silnika_wentylatora_f01
-                name: "F01 - Typ silnika"
-              - entity: switch.0c7fedc122c1_reczna_predkosc_wentylatora_f22
-                name: "F22 - Ręczna prędkość"
-              - entity: number.0c7fedc122c1_predkosc_wentylatora_reczna_f23
-                name: "F23 - Wartość ręczna"
-
-  # ============================================================================
-  # G - DEZYNFEKCJA (Anti-Legionella)
-  # ============================================================================
-  - title: "G - Dezynfekcja"
-    path: g-dezynfekcja
-    icon: mdi:shield-bug
-    cards:
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: |
-              ## 🦠 Grupa G - Dezynfekcja
-              *Funkcja Anti-Legionella*
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 🔘 Włączenie funkcji"
-          - type: entities
-            entities:
-              - entity: switch.0c7fedc122c1_dezynfekcja_g05
-                name: "G05 - Dezynfekcja włączona"
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### ⚙️ Parametry dezynfekcji"
-          - type: entities
-            entities:
-              - entity: number.0c7fedc122c1_temp_wody_dezynfekcji_g01
-                name: "G01 - Temperatura wody"
-              - entity: number.0c7fedc122c1_czas_dezynfekcji_g02
-                name: "G02 - Czas trwania (min)"
-              - entity: number.0c7fedc122c1_godzina_startu_dezynfekcji_g03
-                name: "G03 - Godzina startu"
-              - entity: number.0c7fedc122c1_interwal_dezynfekcji_g04
-                name: "G04 - Interwał (dni)"
+      - type: entities
+        title: "📊 Aktualne odczyty setpointów"
+        entities:
+          - entity: sensor.0c7fedc122c1_r01
+            name: R01 - Aktualne CWU
+          - entity: sensor.0c7fedc122c1_r02
+            name: R02 - Aktualne ogrzewanie
+          - entity: sensor.0c7fedc122c1_r03
+            name: R03 - Aktualne chłodzenie
+          - entity: sensor.0c7fedc122c1_r70
+            name: R70 - Aktualne pokój
 
   # ============================================================================
   # H - KONFIGURACJA SYSTEMU
   # ============================================================================
-  - title: "H - Konfiguracja"
-    path: h-konfiguracja
+  - title: H - System
+    path: h-system
     icon: mdi:cog
     cards:
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: |
-              ## ⚙️ Grupa H - Konfiguracja systemu
-              *Ustawienia ogólne pompy ciepła*
+      - type: entities
+        title: "🔘 Funkcje systemu"
+        entities:
+          - entity: switch.0c7fedc122c1_h01
+            name: H01 - Pamięć wyłączenia
+          - entity: switch.0c7fedc122c1_h05
+            name: H05 - Funkcja chłodzenia
+          - entity: switch.0c7fedc122c1_h22
+            name: H22 - Tryb cichy
+          - entity: switch.0c7fedc122c1_h27
+            name: H27 - Funkcja EVI
+          - entity: switch.0c7fedc122c1_h33
+            name: H33 - Sterownik zintegr.
+          - entity: switch.0c7fedc122c1_h36
+            name: H36 - Kompensacja pogodowa
 
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 🔘 Funkcje podstawowe"
-          - type: entities
-            entities:
-              - entity: switch.0c7fedc122c1_pamiec_wylaczenia_h01
-                name: "H01 - Pamięć wyłączenia"
-              - entity: switch.0c7fedc122c1_funkcja_chlodzenia_h05
-                name: "H05 - Funkcja chłodzenia"
-              - entity: switch.0c7fedc122c1_tryb_cichy_h22
-                name: "H22 - Tryb cichy"
-              - entity: switch.0c7fedc122c1_funkcja_evi_h27
-                name: "H27 - Funkcja EVI"
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 📝 Tryby pracy"
-          - type: entities
-            entities:
-              - entity: select.0c7fedc122c1_tryb_sterowania_h07
-                name: "H07 - Tryb sterowania"
-              - entity: select.0c7fedc122c1_zrodlo_sterowania_temp_h25
-                name: "H25 - Źródło temperatury"
-              - entity: select.0c7fedc122c1_stopien_grzalki_h18
-                name: "H18 - Stopień grzałki"
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 🔧 Konfiguracja sprzętu"
-          - type: entities
-            entities:
-              - entity: select.0c7fedc122c1_jednostka_temperatury_h21
-                name: "H21 - Jednostka temperatury"
-              - entity: select.0c7fedc122c1_typ_jednostki_wewnetrznej_h30
-                name: "H30 - Typ jednostki wewnętrznej"
-              - entity: select.0c7fedc122c1_typ_pompy_obiegowej_h31
-                name: "H31 - Typ pompy obiegowej"
-              - entity: switch.0c7fedc122c1_sterownik_wentylator_sprezarka_h33
-                name: "H33 - Sterownik zintegrowany"
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 🌡️ Kompensacja pogodowa"
-          - type: entities
-            entities:
-              - entity: switch.0c7fedc122c1_kompensacja_pogodowa_h36
-                name: "H36 - Kompensacja pogodowa"
-              - entity: number.0c7fedc122c1_krzywa_kompensacji_h37
-                name: "H37 - Krzywa kompensacji"
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 🚿 CWU"
-          - type: entities
-            entities:
-              - entity: select.0c7fedc122c1_cwu_zal_wyl_h20
-                name: "H20 - CWU ZAŁ/WYŁ"
+      - type: entities
+        title: "📝 Ustawienia systemu"
+        entities:
+          - entity: select.0c7fedc122c1_h07
+            name: H07 - Tryb sterowania
+          - entity: select.0c7fedc122c1_h18
+            name: H18 - Stopień grzałki
+          - entity: select.0c7fedc122c1_h21
+            name: H21 - Jednostka temperatury
+          - entity: select.0c7fedc122c1_h25
+            name: H25 - Źródło temperatury
+          - entity: select.0c7fedc122c1_h30
+            name: H30 - Typ jednostki wewn.
+          - entity: select.0c7fedc122c1_h31
+            name: H31 - Typ pompy obiegowej
 
   # ============================================================================
-  # O - WYJŚCIA (Outputs)
+  # C - SPRĘŻARKA
   # ============================================================================
-  - title: "O - Wyjścia"
-    path: o-wyjscia
-    icon: mdi:electric-switch
+  - title: C - Sprężarka
+    path: c-sprezarka
+    icon: mdi:cog-sync
     cards:
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: |
-              ## 🔌 Grupa O - Wyjścia
-              *Konfiguracja wyjść i przekaźników*
+      - type: entities
+        title: "📊 Status sprężarki"
+        entities:
+          - entity: sensor.0c7fedc122c1_t30
+            name: T30 - Aktualna częstotliwość
+          - entity: sensor.0c7fedc122c1_t31
+            name: T31 - Częst. robocza
+          - entity: sensor.0c7fedc122c1_t32
+            name: T32 - Max częstotliwość
 
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 📝 Konfiguracja wyjść"
-          - type: entities
-            entities:
-              - entity: select.0c7fedc122c1_wyjscie_1_o01
-                name: "O01 - Wyjście 1"
-              - entity: select.0c7fedc122c1_wyjscie_2_o02
-                name: "O02 - Wyjście 2"
-              - entity: select.0c7fedc122c1_wyjscie_3_o03
-                name: "O03 - Wyjście 3"
-              - entity: select.0c7fedc122c1_wyjscie_4_o04
-                name: "O04 - Wyjście 4"
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 🔘 Status wyjść"
-          - type: entities
-            entities:
-              - entity: binary_sensor.0c7fedc122c1_wyjscie_1_status
-                name: "Status wyjścia 1"
-              - entity: binary_sensor.0c7fedc122c1_wyjscie_2_status
-                name: "Status wyjścia 2"
-              - entity: binary_sensor.0c7fedc122c1_wyjscie_3_status
-                name: "Status wyjścia 3"
-              - entity: binary_sensor.0c7fedc122c1_wyjscie_4_status
-                name: "Status wyjścia 4"
+      - type: entities
+        title: "🎚️ Ustawienia sprężarki"
+        entities:
+          - entity: number.0c7fedc122c1_c01
+            name: C01 - Ręczna częstotliwość
+          - entity: number.0c7fedc122c1_c02
+            name: C02 - Min częstotliwość
+          - entity: number.0c7fedc122c1_c03
+            name: C03 - Max częstotliwość
+          - entity: select.0c7fedc122c1_c04
+            name: C04 - Wybór modelu
+          - entity: select.0c7fedc122c1_c06
+            name: C06 - Tryb sterowania
 
   # ============================================================================
-  # P - POMPA OBIEGOWA
+  # D - ODSZRANIANIE
   # ============================================================================
-  - title: "P - Pompa"
+  - title: D - Odszranianie
+    path: d-odszranianie
+    icon: mdi:snowflake-melt
+    cards:
+      - type: entities
+        title: "❄️ Status odszraniania"
+        entities:
+          - entity: binary_sensor.0c7fedc122c1_defrost
+            name: Odszranianie aktywne
+
+      - type: entities
+        title: "🎚️ Ustawienia odszraniania"
+        entities:
+          - entity: number.0c7fedc122c1_d01
+            name: D01 - Temp. startu
+          - entity: number.0c7fedc122c1_d02
+            name: D02 - Czas przed odsz.
+          - entity: number.0c7fedc122c1_d03
+            name: D03 - Interwał
+          - entity: number.0c7fedc122c1_d17
+            name: D17 - Temp. wyjścia
+          - entity: number.0c7fedc122c1_d19
+            name: D19 - Max czas
+          - entity: switch.0c7fedc122c1_d21
+            name: D21 - Grzałka odszraniania
+          - entity: switch.0c7fedc122c1_d26
+            name: D26 - Odszranianie kaskadowe
+
+  # ============================================================================
+  # G - DEZYNFEKCJA
+  # ============================================================================
+  - title: G - Dezynfekcja
+    path: g-dezynfekcja
+    icon: mdi:shield-bug
+    cards:
+      - type: entities
+        title: "🦠 Dezynfekcja Anti-Legionella"
+        entities:
+          - entity: switch.0c7fedc122c1_g05
+            name: G05 - Włącz dezynfekcję
+          - entity: number.0c7fedc122c1_g01
+            name: G01 - Temp. wody
+          - entity: number.0c7fedc122c1_g02
+            name: G02 - Czas trwania (min)
+          - entity: number.0c7fedc122c1_g03
+            name: G03 - Godzina startu
+          - entity: number.0c7fedc122c1_g04
+            name: G04 - Interwał (dni)
+
+  # ============================================================================
+  # A - OCHRONA
+  # ============================================================================
+  - title: A - Ochrona
+    path: a-ochrona
+    icon: mdi:shield-check
+    cards:
+      - type: entities
+        title: "🛡️ Parametry ochrony"
+        entities:
+          - entity: number.0c7fedc122c1_a03
+            name: A03 - Temp. wyłączenia AT
+          - entity: number.0c7fedc122c1_a04
+            name: A04 - Temp. przeciwzamr.
+          - entity: number.0c7fedc122c1_a06
+            name: A06 - Max temp. tłoczenia
+
+      - type: entities
+        title: "🔘 Czujniki ciśnienia"
+        entities:
+          - entity: switch.0c7fedc122c1_a11
+            name: A11 - Czujnik LP
+          - entity: switch.0c7fedc122c1_a29
+            name: A29 - Czujnik HP
+          - entity: select.0c7fedc122c1_a26
+            name: A26 - Typ czynnika chłodn.
+
+  # ============================================================================
+  # F - WENTYLATOR
+  # ============================================================================
+  - title: F - Wentylator
+    path: f-wentylator
+    icon: mdi:fan
+    cards:
+      - type: entities
+        title: "🌀 Status wentylatora"
+        entities:
+          - entity: sensor.0c7fedc122c1_t27
+            name: T27 - Prędkość wentylatora 1
+          - entity: sensor.0c7fedc122c1_t28
+            name: T28 - Prędkość wentylatora 2
+          - entity: sensor.0c7fedc122c1_t29
+            name: T29 - Docelowa prędkość
+
+      - type: entities
+        title: "⚙️ Ustawienia wentylatora"
+        entities:
+          - entity: select.0c7fedc122c1_f01
+            name: F01 - Typ silnika
+          - entity: switch.0c7fedc122c1_f22
+            name: F22 - Ręczna prędkość
+
+  # ============================================================================
+  # E - ZAWÓR EEV
+  # ============================================================================
+  - title: E - EEV
+    path: e-eev
+    icon: mdi:valve
+    cards:
+      - type: entities
+        title: "🔧 Zawór rozprężny EEV"
+        entities:
+          - entity: select.0c7fedc122c1_e01
+            name: E01 - Tryb regulacji
+          - entity: number.0c7fedc122c1_e02
+            name: E02 - Przegrzew docelowy
+          - entity: number.0c7fedc122c1_e03
+            name: E03 - Kroki EEV ręczne
+
+      - type: entities
+        title: "📊 Odczyty EEV"
+        entities:
+          - entity: sensor.0c7fedc122c1_t51
+            name: T51 - Przegrzew aktualny
+
+  # ============================================================================
+  # P - POMPA
+  # ============================================================================
+  - title: P - Pompa
     path: p-pompa
     icon: mdi:pump
     cards:
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: |
-              ## 💧 Grupa P - Pompa obiegowa
-              *Parametry pompy cyrkulacyjnej*
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### ⚙️ Konfiguracja pompy"
-          - type: entities
-            entities:
-              - entity: select.0c7fedc122c1_tryb_pompy_glownej_p01
-                name: "P01 - Tryb pompy głównej"
-              - entity: number.0c7fedc122c1_predkosc_pompy_p02
-                name: "P02 - Prędkość pompy"
-              - entity: switch.0c7fedc122c1_pompa_cwu_p03
-                name: "P03 - Pompa CWU"
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 📊 Status"
-          - type: entities
-            entities:
-              - entity: sensor.0c7fedc122c1_przeplyw_wody_t39
-                name: "T39 - Przepływ wody"
+      - type: entities
+        title: "💧 Pompa obiegowa"
+        entities:
+          - entity: select.0c7fedc122c1_p01
+            name: P01 - Tryb pompy głównej
+          - entity: sensor.0c7fedc122c1_t39
+            name: T39 - Przepływ wody
 
   # ============================================================================
   # Z - STREFY
   # ============================================================================
-  - title: "Z - Strefy"
+  - title: Z - Strefy
     path: z-strefy
     icon: mdi:home-floor-1
     cards:
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: |
-              ## 🏠 Grupa Z - Strefy
-              *Sterowanie strefowe*
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 🌡️ Strefa 1"
-          - type: entities
-            entities:
-              - entity: sensor.0c7fedc122c1_strefa_1_temp_pokojowa_zone_1_room_temp
-                name: "Temperatura pokojowa strefa 1"
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 🌡️ Strefa 2"
-          - type: entities
-            entities:
-              - entity: sensor.0c7fedc122c1_strefa_2_temp_pokojowa_zone_2_room_temp
-                name: "Temperatura pokojowa strefa 2"
-              - entity: sensor.0c7fedc122c1_strefa_2_temp_mieszania_zone_2_mixing_temp
-                name: "Temperatura mieszania strefa 2"
-              - entity: sensor.0c7fedc122c1_strefa_2_zawor_mieszajacy_zone_2_mixing_valve
-                name: "Zawór mieszający strefa 2"
-              - entity: switch.0c7fedc122c1_krzywa_kompensacji_at_strefa_2_z17
-                name: "Z17 - Krzywa kompensacji AT strefa 2"
+      - type: entities
+        title: "🏠 Strefy grzewcze"
+        entities:
+          - entity: sensor.0c7fedc122c1_zone1_room_temp
+            name: Strefa 1 - temp. pokojowa
+          - entity: sensor.0c7fedc122c1_zone2_room_temp
+            name: Strefa 2 - temp. pokojowa
+          - entity: sensor.0c7fedc122c1_zone2_mixing_temp
+            name: Strefa 2 - temp. mieszania
+          - entity: sensor.0c7fedc122c1_zone2_mixing_valve
+            name: Strefa 2 - zawór mieszający
+          - entity: switch.0c7fedc122c1_z17
+            name: Z17 - Kompensacja AT strefa 2
 
   # ============================================================================
-  # ENERGIA - Zużycie i wydajność
+  # ENERGIA
   # ============================================================================
-  - title: "Energia"
+  - title: Energia
     path: energia
     icon: mdi:lightning-bolt
     cards:
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: |
-              ## ⚡ Energia i wydajność
-              *Pobór mocy, COP, zużycie energii*
+      - type: entities
+        title: "⚡ Wydajność bieżąca"
+        entities:
+          - entity: sensor.0c7fedc122c1_power_in_total
+            name: Całkowity pobór mocy
+          - entity: sensor.0c7fedc122c1_capacity_out_total
+            name: Całkowita moc grzewcza
+          - entity: sensor.0c7fedc122c1_cop_eer_total
+            name: COP/EER
+          - entity: sensor.0c7fedc122c1_power_in_odu
+            name: Pobór mocy ODU
+          - entity: sensor.0c7fedc122c1_capacity_out_odu
+            name: Moc grzewcza ODU
 
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 📊 Wydajność bieżąca"
-          - type: entities
-            entities:
-              - entity: sensor.0c7fedc122c1_calkowity_pobor_mocy_power_in_total
-                name: "Całkowity pobór mocy"
-              - entity: sensor.0c7fedc122c1_calkowita_moc_grzewcza_capacity_out_total
-                name: "Całkowita moc grzewcza"
-              - entity: sensor.0c7fedc122c1_wspolczynnik_wydajnosci_cop_eer
-                name: "COP/EER"
-              - entity: sensor.0c7fedc122c1_pobor_mocy_odu_power_in_odu
-                name: "Pobór mocy ODU"
-              - entity: sensor.0c7fedc122c1_moc_grzewcza_odu_capacity_out_odu
-                name: "Moc grzewcza ODU"
+      - type: entities
+        title: "🔥 Energia - Ogrzewanie"
+        entities:
+          - entity: sensor.0c7fedc122c1_heating_consumption
+            name: Energia zużyta
+          - entity: sensor.0c7fedc122c1_heating_generated
+            name: Energia wytworzona
 
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 🔥 Energia - Ogrzewanie"
-          - type: entities
-            entities:
-              - entity: sensor.0c7fedc122c1_energia_zuzyta_grzanie_heating_con
-                name: "Energia zużyta"
-              - entity: sensor.0c7fedc122c1_energia_wytworzona_grzanie_heating_gen
-                name: "Energia wytworzona"
+      - type: entities
+        title: "❄️ Energia - Chłodzenie"
+        entities:
+          - entity: sensor.0c7fedc122c1_cooling_consumption
+            name: Energia zużyta
+          - entity: sensor.0c7fedc122c1_cooling_generated
+            name: Energia wytworzona
 
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### ❄️ Energia - Chłodzenie"
-          - type: entities
-            entities:
-              - entity: sensor.0c7fedc122c1_energia_zuzyta_chlodzenie_cooling_con
-                name: "Energia zużyta"
-              - entity: sensor.0c7fedc122c1_energia_wytworzona_chlodzenie_cooling_gen
-                name: "Energia wytworzona"
+      - type: entities
+        title: "🚿 Energia - CWU"
+        entities:
+          - entity: sensor.0c7fedc122c1_dhw_consumption
+            name: Energia zużyta
+          - entity: sensor.0c7fedc122c1_dhw_generated
+            name: Energia wytworzona
 
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 🚿 Energia - CWU"
-          - type: entities
-            entities:
-              - entity: sensor.0c7fedc122c1_energia_zuzyta_cwu_dhw_con
-                name: "Energia zużyta"
-              - entity: sensor.0c7fedc122c1_energia_wytworzona_cwu_dhw_gen
-                name: "Energia wytworzona"
-
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 📈 Łącznie"
-          - type: entities
-            entities:
-              - entity: sensor.0c7fedc122c1_calkowite_zuzycie_energii_consumption_power
-                name: "Całkowite zużycie energii"
+      - type: entities
+        title: "📈 Łącznie"
+        entities:
+          - entity: sensor.0c7fedc122c1_consumption_power
+            name: Całkowite zużycie energii
 
   # ============================================================================
-  # INFO - Wersje firmware
+  # INFO
   # ============================================================================
-  - title: "Info"
+  - title: Info
     path: info
     icon: mdi:information
     cards:
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: |
-              ## ℹ️ Informacje o urządzeniu
-              *Wersje oprogramowania*
+      - type: entities
+        title: "ℹ️ Wersje oprogramowania"
+        entities:
+          - entity: sensor.0c7fedc122c1_code_version
+            name: Wersja firmware
+          - entity: sensor.0c7fedc122c1_mainboard_version
+            name: Wersja płyty głównej
+          - entity: sensor.0c7fedc122c1_display_version
+            name: Wersja wyświetlacza
 
-      - type: vertical-stack
-        cards:
-          - type: markdown
-            content: "### 📋 Wersje"
-          - type: entities
-            entities:
-              - entity: sensor.0c7fedc122c1_wersja_firmware_code_version
-                name: "Wersja firmware"
-              - entity: sensor.0c7fedc122c1_wersja_plyty_glownej_mainboard_version
-                name: "Wersja płyty głównej"
-              - entity: sensor.0c7fedc122c1_wersja_wyswietlacza_displayver
-                name: "Wersja wyświetlacza"
+      - type: entities
+        title: "📊 Status trybu"
+        entities:
+          - entity: sensor.0c7fedc122c1_mode_state
+            name: Aktualny tryb pracy
