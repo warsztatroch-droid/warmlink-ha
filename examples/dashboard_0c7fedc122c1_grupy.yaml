@@ -1,6 +1,6 @@
 # Dashboard Warmlink - Grupy według kodów protokołu
 # DEVICE_CODE: 0c7fedc122c1 (zamień na swój kod urządzenia)
-# 
+#
 # Entity ID format: {domain}.{device_code}_{translation_key}
 # np. sensor.0c7fedc122c1_t01, switch.0c7fedc122c1_power
 

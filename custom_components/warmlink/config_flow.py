@@ -48,6 +48,13 @@ class WarmLinkConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         self._devices: dict[str, dict] = {}
         self._api: WarmLinkAPI | None = None
 
+    @staticmethod
+    def async_get_options_flow(
+        config_entry: config_entries.ConfigEntry,
+    ) -> config_entries.OptionsFlow:
+        """Get the options flow for this handler."""
+        return WarmLinkOptionsFlow(config_entry)
+
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
     ) -> FlowResult:
