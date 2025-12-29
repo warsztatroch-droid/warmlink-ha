@@ -98,6 +98,142 @@ views:
           - entity: sensor.warmlink_DEVICE_CODE_t39
             name: Przepływ wody
 
+      # === SWITCH CONTROLS ===
+      - type: entities
+        title: Przełączniki
+        show_header_toggle: false
+        entities:
+          - entity: switch.warmlink_DEVICE_CODE_power_switch
+            name: Zasilanie
+          - entity: switch.warmlink_DEVICE_CODE_h22_switch
+            name: Tryb cichy
+          - entity: switch.warmlink_DEVICE_CODE_h05_switch
+            name: Funkcja chłodzenia
+          - entity: switch.warmlink_DEVICE_CODE_g05_switch
+            name: Dezynfekcja
+          - entity: switch.warmlink_DEVICE_CODE_h01_switch
+            name: Pamięć po wyłączeniu
+
+      # === SELECT CONTROLS ===
+      - type: entities
+        title: Wybory trybu
+        entities:
+          - entity: select.warmlink_DEVICE_CODE_mode_select
+            name: Tryb pracy
+          - entity: select.warmlink_DEVICE_CODE_h07_select
+            name: Tryb sterowania
+          - entity: select.warmlink_DEVICE_CODE_h21_select
+            name: Jednostka temperatury
+          - entity: select.warmlink_DEVICE_CODE_h25_select
+            name: Wybór sterowania temp.
+
+      # === NUMBER CONTROLS (Setpoints) ===
+      - type: entities
+        title: Temperatury zadane
+        entities:
+          - entity: number.warmlink_DEVICE_CODE_r01
+            name: CWU
+          - entity: number.warmlink_DEVICE_CODE_r02
+            name: Ogrzewanie
+          - entity: number.warmlink_DEVICE_CODE_r03
+            name: Chłodzenie
+          - entity: number.warmlink_DEVICE_CODE_r70
+            name: Temperatura pokojowa
+
+  - title: Sterowanie
+    path: control
+    icon: mdi:tune
+    cards:
+      # Main Power & Mode
+      - type: entities
+        title: Główne sterowanie
+        show_header_toggle: false
+        entities:
+          - entity: switch.warmlink_DEVICE_CODE_power_switch
+            name: Zasilanie
+            icon: mdi:power
+          - entity: select.warmlink_DEVICE_CODE_mode_select
+            name: Tryb pracy
+            icon: mdi:heat-pump
+
+      # Temperature Setpoints with sliders
+      - type: entities
+        title: Temperatury zadane
+        entities:
+          - entity: number.warmlink_DEVICE_CODE_r01
+            name: Temperatura CWU
+            icon: mdi:water-boiler
+          - entity: number.warmlink_DEVICE_CODE_r02
+            name: Temperatura ogrzewania
+            icon: mdi:radiator
+          - entity: number.warmlink_DEVICE_CODE_r03
+            name: Temperatura chłodzenia
+            icon: mdi:snowflake
+          - entity: number.warmlink_DEVICE_CODE_r70
+            name: Temperatura pokojowa
+            icon: mdi:home-thermometer
+
+      # System Switches
+      - type: entities
+        title: Funkcje systemowe
+        show_header_toggle: false
+        entities:
+          - entity: switch.warmlink_DEVICE_CODE_h22_switch
+            name: Tryb cichy
+            icon: mdi:volume-off
+          - entity: switch.warmlink_DEVICE_CODE_h05_switch
+            name: Funkcja chłodzenia
+            icon: mdi:snowflake
+          - entity: switch.warmlink_DEVICE_CODE_h01_switch
+            name: Pamięć po wyłączeniu
+            icon: mdi:memory
+
+      # DHW & Disinfection
+      - type: entities
+        title: Ciepła woda użytkowa
+        entities:
+          - entity: water_heater.warmlink_DEVICE_CODE_dhw
+            name: Podgrzewacz CWU
+          - entity: switch.warmlink_DEVICE_CODE_g05_switch
+            name: Dezynfekcja (anty-legionella)
+            icon: mdi:bacteria
+
+      # Advanced Settings
+      - type: entities
+        title: Ustawienia zaawansowane
+        entities:
+          - entity: select.warmlink_DEVICE_CODE_h07_select
+            name: Tryb sterowania
+          - entity: select.warmlink_DEVICE_CODE_h21_select
+            name: Jednostka temperatury
+          - entity: select.warmlink_DEVICE_CODE_h25_select
+            name: Źródło sterowania temp.
+          - entity: select.warmlink_DEVICE_CODE_h27_select
+            name: Funkcja EVI
+          - entity: select.warmlink_DEVICE_CODE_h28_select
+            name: Funkcja CWU
+
+      # Zone Control (if available)
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: select.warmlink_DEVICE_CODE_z01_select
+            state_not: unavailable
+        card:
+          type: entities
+          title: Sterowanie strefami
+          entities:
+            - entity: select.warmlink_DEVICE_CODE_z01_select
+              name: Tryb wielostrefowy
+            - entity: number.warmlink_DEVICE_CODE_z02
+              name: Strefa 1 - Temp. pokojowa
+            - entity: number.warmlink_DEVICE_CODE_z04
+              name: Strefa 2 - Temp. pokojowa
+            - entity: number.warmlink_DEVICE_CODE_z06
+              name: Strefa 1 - Temp. wody
+            - entity: number.warmlink_DEVICE_CODE_z07
+              name: Strefa 2 - Temp. mieszania
+
   - title: Wykresy
     path: charts
     icon: mdi:chart-line
