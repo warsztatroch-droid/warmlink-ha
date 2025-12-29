@@ -1,10 +1,19 @@
 # Dashboard Warmlink - Automatyczne wykrywanie encji
 # Wymaga karty auto-entities z HACS: https://github.com/thomasloven/lovelace-auto-entities
-# 
+#
 # Instalacja auto-entities:
 # 1. HACS → Frontend → Search "auto-entities" → Install
 # 2. Restart Home Assistant
 # 3. Skopiuj ten dashboard
+#
+# Format Entity ID w integracji Warmlink:
+# - sensor.warmlink_{device_code}_{code}  (np. sensor.warmlink_0c7fedc122c1_t01)
+# - switch.warmlink_{device_code}_{code}_switch
+# - number.warmlink_{device_code}_{code}
+# - select.warmlink_{device_code}_{code}
+# - binary_sensor.warmlink_{device_code}_{key}
+# - climate.warmlink_{device_code}_climate
+# - water_heater.warmlink_{device_code}_water_heater
 
 title: Pompa Ciepła Warmlink
 views:
@@ -15,19 +24,21 @@ views:
     path: przeglad
     icon: mdi:heat-pump
     cards:
-      # Główne sterowanie - automatyczne wykrywanie
+      # Główne sterowanie - Climate i Water Heater
       - type: custom:auto-entities
         card:
           type: entities
           title: "🎛️ Sterowanie"
         filter:
           include:
-            - entity_id: "switch.*_power"
+            - entity_id: "/climate\\.warmlink_[a-z0-9_]+_climate$/"
               integration: warmlink
-            - entity_id: "select.*_mode"
+            - entity_id: "/water_heater\\.warmlink_[a-z0-9_]+_water_heater$/"
               integration: warmlink
-            - entity_id: "climate.warmlink_*"
-            - entity_id: "water_heater.warmlink_*"
+            - entity_id: "/switch\\.warmlink_[a-z0-9_]+_power_switch$/"
+              integration: warmlink
+            - entity_id: "/select\\.warmlink_[a-z0-9_]+_mode$/"
+              integration: warmlink
 
       # Status - binary sensors
       - type: custom:auto-entities
@@ -37,13 +48,11 @@ views:
           columns: 4
         filter:
           include:
-            - entity_id: "binary_sensor.*_online"
+            - entity_id: "/binary_sensor\\.warmlink_[a-z0-9_]+_device_online$/"
               integration: warmlink
-            - entity_id: "binary_sensor.*_power"
+            - entity_id: "/binary_sensor\\.warmlink_[a-z0-9_]+_power$/"
               integration: warmlink
-            - entity_id: "binary_sensor.*_fault"
-              integration: warmlink
-            - entity_id: "binary_sensor.*_defrost"
+            - entity_id: "/binary_sensor\\.warmlink_[a-z0-9_]+_fault$/"
               integration: warmlink
 
       # Temperatury główne
@@ -54,13 +63,29 @@ views:
           columns: 4
         filter:
           include:
-            - entity_id: "sensor.*_t01"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_t01$/"
               integration: warmlink
-            - entity_id: "sensor.*_t02"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_t02$/"
               integration: warmlink
-            - entity_id: "sensor.*_t04"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_t04$/"
               integration: warmlink
-            - entity_id: "sensor.*_t08"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_t08$/"
+              integration: warmlink
+
+      # Setpointy główne
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "🎯 Temperatury zadane"
+        filter:
+          include:
+            - entity_id: "/number\\.warmlink_[a-z0-9_]+_r01$/"
+              integration: warmlink
+            - entity_id: "/number\\.warmlink_[a-z0-9_]+_r02$/"
+              integration: warmlink
+            - entity_id: "/number\\.warmlink_[a-z0-9_]+_r03$/"
+              integration: warmlink
+            - entity_id: "/number\\.warmlink_[a-z0-9_]+_r70$/"
               integration: warmlink
 
       # Wydajność
@@ -71,13 +96,13 @@ views:
           columns: 4
         filter:
           include:
-            - entity_id: "sensor.*_power_in_total"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_power_in_total$/"
               integration: warmlink
-            - entity_id: "sensor.*_capacity_out_total"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_capacity_out_total$/"
               integration: warmlink
-            - entity_id: "sensor.*_cop_eer_total"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_cop_eer_total$/"
               integration: warmlink
-            - entity_id: "sensor.*_t30"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_t30$/"
               integration: warmlink
 
   # ============================================================================
@@ -94,7 +119,7 @@ views:
           title: "💧 Temperatury wody (T01-T09)"
         filter:
           include:
-            - entity_id: "/sensor\\.[a-z0-9]+_t0[1-9]$/"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_t0[1-9]$/"
               integration: warmlink
         sort:
           method: entity_id
@@ -106,7 +131,7 @@ views:
           title: "🌡️ Temperatury (T10-T19)"
         filter:
           include:
-            - entity_id: "/sensor\\.[a-z0-9]+_t1[0-9]$/"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_t1[0-9]$/"
               integration: warmlink
         sort:
           method: entity_id
@@ -118,7 +143,7 @@ views:
           title: "🌀 Wentylator (T27-T29)"
         filter:
           include:
-            - entity_id: "/sensor\\.[a-z0-9]+_t2[7-9]$/"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_t2[7-9]$/"
               integration: warmlink
         sort:
           method: entity_id
@@ -130,7 +155,7 @@ views:
           title: "⚡ Elektryka (T30-T39)"
         filter:
           include:
-            - entity_id: "/sensor\\.[a-z0-9]+_t3[0-9]$/"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_t3[0-9]$/"
               integration: warmlink
         sort:
           method: entity_id
@@ -142,7 +167,7 @@ views:
           title: "🔧 Pozostałe (T40+)"
         filter:
           include:
-            - entity_id: "/sensor\\.[a-z0-9]+_t[4-9][0-9]$/"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_t[4-9][0-9]$/"
               integration: warmlink
         sort:
           method: entity_id
@@ -154,11 +179,11 @@ views:
           title: "🏠 Klimat wewnętrzny (DP)"
         filter:
           include:
-            - entity_id: "sensor.*_indoor_temp"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_indoor_temp$/"
               integration: warmlink
-            - entity_id: "sensor.*_indoor_humidity"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_indoor_humidity$/"
               integration: warmlink
-            - entity_id: "sensor.*_dew_point_temp"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_dew_point_temp$/"
               integration: warmlink
 
   # ============================================================================
@@ -175,7 +200,7 @@ views:
           title: "🎯 Temperatury zadane (edytowalne)"
         filter:
           include:
-            - entity_id: "/number\\.[a-z0-9]+_r[0-9]+$/"
+            - entity_id: "/number\\.warmlink_[a-z0-9_]+_r[0-9]+$/"
               integration: warmlink
         sort:
           method: entity_id
@@ -187,7 +212,7 @@ views:
           title: "📊 Odczyty setpointów"
         filter:
           include:
-            - entity_id: "/sensor\\.[a-z0-9]+_r[0-9]+$/"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_r[0-9]+$/"
               integration: warmlink
         sort:
           method: entity_id
@@ -206,7 +231,7 @@ views:
           title: "🔘 Funkcje systemu (H - przełączniki)"
         filter:
           include:
-            - entity_id: "/switch\\.[a-z0-9]+_h[0-9]+$/"
+            - entity_id: "/switch\\.warmlink_[a-z0-9_]+_h[0-9]+_switch$/"
               integration: warmlink
         sort:
           method: entity_id
@@ -218,7 +243,7 @@ views:
           title: "📝 Ustawienia systemu (H - wybór)"
         filter:
           include:
-            - entity_id: "/select\\.[a-z0-9]+_h[0-9]+$/"
+            - entity_id: "/select\\.warmlink_[a-z0-9_]+_h[0-9]+$/"
               integration: warmlink
         sort:
           method: entity_id
@@ -230,7 +255,7 @@ views:
           title: "🎚️ Parametry systemu (H - wartości)"
         filter:
           include:
-            - entity_id: "/number\\.[a-z0-9]+_h[0-9]+$/"
+            - entity_id: "/number\\.warmlink_[a-z0-9_]+_h[0-9]+$/"
               integration: warmlink
         sort:
           method: entity_id
@@ -248,11 +273,11 @@ views:
           title: "⚙️ Sprężarka (C)"
         filter:
           include:
-            - entity_id: "/number\\.[a-z0-9]+_c[0-9]+$/"
+            - entity_id: "/number\\.warmlink_[a-z0-9_]+_c[0-9]+$/"
               integration: warmlink
-            - entity_id: "/select\\.[a-z0-9]+_c[0-9]+$/"
+            - entity_id: "/select\\.warmlink_[a-z0-9_]+_c[0-9]+$/"
               integration: warmlink
-            - entity_id: "/switch\\.[a-z0-9]+_c[0-9]+$/"
+            - entity_id: "/switch\\.warmlink_[a-z0-9_]+_c[0-9]+_switch$/"
               integration: warmlink
         sort:
           method: entity_id
@@ -270,13 +295,13 @@ views:
           title: "❄️ Odszranianie (D)"
         filter:
           include:
-            - entity_id: "binary_sensor.*_defrost"
+            - entity_id: "/binary_sensor\\.warmlink_[a-z0-9_]+_defrost$/"
               integration: warmlink
-            - entity_id: "/number\\.[a-z0-9]+_d[0-9]+$/"
+            - entity_id: "/number\\.warmlink_[a-z0-9_]+_d[0-9]+$/"
               integration: warmlink
-            - entity_id: "/switch\\.[a-z0-9]+_d[0-9]+$/"
+            - entity_id: "/switch\\.warmlink_[a-z0-9_]+_d[0-9]+_switch$/"
               integration: warmlink
-            - entity_id: "/select\\.[a-z0-9]+_d[0-9]+$/"
+            - entity_id: "/select\\.warmlink_[a-z0-9_]+_d[0-9]+$/"
               integration: warmlink
         sort:
           method: entity_id
@@ -294,11 +319,11 @@ views:
           title: "🦠 Dezynfekcja Anti-Legionella (G)"
         filter:
           include:
-            - entity_id: "/switch\\.[a-z0-9]+_g[0-9]+$/"
+            - entity_id: "/switch\\.warmlink_[a-z0-9_]+_g[0-9]+_switch$/"
               integration: warmlink
-            - entity_id: "/number\\.[a-z0-9]+_g[0-9]+$/"
+            - entity_id: "/number\\.warmlink_[a-z0-9_]+_g[0-9]+$/"
               integration: warmlink
-            - entity_id: "/select\\.[a-z0-9]+_g[0-9]+$/"
+            - entity_id: "/select\\.warmlink_[a-z0-9_]+_g[0-9]+$/"
               integration: warmlink
         sort:
           method: entity_id
@@ -316,11 +341,11 @@ views:
           title: "🛡️ Parametry ochrony (A)"
         filter:
           include:
-            - entity_id: "/number\\.[a-z0-9]+_a[0-9]+$/"
+            - entity_id: "/number\\.warmlink_[a-z0-9_]+_a[0-9]+$/"
               integration: warmlink
-            - entity_id: "/switch\\.[a-z0-9]+_a[0-9]+$/"
+            - entity_id: "/switch\\.warmlink_[a-z0-9_]+_a[0-9]+_switch$/"
               integration: warmlink
-            - entity_id: "/select\\.[a-z0-9]+_a[0-9]+$/"
+            - entity_id: "/select\\.warmlink_[a-z0-9_]+_a[0-9]+$/"
               integration: warmlink
         sort:
           method: entity_id
@@ -338,11 +363,11 @@ views:
           title: "🌀 Wentylator (F)"
         filter:
           include:
-            - entity_id: "/select\\.[a-z0-9]+_f[0-9]+$/"
+            - entity_id: "/select\\.warmlink_[a-z0-9_]+_f[0-9]+$/"
               integration: warmlink
-            - entity_id: "/switch\\.[a-z0-9]+_f[0-9]+$/"
+            - entity_id: "/switch\\.warmlink_[a-z0-9_]+_f[0-9]+_switch$/"
               integration: warmlink
-            - entity_id: "/number\\.[a-z0-9]+_f[0-9]+$/"
+            - entity_id: "/number\\.warmlink_[a-z0-9_]+_f[0-9]+$/"
               integration: warmlink
         sort:
           method: entity_id
@@ -360,11 +385,11 @@ views:
           title: "🔧 Zawór rozprężny EEV (E)"
         filter:
           include:
-            - entity_id: "/select\\.[a-z0-9]+_e[0-9]+$/"
+            - entity_id: "/select\\.warmlink_[a-z0-9_]+_e[0-9]+$/"
               integration: warmlink
-            - entity_id: "/number\\.[a-z0-9]+_e[0-9]+$/"
+            - entity_id: "/number\\.warmlink_[a-z0-9_]+_e[0-9]+$/"
               integration: warmlink
-            - entity_id: "/switch\\.[a-z0-9]+_e[0-9]+$/"
+            - entity_id: "/switch\\.warmlink_[a-z0-9_]+_e[0-9]+_switch$/"
               integration: warmlink
         sort:
           method: entity_id
@@ -382,13 +407,13 @@ views:
           title: "💧 Pompa obiegowa (P)"
         filter:
           include:
-            - entity_id: "/select\\.[a-z0-9]+_p[0-9]+$/"
+            - entity_id: "/select\\.warmlink_[a-z0-9_]+_p[0-9]+$/"
               integration: warmlink
-            - entity_id: "/switch\\.[a-z0-9]+_p[0-9]+$/"
+            - entity_id: "/switch\\.warmlink_[a-z0-9_]+_p[0-9]+_switch$/"
               integration: warmlink
-            - entity_id: "/number\\.[a-z0-9]+_p[0-9]+$/"
+            - entity_id: "/number\\.warmlink_[a-z0-9_]+_p[0-9]+$/"
               integration: warmlink
-            - entity_id: "sensor.*_t39"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_t39$/"
               integration: warmlink
         sort:
           method: entity_id
@@ -406,15 +431,13 @@ views:
           title: "🏠 Strefy grzewcze (Z)"
         filter:
           include:
-            - entity_id: "sensor.*_zone1_*"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_zone[12]_/"
               integration: warmlink
-            - entity_id: "sensor.*_zone2_*"
+            - entity_id: "/switch\\.warmlink_[a-z0-9_]+_z[0-9]+_switch$/"
               integration: warmlink
-            - entity_id: "/switch\\.[a-z0-9]+_z[0-9]+$/"
+            - entity_id: "/number\\.warmlink_[a-z0-9_]+_z[0-9]+$/"
               integration: warmlink
-            - entity_id: "/number\\.[a-z0-9]+_z[0-9]+$/"
-              integration: warmlink
-            - entity_id: "/select\\.[a-z0-9]+_z[0-9]+$/"
+            - entity_id: "/select\\.warmlink_[a-z0-9_]+_z[0-9]+$/"
               integration: warmlink
         sort:
           method: entity_id
@@ -432,11 +455,11 @@ views:
           title: "⚡ Wydajność bieżąca"
         filter:
           include:
-            - entity_id: "sensor.*_power_in_*"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_power_in/"
               integration: warmlink
-            - entity_id: "sensor.*_capacity_out_*"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_capacity_out/"
               integration: warmlink
-            - entity_id: "sensor.*_cop_eer_*"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_cop_eer/"
               integration: warmlink
         sort:
           method: entity_id
@@ -447,13 +470,13 @@ views:
           title: "📊 Zużycie energii"
         filter:
           include:
-            - entity_id: "sensor.*_heating_*"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_heating_/"
               integration: warmlink
-            - entity_id: "sensor.*_cooling_*"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_cooling_/"
               integration: warmlink
-            - entity_id: "sensor.*_dhw_*"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_dhw_/"
               integration: warmlink
-            - entity_id: "sensor.*_consumption_*"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_consumption_/"
               integration: warmlink
         sort:
           method: entity_id
@@ -471,11 +494,11 @@ views:
           title: "ℹ️ Wersje oprogramowania"
         filter:
           include:
-            - entity_id: "sensor.*_code_version"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_code_version$/"
               integration: warmlink
-            - entity_id: "sensor.*_mainboard_version"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_mainboard_version$/"
               integration: warmlink
-            - entity_id: "sensor.*_display_version"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_display_version$/"
               integration: warmlink
 
       - type: custom:auto-entities
@@ -484,7 +507,7 @@ views:
           title: "📊 Status"
         filter:
           include:
-            - entity_id: "sensor.*_mode_state"
+            - entity_id: "/sensor\\.warmlink_[a-z0-9_]+_mode_state$/"
               integration: warmlink
 
   # ============================================================================
