@@ -1,0 +1,202 @@
+# Warmlink Dashboard - AUTOMATYCZNE WYKRYWANIE ENCJI
+# Wymaga: auto-entities card z HACS
+# https://github.com/thomasloven/lovelace-auto-entities
+#
+# Instalacja auto-entities:
+# 1. HACS → Frontend → Search: "auto-entities"
+# 2. Install → Restart HA
+# 3. Clear browser cache
+
+title: Pompa Ciepła Warmlink
+views:
+  - title: Przegląd
+    path: overview
+    icon: mdi:heat-pump
+    cards:
+      # === STATUS - automatycznie znajduje wszystkie binary_sensor.warmlink_* ===
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: Status
+        filter:
+          include:
+            - entity_id: binary_sensor.warmlink_*_online
+            - entity_id: binary_sensor.warmlink_*_power
+            - entity_id: binary_sensor.warmlink_*_fault
+          exclude: []
+        sort:
+          method: name
+
+      # === CLIMATE - automatycznie znajduje wszystkie pompy ===
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: Pompa Ciepła
+        filter:
+          include:
+            - entity_id: climate.warmlink_*
+              options:
+                type: custom:mushroom-climate-card
+
+      # === TEMPERATURY - wszystkie sensory T* ===
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: Temperatury
+        filter:
+          include:
+            - entity_id: sensor.warmlink_*_t01
+              options:
+                name: Wlot wody
+            - entity_id: sensor.warmlink_*_t02
+              options:
+                name: Wylot wody
+            - entity_id: sensor.warmlink_*_t04
+              options:
+                name: Zewnętrzna
+            - entity_id: sensor.warmlink_*_t08
+              options:
+                name: Zasobnik CWU
+            - entity_id: sensor.warmlink_*_t12
+              options:
+                name: Tłoczenie
+        sort:
+          method: name
+
+      # === WYDAJNOŚĆ - COP, moc ===
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: Wydajność
+        filter:
+          include:
+            - entity_id: sensor.warmlink_*_cop*
+              options:
+                name: COP/EER
+            - entity_id: sensor.warmlink_*_power_in*
+              options:
+                name: Pobór mocy
+            - entity_id: sensor.warmlink_*_capacity*
+              options:
+                name: Moc grzewcza
+
+      # === PRZEŁĄCZNIKI - automatycznie wszystkie switch.warmlink_* ===
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: Przełączniki
+          show_header_toggle: false
+        filter:
+          include:
+            - entity_id: switch.warmlink_*
+        sort:
+          method: friendly_name
+
+      # === WYBORY TRYBU - automatycznie wszystkie select.warmlink_* ===
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: Wybory trybu
+        filter:
+          include:
+            - entity_id: select.warmlink_*
+        sort:
+          method: friendly_name
+
+      # === TEMPERATURY ZADANE - automatycznie wszystkie number.warmlink_* ===
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: Temperatury zadane
+        filter:
+          include:
+            - entity_id: number.warmlink_*
+        sort:
+          method: friendly_name
+
+      # === WATER HEATER - automatycznie ===
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: Podgrzewacz CWU
+        filter:
+          include:
+            - entity_id: water_heater.warmlink_*
+
+  - title: Wszystkie encje
+    path: all
+    icon: mdi:format-list-bulleted
+    cards:
+      # Pokaż WSZYSTKIE encje Warmlink pogrupowane
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: Wszystkie sensory Warmlink
+        filter:
+          include:
+            - entity_id: sensor.warmlink_*
+        sort:
+          method: friendly_name
+
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: Wszystkie binary_sensor Warmlink
+        filter:
+          include:
+            - entity_id: binary_sensor.warmlink_*
+        sort:
+          method: friendly_name
+
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: Wszystkie sterowanie Warmlink
+        filter:
+          include:
+            - domain: switch
+              entity_id: "*warmlink*"
+            - domain: select
+              entity_id: "*warmlink*"
+            - domain: number
+              entity_id: "*warmlink*"
+        sort:
+          method: domain
+
+  - title: Wykresy
+    path: charts
+    icon: mdi:chart-line
+    cards:
+      # Historia temperatur - automatycznie
+      - type: custom:auto-entities
+        card:
+          type: history-graph
+          title: Historia temperatur
+          hours_to_show: 24
+        filter:
+          include:
+            - entity_id: sensor.warmlink_*_t01
+            - entity_id: sensor.warmlink_*_t02
+            - entity_id: sensor.warmlink_*_t04
+            - entity_id: sensor.warmlink_*_t08
+
+      # Historia COP
+      - type: custom:auto-entities
+        card:
+          type: history-graph
+          title: Historia COP
+          hours_to_show: 24
+        filter:
+          include:
+            - entity_id: sensor.warmlink_*_cop*
+
+      # Historia mocy
+      - type: custom:auto-entities
+        card:
+          type: history-graph
+          title: Historia mocy
+          hours_to_show: 24
+        filter:
+          include:
+            - entity_id: sensor.warmlink_*_power_in*
+            - entity_id: sensor.warmlink_*_capacity*

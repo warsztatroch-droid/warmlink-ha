@@ -74,45 +74,77 @@ This integration works with heat pumps using the Warmlink mobile app, including:
 
 ### Temperature Sensors (Read-only)
 
-| Code | Description              | Unit |
-| ---- | ------------------------ | ---- |
-| T01  | Inlet Water Temperature  | °C   |
-| T02  | Outlet Water Temperature | °C   |
-| T03  | Coil Temperature         | °C   |
-| T04  | Ambient Temperature      | °C   |
-| T05  | Suction Temperature      | °C   |
-| T08  | DHW Tank Temperature     | °C   |
-| T09  | Room Temperature         | °C   |
-| T30  | Compressor Frequency     | Hz   |
-| T39  | Water Flow Rate          | L/min|
+| Code | Description              | Unit  |
+| ---- | ------------------------ | ----- |
+| T01  | Inlet Water Temperature  | °C    |
+| T02  | Outlet Water Temperature | °C    |
+| T03  | Coil Temperature         | °C    |
+| T04  | Ambient Temperature      | °C    |
+| T05  | Suction Temperature      | °C    |
+| T08  | DHW Tank Temperature     | °C    |
+| T09  | Room Temperature         | °C    |
+| T30  | Compressor Frequency     | Hz    |
+| T39  | Water Flow Rate          | L/min |
 
 ### Setpoint Controls (Read-Write)
 
-| Code | Description           | Range    |
-| ---- | --------------------- | -------- |
-| R01  | DHW Target Temp       | 15-70°C  |
-| R02  | Heating Target Temp   | 15-75°C  |
-| R03  | Cooling Target Temp   | 9-28°C   |
-| R70  | Room Target Temp      | 5-27°C   |
+| Code | Description         | Range   |
+| ---- | ------------------- | ------- |
+| R01  | DHW Target Temp     | 15-70°C |
+| R02  | Heating Target Temp | 15-75°C |
+| R03  | Cooling Target Temp | 9-28°C  |
+| R70  | Room Target Temp    | 5-27°C  |
 
 ### Switch Controls
 
-| Code  | Description              |
-| ----- | ------------------------ |
-| Power | Main power on/off        |
-| H01   | Power-off Memory         |
-| H05   | Enable Cooling Function  |
-| H22   | Silent Mode              |
-| G05   | Disinfection Enable      |
+| Code  | Description             |
+| ----- | ----------------------- |
+| Power | Main power on/off       |
+| H01   | Power-off Memory        |
+| H05   | Enable Cooling Function |
+| H22   | Silent Mode             |
+| G05   | Disinfection Enable     |
 
 ### Select Controls
 
-| Code | Description        | Options                    |
-| ---- | ------------------ | -------------------------- |
-| Mode | Operating Mode     | Heating/Cooling/Hot Water  |
-| H07  | Control Mode       | Display / Remote           |
-| H21  | Temperature Unit   | Celsius / Fahrenheit       |
-| H25  | Temp Control       | Outlet / Room / Buffer     |
+| Code | Description      | Options                   |
+| ---- | ---------------- | ------------------------- |
+| Mode | Operating Mode   | Heating/Cooling/Hot Water |
+| H07  | Control Mode     | Display / Remote          |
+| H21  | Temperature Unit | Celsius / Fahrenheit      |
+| H25  | Temp Control     | Outlet / Room / Buffer    |
+
+## Dashboard
+
+Example dashboards are available in `examples/` folder.
+
+### Option 1: Auto-entities (Recommended)
+
+Uses `auto-entities` card to **automatically detect all Warmlink entities** - no manual DEVICE_CODE needed!
+
+1. Install [auto-entities](https://github.com/thomasloven/lovelace-auto-entities) via HACS:
+   - HACS → Frontend → Search "auto-entities" → Install → Restart HA
+2. Copy `examples/dashboard_auto.yaml` content to your dashboard
+3. Done! All Warmlink entities are detected automatically.
+
+### Option 2: Generate with Script
+
+Generate dashboard with your specific DEVICE_CODE:
+
+```bash
+cd examples/
+python3 generate_dashboard.py YOUR_DEVICE_CODE
+# Creates: dashboard_YOUR_DEVICE_CODE.yaml
+```
+
+Find your DEVICE_CODE:
+1. Settings → Devices & Services → Warmlink → click device
+2. See entity like `sensor.warmlink_abc123def_t01`
+3. Your code is: `abc123def`
+
+### Option 3: Manual Template
+
+Use `examples/dashboard.yaml` and replace all `DEVICE_CODE` with your actual code.
 
 ## Troubleshooting
 
