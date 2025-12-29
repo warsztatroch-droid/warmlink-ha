@@ -27,6 +27,8 @@ ENDPOINT_DEVICE_STATUS: Final = "app/device/getDeviceStatus"
 ENDPOINT_DEVICE_CONTROL: Final = "app/device/control"
 ENDPOINT_DEVICE_DATA: Final = "app/device/getDataByCode"
 ENDPOINT_DEVICE_FAULT: Final = "app/device/getFaultDataByDeviceCode"
+# Shared/authorized devices endpoint (for devices shared with user)
+ENDPOINT_AUTH_DEVICE_LIST: Final = "app/device/getAuthDeviceList"
 
 # Warmlink Product ID - VERIFIED
 WARMLINK_PRODUCT_ID: Final = "1501438265440362496"

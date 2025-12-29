@@ -12,7 +12,7 @@
       },
       "devices": {
         "title": "Wybór urządzeń",
-        "description": "Znaleziono {device_count} urządzenie(a). Wybierz które dodać:",
+        "description": "Znaleziono {device_count} urządzenie(a). Wybierz które dodać.\n🟢 Online, 🔴 Offline, 👥 Udostępnione",
         "data": {
           "devices": "Urządzenia"
         }

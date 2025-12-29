@@ -12,7 +12,7 @@
       },
       "devices": {
         "title": "Select Devices",
-        "description": "Found {device_count} device(s). Select which devices to add:",
+        "description": "Found {device_count} device(s). Select which to add.\n🟢 Online, 🔴 Offline, 👥 Shared with you",
         "data": {
           "devices": "Devices"
         }

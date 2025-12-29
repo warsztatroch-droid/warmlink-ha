@@ -135,11 +135,18 @@ class WarmLinkConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             is_online = status.upper() == "ONLINE"
             status_icon = "🟢" if is_online else "🔴"
             
+            # Check if shared device
+            ownership = device_info.get("_ownership", "owned")
+            share_icon = "👥" if ownership == "shared" else ""
+            
             # Build label
+            parts = [status_icon]
+            if share_icon:
+                parts.append(share_icon)
+            parts.append(device_name)
             if model:
-                label = f"{status_icon} {device_name} ({model})"
-            else:
-                label = f"{status_icon} {device_name}"
+                parts.append(f"({model})")
+            label = " ".join(parts)
             
             device_options.append(
                 SelectOptionDict(value=device_code, label=label)

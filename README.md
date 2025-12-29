@@ -11,6 +11,8 @@ Custom integration for Phinx/Warmlink heat pumps connected via cloud.linked-go.c
 - **Temperature sensors** - Inlet (T01), Outlet (T02), Ambient (T03), Tank (T04), Coil (T05)
 - **Setpoint sensors** - Water (R01), Room (R02), Cooling (R03)
 - **Binary sensors** - Online status, Power state, Fault detection
+- **Shared devices support** - Access devices shared with you from other accounts 👥
+- **Multi-language** - Polish and English sensor names
 
 ## Installation
 
@@ -77,6 +79,10 @@ The API on port 449 may have certificate issues. The integration uses SSL verifi
 ### No Devices Found
 
 Make sure you're using credentials from the Warmlink app (not Aqua Temp). Warmlink requires `appId: 16`.
+
+### Shared Devices Not Visible
+
+If someone shared a device with you through the Warmlink app, the integration will automatically fetch it using the `getAuthDeviceList` API. Shared devices are marked with 👥 icon during setup.
 
 ## Credits
 

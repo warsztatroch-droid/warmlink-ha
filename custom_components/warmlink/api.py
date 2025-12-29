@@ -23,6 +23,7 @@ from .const import (
     ENDPOINT_DEVICE_CONTROL,
     ENDPOINT_DEVICE_DATA,
     ENDPOINT_DEVICE_FAULT,
+    ENDPOINT_AUTH_DEVICE_LIST,
     PROTOCOL_CODES_STATUS,
     PROTOCOL_CODES_TEMPS,
     PROTOCOL_CODES_SETPOINTS,
@@ -119,9 +120,10 @@ class WarmLinkAPI:
             raise WarmLinkConnectionError(f"Connection error: {ex}") from ex
 
     async def get_devices(self) -> dict[str, dict[str, Any]]:
-        """Fetch list of devices.
+        """Fetch list of devices (owned + shared/authorized).
         
         VERIFIED: Returns devices with device_code, deviceStatus, productId, custModel, etc.
+        Also fetches shared devices from getAuthDeviceList endpoint.
         """
         if not self.is_authenticated:
             await self.login()
@@ -131,6 +133,7 @@ class WarmLinkAPI:
         }
         
         try:
+            # Get owned devices
             response = await self._post(ENDPOINT_DEVICE_LIST, data)
             
             if response.get("error_msg") == "Success":
@@ -139,13 +142,36 @@ class WarmLinkAPI:
                 for device in devices:
                     device_code = device.get("device_code") or device.get("deviceCode")
                     if device_code:
+                        device["_ownership"] = "owned"
                         self._devices[device_code] = device
                         device_status = device.get("deviceStatus") or device.get("device_status")
                         model = device.get("custModel") or "Unknown"
                         _LOGGER.info(
-                            "Discovered device: %s (model: %s, status: %s)", 
+                            "Discovered owned device: %s (model: %s, status: %s)", 
                             device_code, model, device_status
                         )
+            
+            # Get shared/authorized devices
+            try:
+                shared_response = await self._post(ENDPOINT_AUTH_DEVICE_LIST, data)
+                
+                if shared_response.get("error_msg") == "Success":
+                    shared_devices = shared_response.get("objectResult", [])
+                    
+                    for device in shared_devices:
+                        device_code = device.get("device_code") or device.get("deviceCode")
+                        if device_code and device_code not in self._devices:
+                            device["_ownership"] = "shared"
+                            self._devices[device_code] = device
+                            device_status = device.get("deviceStatus") or device.get("device_status")
+                            model = device.get("custModel") or "Unknown"
+                            _LOGGER.info(
+                                "Discovered shared device: %s (model: %s, status: %s)", 
+                                device_code, model, device_status
+                            )
+            except Exception as ex:
+                # Shared devices endpoint might not work for all accounts
+                _LOGGER.debug("Could not fetch shared devices: %s", ex)
             
             return self._devices
             
