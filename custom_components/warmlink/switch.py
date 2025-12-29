@@ -11,7 +11,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .api import is_device_online
-from .const import DOMAIN, CONF_LANGUAGE, ALL_SWITCH_PARAMS
+from .const import DOMAIN, CONF_LANGUAGE, SWITCH_PARAMS
 from .coordinator import WarmLinkCoordinator
 
 _LOGGER = logging.getLogger(__name__)
@@ -71,7 +71,7 @@ async def async_setup_entry(
     for device_code, device_data in coordinator.data.items():
         parsed_data = device_data.get("_parsed_data", {})
         
-        for param_code, param_info in ALL_SWITCH_PARAMS.items():
+        for param_code, param_info in SWITCH_PARAMS.items():
             # Power switch is always available
             # Others only if device has this parameter
             if param_code == "Power" or param_code in parsed_data:
@@ -124,13 +124,11 @@ class WarmLinkSwitch(CoordinatorEntity[WarmLinkCoordinator], SwitchEntity):
 
         self._attr_unique_id = f"{DOMAIN}_{device_code}_{param_code}_switch"
 
-        # Get translated name with parameter code prefix
+        # Get translated name
         translations = SWITCH_TRANSLATIONS.get(language, SWITCH_TRANSLATIONS["en"])
-        base_name = translations.get(param_code, param_info.get("name", param_code))
-        # Add code prefix for identification (e.g., "[G05] Disinfection Enable")
-        self._attr_name = f"[{param_code}] {base_name}"
+        self._attr_name = translations.get(param_code, param_info.get("name", param_code))
 
-        self._attr_icon = get_switch_icon(param_code)
+        self._attr_icon = param_info.get("icon", "mdi:toggle-switch")
 
         # Power switch gets special device class
         if param_code == "Power":

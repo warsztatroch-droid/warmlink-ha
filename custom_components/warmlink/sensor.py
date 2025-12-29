@@ -27,7 +27,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .api import is_device_online
-from .const import DOMAIN, CONF_LANGUAGE, ALL_SENSOR_PARAMS
+from .const import DOMAIN, CONF_LANGUAGE
 from .coordinator import WarmLinkCoordinator
 
 _LOGGER = logging.getLogger(__name__)
@@ -45,7 +45,6 @@ SENSOR_DESCRIPTIONS: tuple[WarmLinkSensorEntityDescription, ...] = (
     # === TEMPERATURE SENSORS (from Modbus registers 2045-2068) ===
     WarmLinkSensorEntityDescription(
         key="T01",
-        name="Inlet Water Temperature",
         translation_key="t01",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         device_class=SensorDeviceClass.TEMPERATURE,
@@ -548,12 +547,6 @@ class WarmLinkSensor(CoordinatorEntity[WarmLinkCoordinator], SensorEntity):
         model = device_data.get("custModel") or device_data.get("productId") or "Heat Pump"
         
         self._attr_unique_id = f"{DOMAIN}_{device_code}_{description.key}"
-        
-        # Get translated base name or fallback to key
-        base_name = description.name if description.name else description.key
-        # Add code prefix for identification (e.g., "[T01] Inlet Water Temperature")
-        self._attr_name = f"[{description.key}] {base_name}"
-        # Also keep translation key for HA native translations
         self._attr_translation_key = description.translation_key
         
         self._attr_device_info = {

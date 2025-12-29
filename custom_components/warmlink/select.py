@@ -11,7 +11,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .api import is_device_online
-from .const import DOMAIN, CONF_LANGUAGE, ALL_SELECT_PARAMS
+from .const import DOMAIN, CONF_LANGUAGE, SELECT_PARAMS
 from .coordinator import WarmLinkCoordinator
 
 _LOGGER = logging.getLogger(__name__)
@@ -233,7 +233,7 @@ async def async_setup_entry(
 
     entities = []
     for device_code, device_data in coordinator.data.items():
-        for param_code, param_info in ALL_SELECT_PARAMS.items():
+        for param_code, param_info in SELECT_PARAMS.items():
             # Mode is always available, others check if device has parameter
             parsed_data = device_data.get("_parsed_data", {})
             if param_code == "Mode" or param_code in parsed_data:
@@ -285,11 +285,9 @@ class WarmLinkSelect(CoordinatorEntity[WarmLinkCoordinator], SelectEntity):
 
         self._attr_unique_id = f"{DOMAIN}_{device_code}_{param_code}_select"
 
-        # Get translated name with parameter code prefix
+        # Get translated name
         translations = SELECT_TRANSLATIONS.get(language, SELECT_TRANSLATIONS["en"])
-        base_name = translations.get(param_code, param_info.get("name", param_code))
-        # Add code prefix for identification (e.g., "[H07] Control Mode")
-        self._attr_name = f"[{param_code}] {base_name}"
+        self._attr_name = translations.get(param_code, param_info.get("name", param_code))
 
         self._attr_icon = param_info.get("icon", "mdi:form-select")
 

@@ -16,7 +16,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .api import is_device_online
-from .const import DOMAIN, CONF_LANGUAGE, ALL_WRITABLE_PARAMS
+from .const import DOMAIN, CONF_LANGUAGE, WRITABLE_PARAMS
 from .coordinator import WarmLinkCoordinator
 
 _LOGGER = logging.getLogger(__name__)
@@ -254,7 +254,7 @@ async def async_setup_entry(
         parsed_data = device_data.get("_parsed_data", {})
         
         # Add all writable parameters that exist in device data
-        for param_code, param_info in ALL_WRITABLE_PARAMS.items():
+        for param_code, param_info in WRITABLE_PARAMS.items():
             # Check if device has this parameter OR it's a primary setpoint
             if param_code in parsed_data or param_code in PRIMARY_SETPOINTS:
                 entities.append(
@@ -306,18 +306,16 @@ class WarmLinkNumber(CoordinatorEntity[WarmLinkCoordinator], NumberEntity):
 
         self._attr_unique_id = f"{DOMAIN}_{device_code}_{param_code}"
         
-        # Get translated name with parameter code prefix [CODE]
+        # Get translated name
         translations = NUMBER_TRANSLATIONS.get(language, NUMBER_TRANSLATIONS["en"])
-        base_name = translations.get(param_code, param_info.get("name", param_code))
-        # Add parameter code prefix for easy identification
-        self._attr_name = f"[{param_code}] {base_name}"
+        self._attr_name = translations.get(param_code, param_info.get("name", param_code))
 
-        # Set number attributes from param_info (includes Modbus data)
+        # Set number attributes from param_info
         self._attr_native_min_value = float(param_info.get("min", 0))
         self._attr_native_max_value = float(param_info.get("max", 100))
         self._attr_native_step = float(param_info.get("step", 0.5))
         self._attr_mode = NumberMode.SLIDER if param_code in PRIMARY_SETPOINTS else NumberMode.BOX
-        self._attr_icon = get_icon_for_param(param_code)
+        self._attr_icon = param_info.get("icon", get_icon_for_param(param_code))
 
         # Set device class and unit based on param type
         unit = param_info.get("unit", "")
