@@ -24,12 +24,12 @@ _LOGGER = logging.getLogger(__name__)
 BINARY_SENSOR_DESCRIPTIONS: tuple[BinarySensorEntityDescription, ...] = (
     BinarySensorEntityDescription(
         key="device_online",
-        name="(Online) Device Connected",
+        name="(Online) Status połączenia",
         device_class=BinarySensorDeviceClass.CONNECTIVITY,
     ),
     BinarySensorEntityDescription(
         key="power",
-        name="(Power) Main Power Status",
+        name="(Power) Status zasilania",
         device_class=BinarySensorDeviceClass.POWER,
     ),
 )
@@ -133,7 +133,7 @@ class WarmLinkFaultSensor(CoordinatorEntity[WarmLinkCoordinator], BinarySensorEn
 
     _attr_has_entity_name = True
     _attr_device_class = BinarySensorDeviceClass.PROBLEM
-    _attr_name = "(Fault) Fault Status"
+    _attr_name = "(Fault) Status awarii"
 
     def __init__(
         self,
