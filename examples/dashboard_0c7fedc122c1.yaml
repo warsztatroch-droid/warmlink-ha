@@ -1,0 +1,239 @@
+# Dashboard dla Warmlink - urządzenie 0c7fedc122c1
+# Integracja: https://github.com/warsztatroch-droid/warmlink-ha
+# Język: Polski (entity_id z polskich tłumaczeń)
+#
+# Wklej do: Ustawienia → Panele → [Panel] → ⋮ → Edytor surowego pliku konfiguracji
+
+title: Pompa Ciepła
+views:
+  - title: Przegląd
+    path: overview
+    icon: mdi:heat-pump
+    cards:
+      # === STATUS ===
+      - type: entities
+        title: "📡 Status"
+        entities:
+          - entity: binary_sensor.0c7fedc122c1_status_polaczenia
+            name: Połączenie
+          - entity: binary_sensor.0c7fedc122c1_status_zasilania
+            name: Zasilanie
+          - entity: sensor.0c7fedc122c1_tryb_pracy
+            name: Tryb pracy
+          - entity: binary_sensor.0c7fedc122c1_status_awarii
+            name: Awaria
+
+      # === TERMOSTAT ===
+      - type: thermostat
+        entity: climate.0c7fedc122c1_pompa_ciepla
+        name: Pompa Ciepła
+
+      # === GAUGE TEMPERATURY ===
+      - type: horizontal-stack
+        cards:
+          - type: gauge
+            entity: sensor.0c7fedc122c1_temperatura_wody_wlotowej
+            name: Wlot
+            min: 0
+            max: 70
+            severity:
+              green: 25
+              yellow: 45
+              red: 55
+          - type: gauge
+            entity: sensor.0c7fedc122c1_temperatura_wody_wylotowej
+            name: Wylot
+            min: 0
+            max: 70
+            severity:
+              green: 25
+              yellow: 45
+              red: 55
+          - type: gauge
+            entity: sensor.0c7fedc122c1_temperatura_zewnetrzna
+            name: Zewn.
+            min: -30
+            max: 40
+            severity:
+              green: 5
+              yellow: -5
+              red: -15
+
+      # === TEMPERATURY ===
+      - type: entities
+        title: "🌡️ Temperatury"
+        state_color: true
+        entities:
+          - entity: sensor.0c7fedc122c1_temperatura_wody_wlotowej
+            name: Woda wlotowa (T01)
+          - entity: sensor.0c7fedc122c1_temperatura_wody_wylotowej
+            name: Woda wylotowa (T02)
+          - entity: sensor.0c7fedc122c1_temperatura_wezownicy
+            name: Wężownica (T03)
+          - entity: sensor.0c7fedc122c1_temperatura_zewnetrzna
+            name: Zewnętrzna (T04)
+          - entity: sensor.0c7fedc122c1_temperatura_ssania
+            name: Ssanie (T05)
+          - entity: sensor.0c7fedc122c1_temperatura_zasobnika_cwu
+            name: Zasobnik CWU (T08)
+          - entity: sensor.0c7fedc122c1_temperatura_tloczenia
+            name: Tłoczenie (T12)
+
+      # === PRZEŁĄCZNIKI ===
+      - type: entities
+        title: "🔘 Przełączniki"
+        show_header_toggle: false
+        entities:
+          - entity: switch.0c7fedc122c1_power
+            name: Zasilanie
+          - entity: switch.0c7fedc122c1_silent_mode
+            name: Tryb cichy (H22)
+          - entity: switch.0c7fedc122c1_cooling_function
+            name: Funkcja chłodzenia (H05)
+          - entity: switch.0c7fedc122c1_disinfection
+            name: Dezynfekcja (G05)
+          - entity: switch.0c7fedc122c1_power_off_memory
+            name: Pamięć wyłączenia (H01)
+
+      # === WYBORY ===
+      - type: entities
+        title: "📋 Tryby"
+        entities:
+          - entity: select.0c7fedc122c1_operating_mode
+            name: Tryb pracy
+          - entity: select.0c7fedc122c1_control_mode
+            name: Tryb sterowania (H07)
+
+      # === NASTAWY TEMPERATUR ===
+      - type: entities
+        title: "🎚️ Temperatury zadane"
+        entities:
+          - entity: number.0c7fedc122c1_temperatura_zadana_cwu
+            name: CWU (R01)
+          - entity: number.0c7fedc122c1_temperatura_zadana_ogrzewania
+            name: Ogrzewanie (R02)
+          - entity: number.0c7fedc122c1_temperatura_zadana_chlodzenia
+            name: Chłodzenie (R03)
+          - entity: number.0c7fedc122c1_temperatura_zadana_pokoju
+            name: Temperatura pokojowa (R70)
+
+      # === CWU ===
+      - type: entities
+        title: "🚿 Podgrzewacz CWU"
+        entities:
+          - entity: water_heater.0c7fedc122c1_zasobnik_cwu
+            name: Podgrzewacz
+          - entity: sensor.0c7fedc122c1_temperatura_zasobnika_cwu
+            name: Temperatura zasobnika
+          - entity: number.0c7fedc122c1_temperatura_zadana_cwu
+            name: Temperatura zadana
+
+      # === WYDAJNOŚĆ ===
+      - type: entities
+        title: "⚡ Wydajność"
+        entities:
+          - entity: sensor.0c7fedc122c1_cop_eer
+            name: COP/EER
+          - entity: sensor.0c7fedc122c1_calkowity_pobor_mocy
+            name: Pobór mocy
+          - entity: sensor.0c7fedc122c1_calkowita_moc_grzewcza
+            name: Moc grzewcza
+          - entity: sensor.0c7fedc122c1_czestotliwosc_sprezarki
+            name: Częstotliwość sprężarki (T30)
+          - entity: sensor.0c7fedc122c1_przeplyw_wody
+            name: Przepływ wody (T39)
+
+  - title: Sterowanie
+    path: control
+    icon: mdi:tune
+    cards:
+      # Wszystkie przełączniki
+      - type: entities
+        title: "🔘 Wszystkie przełączniki"
+        show_header_toggle: false
+        entities:
+          - entity: switch.0c7fedc122c1_power
+            name: Zasilanie
+          - entity: switch.0c7fedc122c1_power_off_memory
+            name: Pamięć wyłączenia (H01)
+          - entity: switch.0c7fedc122c1_cooling_function
+            name: Funkcja chłodzenia (H05)
+          - entity: switch.0c7fedc122c1_silent_mode
+            name: Tryb cichy (H22)
+          - entity: switch.0c7fedc122c1_evi_function
+            name: Funkcja EVI (H27)
+          - entity: switch.0c7fedc122c1_weather_compensation
+            name: Komp. pogodowa (H36)
+          - entity: switch.0c7fedc122c1_disinfection
+            name: Dezynfekcja (G05)
+
+      # Wszystkie wybory
+      - type: entities
+        title: "📋 Wszystkie wybory"
+        entities:
+          - entity: select.0c7fedc122c1_operating_mode
+            name: Tryb pracy
+          - entity: select.0c7fedc122c1_control_mode
+            name: Tryb sterowania (H07)
+          - entity: select.0c7fedc122c1_temperature_unit
+            name: Jednostka temp. (H21)
+          - entity: select.0c7fedc122c1_temp_control_source
+            name: Źródło sterowania (H25)
+
+      # Wszystkie nastawy
+      - type: entities
+        title: "🎚️ Wszystkie nastawy"
+        entities:
+          - entity: number.0c7fedc122c1_temperatura_zadana_cwu
+            name: CWU (R01)
+          - entity: number.0c7fedc122c1_temperatura_zadana_ogrzewania
+            name: Ogrzewanie (R02)
+          - entity: number.0c7fedc122c1_temperatura_zadana_chlodzenia
+            name: Chłodzenie (R03)
+          - entity: number.0c7fedc122c1_temperatura_zadana_pokoju
+            name: Pokojowa (R70)
+
+  - title: Wykresy
+    path: charts
+    icon: mdi:chart-line
+    cards:
+      - type: history-graph
+        title: Temperatury wody (24h)
+        hours_to_show: 24
+        entities:
+          - entity: sensor.0c7fedc122c1_temperatura_wody_wlotowej
+            name: Wlot
+          - entity: sensor.0c7fedc122c1_temperatura_wody_wylotowej
+            name: Wylot
+          - entity: sensor.0c7fedc122c1_temperatura_zasobnika_cwu
+            name: Zasobnik CWU
+
+      - type: history-graph
+        title: Temperatura zewnętrzna (24h)
+        hours_to_show: 24
+        entities:
+          - entity: sensor.0c7fedc122c1_temperatura_zewnetrzna
+            name: Zewnętrzna
+
+      - type: history-graph
+        title: COP/EER (24h)
+        hours_to_show: 24
+        entities:
+          - entity: sensor.0c7fedc122c1_cop_eer
+            name: COP/EER
+
+      - type: history-graph
+        title: Moc (24h)
+        hours_to_show: 24
+        entities:
+          - entity: sensor.0c7fedc122c1_calkowity_pobor_mocy
+            name: Pobór
+          - entity: sensor.0c7fedc122c1_calkowita_moc_grzewcza
+            name: Wydajność
+
+      - type: history-graph
+        title: Sprężarka (24h)
+        hours_to_show: 24
+        entities:
+          - entity: sensor.0c7fedc122c1_czestotliwosc_sprezarki
+            name: Częstotliwość

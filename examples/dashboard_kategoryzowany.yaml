@@ -1,0 +1,466 @@
+# Dashboard Warmlink - Pogrupowany według kategorii
+# Użycie: Skopiuj do dashboardu w Home Assistant
+# Zamień DEVICE_CODE na kod urządzenia (np. 0c7fedc122c1)
+
+title: Pompa Ciepła Warmlink
+views:
+  - title: Przegląd
+    path: przeglad
+    icon: mdi:heat-pump
+    cards:
+      # === GŁÓWNE STEROWANIE ===
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: "## 🎛️ Sterowanie główne"
+          - type: entities
+            entities:
+              - entity: switch.DEVICE_CODE_zasilanie
+                name: Zasilanie
+              - entity: select.DEVICE_CODE_tryb_pracy
+                name: Tryb pracy
+              - entity: climate.DEVICE_CODE_pompa_ciepla
+                name: Klimat
+              - entity: water_heater.DEVICE_CODE_zasobnik_cwu
+                name: CWU
+
+      # === STATUS ===
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: "## 📊 Status"
+          - type: glance
+            entities:
+              - entity: binary_sensor.DEVICE_CODE_status_polaczenia
+                name: Online
+              - entity: binary_sensor.DEVICE_CODE_status_zasilania
+                name: Zasilanie
+              - entity: binary_sensor.DEVICE_CODE_status_awarii
+                name: Awaria
+              - entity: binary_sensor.DEVICE_CODE_odszranianie_aktywne
+                name: Odszranianie
+            columns: 4
+
+      # === TEMPERATURY GŁÓWNE ===
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: "## 🌡️ Temperatury"
+          - type: glance
+            entities:
+              - entity: sensor.DEVICE_CODE_temperatura_wody_wlotowej_t01
+                name: Wlot (T01)
+              - entity: sensor.DEVICE_CODE_temperatura_wody_wylotowej_t02
+                name: Wylot (T02)
+              - entity: sensor.DEVICE_CODE_temperatura_zewnetrzna_t04
+                name: Zewn. (T04)
+              - entity: sensor.DEVICE_CODE_temperatura_zasobnika_cwu_t08
+                name: CWU (T08)
+            columns: 4
+          - type: glance
+            entities:
+              - entity: sensor.DEVICE_CODE_temperatura_pokojowa_t09
+                name: Pokój (T09)
+              - entity: sensor.DEVICE_CODE_temperatura_tloczenia_t12
+                name: Tłocz. (T12)
+              - entity: sensor.DEVICE_CODE_temperatura_ssania_t05
+                name: Ssanie (T05)
+              - entity: sensor.DEVICE_CODE_temperatura_wezownicy_t03
+                name: Wężow. (T03)
+            columns: 4
+
+      # === WYDAJNOŚĆ ===
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: "## ⚡ Wydajność"
+          - type: glance
+            entities:
+              - entity: sensor.DEVICE_CODE_calkowity_pobor_mocy_power_in_total
+                name: Pobór
+              - entity: sensor.DEVICE_CODE_calkowita_moc_grzewcza_capacity_out_total
+                name: Moc grz.
+              - entity: sensor.DEVICE_CODE_wspolczynnik_wydajnosci_cop_eer
+                name: COP
+              - entity: sensor.DEVICE_CODE_czestotliwosc_sprezarki_t30
+                name: Sprężarka
+            columns: 4
+
+  - title: Temperatury
+    path: temperatury
+    icon: mdi:thermometer
+    cards:
+      # === SENSORY R - TEMPERATURY ZADANE ===
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ## 🎯 Temperatury zadane (R)
+              *Nastawy temperatur*
+          - type: entities
+            entities:
+              - type: custom:slider-entity-row
+                entity: number.DEVICE_CODE_temperatura_zadana_cwu_r01
+                name: "⬛ CWU (R01)"
+                full_row: false
+              - type: custom:slider-entity-row
+                entity: number.DEVICE_CODE_temperatura_zadana_ogrzewania_r02
+                name: "⬛ Ogrzewanie (R02)"
+                full_row: false
+              - type: custom:slider-entity-row
+                entity: number.DEVICE_CODE_temperatura_zadana_chlodzenia_r03
+                name: "⬛ Chłodzenie (R03)"
+                full_row: false
+              - type: custom:slider-entity-row
+                entity: number.DEVICE_CODE_temperatura_zadana_pokoju_r70
+                name: "⬛ Pokój (R70)"
+                full_row: false
+
+      # === SENSORY T - TEMPERATURY ODCZYTANE ===
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ## 🌡️ Temperatury wody (T)
+              *Odczyty z czujników*
+          - type: entities
+            entities:
+              - entity: sensor.DEVICE_CODE_temperatura_wody_wlotowej_t01
+              - entity: sensor.DEVICE_CODE_temperatura_wody_wylotowej_t02
+              - entity: sensor.DEVICE_CODE_temperatura_wezownicy_t03
+              - entity: sensor.DEVICE_CODE_temp_za_grzalka_t55
+              - entity: sensor.DEVICE_CODE_temperatura_bufora_t07
+              - entity: sensor.DEVICE_CODE_temperatura_zasobnika_cwu_t08
+
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ## 🏠 Temperatury środowiskowe (T)
+          - type: entities
+            entities:
+              - entity: sensor.DEVICE_CODE_temperatura_zewnetrzna_t04
+              - entity: sensor.DEVICE_CODE_temperatura_pokojowa_t09
+              - entity: sensor.DEVICE_CODE_temperatura_wewnetrzna_dp4
+              - entity: sensor.DEVICE_CODE_wilgotnosc_wewnetrzna_dp5
+              - entity: sensor.DEVICE_CODE_temperatura_punktu_rosy_dp6
+
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ## ❄️ Temperatury układu chłodniczego (T)
+          - type: entities
+            entities:
+              - entity: sensor.DEVICE_CODE_temperatura_ssania_t05
+              - entity: sensor.DEVICE_CODE_temperatura_tloczenia_t12
+              - entity: sensor.DEVICE_CODE_temperatura_parowania_t49
+              - entity: sensor.DEVICE_CODE_przegrzew_t51
+              - entity: sensor.DEVICE_CODE_przegrzew_tloczenia_t50
+              - entity: sensor.DEVICE_CODE_temperatura_przeciwzamrozeniowa_t06
+              - entity: sensor.DEVICE_CODE_temperatura_wlotu_evi_t10
+              - entity: sensor.DEVICE_CODE_temperatura_wylotu_evi_t11
+
+  - title: Sprężarka
+    path: sprezarka
+    icon: mdi:cog-sync
+    cards:
+      # === C - SPRĘŻARKA ===
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ## ⚙️ Parametry sprężarki (C)
+              *Sterowanie częstotliwością*
+          - type: entities
+            entities:
+              - entity: sensor.DEVICE_CODE_czestotliwosc_sprezarki_t30
+                name: "📊 Aktualna częstotliwość (T30)"
+              - entity: sensor.DEVICE_CODE_robocza_czestotliwosc_sprezarki_t31
+                name: "📊 Częstotliwość robocza (T31)"
+              - entity: sensor.DEVICE_CODE_max_czestotliwosc_sprezarki_t32
+                name: "📊 Max częstotliwość (T32)"
+          - type: markdown
+            content: "### Ustawienia"
+          - type: entities
+            entities:
+              - entity: number.DEVICE_CODE_reczna_czestotliwosc_sprezarki_c01
+                name: "🎚️ Ręczna częstotliwość (C01)"
+              - entity: number.DEVICE_CODE_min_czestotliwosc_sprezarki_c02
+                name: "🎚️ Min częstotliwość (C02)"
+              - entity: number.DEVICE_CODE_max_czestotliwosc_sprezarki_c03
+                name: "🎚️ Max częstotliwość (C03)"
+              - entity: select.DEVICE_CODE_wybor_modelu_c04
+                name: "📝 Wybór modelu (C04)"
+              - entity: select.DEVICE_CODE_tryb_sterowania_czestotliwoscia_c06
+                name: "📝 Tryb sterowania (C06)"
+
+      # === ELEKTRYCZNE ===
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ## ⚡ Parametry elektryczne (T)
+          - type: entities
+            entities:
+              - entity: sensor.DEVICE_CODE_napiecie_wejsciowe_ac_t34
+                name: "📊 Napięcie AC (T34)"
+              - entity: sensor.DEVICE_CODE_prad_wejsciowy_ac_t35
+                name: "📊 Prąd AC (T35)"
+              - entity: sensor.DEVICE_CODE_prad_fazowy_sprezarki_t36
+                name: "📊 Prąd sprężarki (T36)"
+              - entity: sensor.DEVICE_CODE_napiecie_szyny_dc_t37
+                name: "📊 Napięcie DC (T37)"
+              - entity: sensor.DEVICE_CODE_temperatura_ipm_t38
+                name: "🌡️ Temp. IPM (T38)"
+
+  - title: Wentylator
+    path: wentylator
+    icon: mdi:fan
+    cards:
+      # === F - WENTYLATOR ===
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ## 🌀 Wentylator (F)
+              *Parametry wentylatora*
+          - type: entities
+            entities:
+              - entity: sensor.DEVICE_CODE_predkosc_wentylatora_1_t27
+                name: "📊 Prędkość wentylatora 1 (T27)"
+              - entity: sensor.DEVICE_CODE_predkosc_wentylatora_2_t28
+                name: "📊 Prędkość wentylatora 2 (T28)"
+              - entity: sensor.DEVICE_CODE_docelowa_predkosc_wentylatora_t29
+                name: "📊 Docelowa prędkość (T29)"
+          - type: markdown
+            content: "### Ustawienia"
+          - type: entities
+            entities:
+              - entity: select.DEVICE_CODE_typ_silnika_wentylatora_f01
+                name: "📝 Typ silnika (F01)"
+              - entity: switch.DEVICE_CODE_reczna_predkosc_wentylatora_f22
+                name: "🔘 Ręczna prędkość (F22)"
+
+  - title: Odszranianie
+    path: odszranianie
+    icon: mdi:snowflake-melt
+    cards:
+      # === D - ODSZRANIANIE ===
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ## ❄️ Odszranianie (D)
+              *Parametry cyklu odszraniania*
+          - type: entities
+            entities:
+              - entity: binary_sensor.DEVICE_CODE_odszranianie_aktywne
+                name: "📊 Status odszraniania"
+          - type: markdown
+            content: "### Ustawienia"
+          - type: entities
+            entities:
+              - entity: number.DEVICE_CODE_temp_startu_odszraniania_d01
+                name: "🎚️ Temp. startu (D01)"
+              - entity: number.DEVICE_CODE_czas_grzania_przed_odszranianiem_d02
+                name: "🎚️ Czas przed odsz. (D02)"
+              - entity: number.DEVICE_CODE_interwal_odszraniania_d03
+                name: "🎚️ Interwał (D03)"
+              - entity: number.DEVICE_CODE_temp_wyjscia_z_odszraniania_d17
+                name: "🎚️ Temp. wyjścia (D17)"
+              - entity: number.DEVICE_CODE_max_czas_odszraniania_d19
+                name: "🎚️ Max czas (D19)"
+              - entity: switch.DEVICE_CODE_grzalka_odszraniania_d21
+                name: "🔘 Grzałka odszraniania (D21)"
+              - entity: switch.DEVICE_CODE_odszranianie_kaskadowe_d26
+                name: "🔘 Odszranianie kaskadowe (D26)"
+
+  - title: Dezynfekcja
+    path: dezynfekcja
+    icon: mdi:shield-bug
+    cards:
+      # === G - DEZYNFEKCJA ===
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ## 🦠 Dezynfekcja - Anti-Legionella (G)
+              *Ochrona przed bakteriami Legionella*
+          - type: entities
+            entities:
+              - entity: switch.DEVICE_CODE_dezynfekcja_g05
+                name: "🔘 Włącz dezynfekcję (G05)"
+          - type: markdown
+            content: "### Parametry"
+          - type: entities
+            entities:
+              - entity: number.DEVICE_CODE_temp_wody_dezynfekcji_g01
+                name: "🎚️ Temperatura wody (G01)"
+              - entity: number.DEVICE_CODE_czas_dezynfekcji_g02
+                name: "🎚️ Czas trwania (G02)"
+              - entity: number.DEVICE_CODE_godzina_startu_dezynfekcji_g03
+                name: "🎚️ Godzina startu (G03)"
+              - entity: number.DEVICE_CODE_interwal_dezynfekcji_g04
+                name: "🎚️ Interwał dni (G04)"
+
+  - title: Ochrona
+    path: ochrona
+    icon: mdi:shield-check
+    cards:
+      # === A - OCHRONA ===
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ## 🛡️ Parametry ochrony (A)
+              *Zabezpieczenia temperaturowe i ciśnieniowe*
+          - type: entities
+            entities:
+              - entity: number.DEVICE_CODE_temp_wylaczenia_at_a03
+                name: "🎚️ Temp. wyłączenia AT (A03)"
+              - entity: number.DEVICE_CODE_temp_przeciwzamrozeniowa_a04
+                name: "🎚️ Temp. p/zamroż. (A04)"
+              - entity: number.DEVICE_CODE_max_temp_tloczenia_a06
+                name: "🎚️ Max temp. tłocz. (A06)"
+          - type: markdown
+            content: "### Czujniki ciśnienia"
+          - type: entities
+            entities:
+              - entity: switch.DEVICE_CODE_czujnik_niskiego_cisnienia_a11
+                name: "🔘 Czujnik LP (A11)"
+              - entity: switch.DEVICE_CODE_czujnik_wysokiego_cisnienia_a29
+                name: "🔘 Czujnik HP (A29)"
+              - entity: select.DEVICE_CODE_typ_czynnika_chlodniczego_a26
+                name: "📝 Typ czynnika (A26)"
+
+  - title: Konfiguracja
+    path: konfiguracja
+    icon: mdi:cog
+    cards:
+      # === H - KONFIGURACJA SYSTEMU ===
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ## ⚙️ Konfiguracja systemu (H)
+              *Ustawienia ogólne*
+          - type: entities
+            entities:
+              - entity: select.DEVICE_CODE_tryb_sterowania_h07
+                name: "📝 Tryb sterowania (H07)"
+              - entity: select.DEVICE_CODE_jednostka_temperatury_h21
+                name: "📝 Jednostka temp. (H21)"
+              - entity: select.DEVICE_CODE_zrodlo_sterowania_temp_h25
+                name: "📝 Źródło temp. (H25)"
+              - entity: select.DEVICE_CODE_typ_jednostki_wewnetrznej_h30
+                name: "📝 Typ jedn. wewn. (H30)"
+              - entity: select.DEVICE_CODE_typ_pompy_obiegowej_h31
+                name: "📝 Typ pompy (H31)"
+              - entity: select.DEVICE_CODE_stopien_grzalki_h18
+                name: "📝 Stopień grzałki (H18)"
+          - type: markdown
+            content: "### Funkcje"
+          - type: entities
+            entities:
+              - entity: switch.DEVICE_CODE_pamiec_wylaczenia_h01
+                name: "🔘 Pamięć wyłączenia (H01)"
+              - entity: switch.DEVICE_CODE_funkcja_chlodzenia_h05
+                name: "🔘 Funkcja chłodzenia (H05)"
+              - entity: switch.DEVICE_CODE_tryb_cichy_h22
+                name: "🔘 Tryb cichy (H22)"
+              - entity: switch.DEVICE_CODE_funkcja_evi_h27
+                name: "🔘 Funkcja EVI (H27)"
+              - entity: switch.DEVICE_CODE_kompensacja_pogodowa_h36
+                name: "🔘 Komp. pogodowa (H36)"
+              - entity: switch.DEVICE_CODE_sterownik_wentylator_sprezarka_h33
+                name: "🔘 Sterownik zintegrowany (H33)"
+
+      # === P - POMPA ===
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ## 💧 Pompa obiegowa (P)
+          - type: entities
+            entities:
+              - entity: select.DEVICE_CODE_tryb_pompy_glownej_p01
+                name: "📝 Tryb pompy (P01)"
+
+      # === E - EEV ===
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ## 🔧 Zawór rozprężny EEV (E)
+          - type: entities
+            entities:
+              - entity: select.DEVICE_CODE_tryb_regulacji_eev_e01
+                name: "📝 Tryb regulacji (E01)"
+
+  - title: Energia
+    path: energia
+    icon: mdi:lightning-bolt
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ## ⚡ Energia i wydajność
+          - type: entities
+            entities:
+              - entity: sensor.DEVICE_CODE_calkowity_pobor_mocy_power_in_total
+              - entity: sensor.DEVICE_CODE_calkowita_moc_grzewcza_capacity_out_total
+              - entity: sensor.DEVICE_CODE_wspolczynnik_wydajnosci_cop_eer
+              - entity: sensor.DEVICE_CODE_pobor_mocy_odu_power_in_odu
+              - entity: sensor.DEVICE_CODE_moc_grzewcza_odu_capacity_out_odu
+          - type: markdown
+            content: |
+              ## 📊 Zużycie energii
+          - type: entities
+            entities:
+              - entity: sensor.DEVICE_CODE_energia_zuzyta_grzanie_heating_con
+              - entity: sensor.DEVICE_CODE_energia_wytworzona_grzanie_heating_gen
+              - entity: sensor.DEVICE_CODE_energia_zuzyta_chlodzenie_cooling_con
+              - entity: sensor.DEVICE_CODE_energia_wytworzona_chlodzenie_cooling_gen
+              - entity: sensor.DEVICE_CODE_energia_zuzyta_cwu_dhw_con
+              - entity: sensor.DEVICE_CODE_energia_wytworzona_cwu_dhw_gen
+              - entity: sensor.DEVICE_CODE_calkowite_zuzycie_energii_consumption_power
+
+  - title: Strefy
+    path: strefy
+    icon: mdi:home-floor-1
+    cards:
+      # === Z - STREFY ===
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ## 🏠 Sterowanie strefowe (Z)
+          - type: entities
+            entities:
+              - entity: sensor.DEVICE_CODE_strefa_1_temp_pokojowa_zone_1_room_temp
+              - entity: sensor.DEVICE_CODE_strefa_2_temp_pokojowa_zone_2_room_temp
+              - entity: sensor.DEVICE_CODE_strefa_2_temp_mieszania_zone_2_mixing_temp
+              - entity: sensor.DEVICE_CODE_strefa_2_zawor_mieszajacy_zone_2_mixing_valve
+          - type: markdown
+            content: "### Ustawienia stref"
+          - type: entities
+            entities:
+              - entity: switch.DEVICE_CODE_krzywa_kompensacji_at_strefa_2_z17
+                name: "🔘 Kompensacja AT strefa 2 (Z17)"
+
+  - title: Wersje
+    path: wersje
+    icon: mdi:information
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: |
+              ## ℹ️ Informacje o urządzeniu
+          - type: entities
+            entities:
+              - entity: sensor.DEVICE_CODE_wersja_firmware_code_version
+              - entity: sensor.DEVICE_CODE_wersja_plyty_glownej_mainboard_version
+              - entity: sensor.DEVICE_CODE_wersja_wyswietlacza_displayver
