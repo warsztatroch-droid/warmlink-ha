@@ -430,64 +430,143 @@ DATA_TYPE_MAP: Final = {
 }
 
 # Writable parameters with their ranges and units
+# Organized by category: R=Temps, Z=Zones, G=Disinfection, C=Compressor, P=Pump, F=Fan, D=Defrost, A=Protection, E=EEV, H=System
 WRITABLE_PARAMS: Final = {
-    # Main setpoints (temperature controls)
-    "R01": {"name": "DHW Target Temp", "min": 20, "max": 65, "step": 0.5, "unit": "°C"},
-    "R02": {"name": "Heating Target Temp", "min": 20, "max": 65, "step": 0.5, "unit": "°C"},
-    "R03": {"name": "Cooling Target Temp", "min": 7, "max": 25, "step": 0.5, "unit": "°C"},
-    "R70": {"name": "Room Target Temp", "min": 5, "max": 27, "step": 0.5, "unit": "°C"},
+    # === TEMPERATURES (R) - Main setpoints ===
+    "R01": {"name": "DHW Target Temp", "min": 20, "max": 65, "step": 0.5, "unit": "°C", "category": "temperatures"},
+    "R02": {"name": "Heating Target Temp", "min": 20, "max": 65, "step": 0.5, "unit": "°C", "category": "temperatures"},
+    "R03": {"name": "Cooling Target Temp", "min": 7, "max": 25, "step": 0.5, "unit": "°C", "category": "temperatures"},
+    "R70": {"name": "Room Target Temp", "min": 5, "max": 27, "step": 0.5, "unit": "°C", "category": "temperatures"},
+    # Temperature differences (hysteresis)
+    "R04": {"name": "Heating On Diff", "min": 0, "max": 10, "step": 0.5, "unit": "°C", "category": "temperatures"},
+    "R05": {"name": "Heating Off Diff", "min": 0, "max": 10, "step": 0.5, "unit": "°C", "category": "temperatures"},
+    "R06": {"name": "Cooling On Diff", "min": 0, "max": 10, "step": 0.5, "unit": "°C", "category": "temperatures"},
+    "R07": {"name": "Cooling Off Diff", "min": 0, "max": 10, "step": 0.5, "unit": "°C", "category": "temperatures"},
+    "R16": {"name": "DHW On Diff", "min": 0, "max": 10, "step": 0.5, "unit": "°C", "category": "temperatures"},
+    "R17": {"name": "DHW Off Diff", "min": 0, "max": 10, "step": 0.5, "unit": "°C", "category": "temperatures"},
+    # Temperature limits
+    "R08": {"name": "Min Cooling Target", "min": 5, "max": 25, "step": 1, "unit": "°C", "category": "temperatures"},
+    "R09": {"name": "Max Cooling Target", "min": 10, "max": 30, "step": 1, "unit": "°C", "category": "temperatures"},
+    "R10": {"name": "Min Heating Target", "min": 15, "max": 45, "step": 1, "unit": "°C", "category": "temperatures"},
+    "R11": {"name": "Max Heating Target", "min": 35, "max": 75, "step": 1, "unit": "°C", "category": "temperatures"},
+    "R36": {"name": "Min DHW Target", "min": 15, "max": 50, "step": 1, "unit": "°C", "category": "temperatures"},
+    "R37": {"name": "Max DHW Target", "min": 40, "max": 70, "step": 1, "unit": "°C", "category": "temperatures"},
     
-    # Temperature differences
-    "R04": {"name": "Heating On Diff", "min": 0, "max": 10, "step": 0.5, "unit": "°C"},
-    "R05": {"name": "Heating Standby Diff", "min": 0, "max": 10, "step": 0.5, "unit": "°C"},
-    "R06": {"name": "Cooling On Diff", "min": 0, "max": 10, "step": 0.5, "unit": "°C"},
-    "R07": {"name": "Cooling Standby Diff", "min": 0, "max": 10, "step": 0.5, "unit": "°C"},
-    "R16": {"name": "DHW On Diff", "min": 0, "max": 10, "step": 0.5, "unit": "°C"},
-    "R17": {"name": "DHW Standby Diff", "min": 0, "max": 10, "step": 0.5, "unit": "°C"},
+    # === ZONES (Z) ===
+    "Z02": {"name": "Zone 1 Target RT", "min": 10, "max": 35, "step": 0.5, "unit": "°C", "category": "zones"},
+    "Z03": {"name": "Zone 1 Diff to Start", "min": 0, "max": 10, "step": 0.5, "unit": "°C", "category": "zones"},
+    "Z04": {"name": "Zone 2 Target RT", "min": 10, "max": 35, "step": 0.5, "unit": "°C", "category": "zones"},
+    "Z05": {"name": "Zone 2 Diff to Start", "min": 0, "max": 10, "step": 0.5, "unit": "°C", "category": "zones"},
+    "Z06": {"name": "Zone 1 Heating Target WT", "min": 20, "max": 65, "step": 0.5, "unit": "°C", "category": "zones"},
+    "Z07": {"name": "Zone 2 Mixing Target WT", "min": 20, "max": 65, "step": 0.5, "unit": "°C", "category": "zones"},
+    "Z08": {"name": "Mixing Valve Manual %", "min": 0, "max": 100, "step": 1, "unit": "%", "category": "zones"},
+    "Z09": {"name": "Mixing Valve Open Time", "min": 0, "max": 2000, "step": 10, "unit": "s", "category": "zones"},
+    "Z10": {"name": "Mixing Valve Close Time", "min": 0, "max": 2000, "step": 10, "unit": "s", "category": "zones"},
+    "Z11": {"name": "Mixing Valve P", "min": 0, "max": 10, "step": 0.1, "unit": "", "category": "zones"},
+    "Z12": {"name": "Mixing Valve I", "min": 0, "max": 10, "step": 0.1, "unit": "", "category": "zones"},
+    "Z13": {"name": "Mixing Valve PID Period", "min": 1, "max": 20, "step": 1, "unit": "min", "category": "zones"},
     
-    # Zone control
-    "Z02": {"name": "Zone 1 Target RT", "min": 10, "max": 35, "step": 0.5, "unit": "°C"},
-    "Z04": {"name": "Zone 2 Target RT", "min": 10, "max": 35, "step": 0.5, "unit": "°C"},
+    # === DISINFECTION (G) - Anti-Legionella ===
+    "G01": {"name": "Disinfection Temp", "min": 60, "max": 75, "step": 1, "unit": "°C", "category": "disinfection"},
+    "G02": {"name": "Disinfection Duration", "min": 5, "max": 60, "step": 5, "unit": "min", "category": "disinfection"},
+    "G03": {"name": "Disinfection Start Time", "min": 0, "max": 23, "step": 1, "unit": "h", "category": "disinfection"},
+    "G04": {"name": "Disinfection Interval", "min": 1, "max": 30, "step": 1, "unit": "days", "category": "disinfection"},
+
+    # === COMPRESSOR (C) ===
+    "C01": {"name": "Manual Comp Freq", "min": 0, "max": 120, "step": 1, "unit": "Hz", "category": "compressor"},
+    "C02": {"name": "Min Comp Freq", "min": 20, "max": 60, "step": 1, "unit": "Hz", "category": "compressor"},
+    "C03": {"name": "Max Comp Freq", "min": 50, "max": 120, "step": 1, "unit": "Hz", "category": "compressor"},
     
-    # Disinfection (Anti-Legionella)
-    "G01": {"name": "Disinfection Temp", "min": 60, "max": 75, "step": 1, "unit": "°C"},
-    "G02": {"name": "Disinfection Duration", "min": 5, "max": 60, "step": 5, "unit": "min"},
-    "G04": {"name": "Disinfection Interval", "min": 1, "max": 30, "step": 1, "unit": "days"},
+    # === PUMP (P) ===
+    "P02": {"name": "Pump Interval Time", "min": 0, "max": 60, "step": 1, "unit": "min", "category": "pump"},
+    "P10": {"name": "Circulation Pump Speed", "min": 0, "max": 100, "step": 5, "unit": "%", "category": "pump"},
     
-    # Fan speed settings
-    "F18": {"name": "Min Fan Speed Cooling", "min": 10, "max": 1300, "step": 10, "unit": "rpm"},
-    "F19": {"name": "Min Fan Speed Heating", "min": 10, "max": 1300, "step": 10, "unit": "rpm"},
-    "F25": {"name": "Max Fan Speed Cooling", "min": 10, "max": 1300, "step": 10, "unit": "rpm"},
-    "F26": {"name": "Max Fan Speed Heating", "min": 10, "max": 1300, "step": 10, "unit": "rpm"},
+    # === FAN (F) ===
+    "F02": {"name": "CT Max Fan Cooling", "min": -15, "max": 60, "step": 1, "unit": "°C", "category": "fan"},
+    "F03": {"name": "CT Min Fan Cooling", "min": -15, "max": 60, "step": 1, "unit": "°C", "category": "fan"},
+    "F05": {"name": "CT Max Fan Heating", "min": -15, "max": 60, "step": 1, "unit": "°C", "category": "fan"},
+    "F06": {"name": "CT Min Fan Heating", "min": -15, "max": 60, "step": 1, "unit": "°C", "category": "fan"},
+    "F18": {"name": "Min Fan Speed Cooling", "min": 10, "max": 1300, "step": 10, "unit": "rpm", "category": "fan"},
+    "F19": {"name": "Min Fan Speed Heating", "min": 10, "max": 1300, "step": 10, "unit": "rpm", "category": "fan"},
+    "F23": {"name": "Rated DC Fan Speed", "min": 10, "max": 1300, "step": 10, "unit": "rpm", "category": "fan"},
+    "F25": {"name": "Max Fan Speed Cooling", "min": 10, "max": 1300, "step": 10, "unit": "rpm", "category": "fan"},
+    "F26": {"name": "Max Fan Speed Heating", "min": 10, "max": 1300, "step": 10, "unit": "rpm", "category": "fan"},
+    "F28": {"name": "CT Two to One Fan Cooling", "min": -30, "max": 60, "step": 1, "unit": "°C", "category": "fan"},
+    "F29": {"name": "CT Stop Single Fan Cooling", "min": -30, "max": 60, "step": 1, "unit": "°C", "category": "fan"},
     
-    # Defrosting
-    "D01": {"name": "Defrost Start AT", "min": -37, "max": 45, "step": 1, "unit": "°C"},
-    "D03": {"name": "Defrost Interval", "min": 10, "max": 90, "step": 5, "unit": "min"},
-    "D19": {"name": "Max Defrost Time", "min": 1, "max": 20, "step": 1, "unit": "min"},
+    # === DEFROST (D) ===
+    "D01": {"name": "Defrost Start AT", "min": -37, "max": 45, "step": 1, "unit": "°C", "category": "defrost"},
+    "D02": {"name": "Heating Before Defrost", "min": 0, "max": 120, "step": 5, "unit": "min", "category": "defrost"},
+    "D03": {"name": "Defrost Interval", "min": 10, "max": 90, "step": 5, "unit": "min", "category": "defrost"},
+    "D17": {"name": "CT Exit Defrost", "min": 0, "max": 30, "step": 1, "unit": "°C", "category": "defrost"},
+    "D19": {"name": "Max Defrost Time", "min": 1, "max": 20, "step": 1, "unit": "min", "category": "defrost"},
+    "D20": {"name": "Defrost Frequency", "min": 20, "max": 120, "step": 5, "unit": "Hz", "category": "defrost"},
     
-    # Compressor
-    "C02": {"name": "Min Compressor Freq", "min": 20, "max": 60, "step": 1, "unit": "Hz"},
-    "C03": {"name": "Max Compressor Freq", "min": 50, "max": 120, "step": 1, "unit": "Hz"},
+    # === PROTECTION (A) ===
+    "A03": {"name": "Shutdown Ambient Temp", "min": -40, "max": 10, "step": 1, "unit": "°C", "category": "protection"},
+    "A04": {"name": "Antifreeze Temp", "min": -20, "max": 10, "step": 0.5, "unit": "°C", "category": "protection"},
+    "A05": {"name": "Antifreeze Temp Diff", "min": 1, "max": 50, "step": 0.5, "unit": "°C", "category": "protection"},
+    "A06": {"name": "Max Exhaust Temp", "min": 60, "max": 130, "step": 1, "unit": "°C", "category": "protection"},
+    "A22": {"name": "Min Antifreeze Temp", "min": -20, "max": 10, "step": 0.5, "unit": "°C", "category": "protection"},
+    "A23": {"name": "Min Outlet Water Protect", "min": -30, "max": 20, "step": 1, "unit": "°C", "category": "protection"},
+    "A24": {"name": "Excess Temp Diff In/Out", "min": 0, "max": 30, "step": 1, "unit": "°C", "category": "protection"},
+    "A25": {"name": "Min Evap Temp Cooling", "min": -50, "max": 30, "step": 1, "unit": "°C", "category": "protection"},
+    "A27": {"name": "Temp Diff Limit Freq", "min": -20, "max": 95, "step": 1, "unit": "°C", "category": "protection"},
+    "A28": {"name": "Temp Diff Outlet/DHW", "min": -20, "max": 95, "step": 1, "unit": "°C", "category": "protection"},
+    "A30": {"name": "Min AT for Cooling", "min": -30, "max": 60, "step": 1, "unit": "°C", "category": "protection"},
+    "A31": {"name": "Electric Heater On AT", "min": -30, "max": 60, "step": 1, "unit": "°C", "category": "protection"},
+    "A32": {"name": "E-Heater Delays Comp", "min": 10, "max": 999, "step": 10, "unit": "min", "category": "protection"},
+    "A33": {"name": "E-Heater Opening Diff", "min": 0, "max": 20, "step": 1, "unit": "°C", "category": "protection"},
+    "A34": {"name": "Crank Preheating Time", "min": 0, "max": 360, "step": 10, "unit": "min", "category": "protection"},
+    "A35": {"name": "E-Heater OFF Diff", "min": 0, "max": 30, "step": 1, "unit": "°C", "category": "protection"},
+    
+    # === EEV (E) - Electronic Expansion Valve ===
+    "E02": {"name": "Target Superheat Heating", "min": 0, "max": 20, "step": 0.5, "unit": "°C", "category": "eev"},
+    "E03": {"name": "EEV Initial Steps Heating", "min": 0, "max": 500, "step": 10, "unit": "", "category": "eev"},
+    "E07": {"name": "EEV Min Steps", "min": 0, "max": 100, "step": 5, "unit": "", "category": "eev"},
+    "E08": {"name": "EEV Initial Steps Cooling", "min": 0, "max": 500, "step": 10, "unit": "", "category": "eev"},
+    
+    # === SYSTEM (H) ===
+    "H10": {"name": "Unit Address", "min": 1, "max": 32, "step": 1, "unit": "", "category": "system"},
+    "H18": {"name": "Electric Heater Stage", "min": 1, "max": 3, "step": 1, "unit": "", "category": "system"},
+    "H29": {"name": "Operation Code", "min": 0, "max": 20, "step": 1, "unit": "", "category": "system"},
+    "H32": {"name": "Force Switch Mode Time", "min": 1, "max": 300, "step": 5, "unit": "min", "category": "system"},
 }
 
 # Switch parameters (binary on/off)
+# Categories: H=System, G=Disinfection, A=Protection, F=Fan, D=Defrost, P=Pump, Z=Zone
 SWITCH_PARAMS: Final = {
-    "Power": {"name": "Power", "icon": "mdi:power"},
-    "H01": {"name": "Power-off Memory", "icon": "mdi:memory"},
-    "H05": {"name": "Cooling Function", "icon": "mdi:snowflake"},
-    "H22": {"name": "Silent Mode", "icon": "mdi:volume-off"},
-    "G05": {"name": "Disinfection", "icon": "mdi:bacteria"},
-    "A11": {"name": "Low Pressure Sensor", "icon": "mdi:gauge-low"},
-    "A29": {"name": "High Pressure Sensor", "icon": "mdi:gauge-full"},
-    "F22": {"name": "Manual Fan Speed", "icon": "mdi:fan"},
-    "D21": {"name": "Electric Heater Defrost", "icon": "mdi:heating-coil"},
+    # Main control
+    "Power": {"name": "Power", "icon": "mdi:power", "category": "system"},
+    # System (H)
+    "H01": {"name": "Power-off Memory", "icon": "mdi:memory", "category": "system"},
+    "H05": {"name": "Cooling Function", "icon": "mdi:snowflake", "category": "system"},
+    "H22": {"name": "Silent Mode", "icon": "mdi:volume-off", "category": "system"},
+    "H27": {"name": "EVI Function", "icon": "mdi:molecule", "category": "system"},
+    "H33": {"name": "Fan+Comp Driver Integrated", "icon": "mdi:chip", "category": "system"},
+    "H36": {"name": "Weather Compensation", "icon": "mdi:weather-cloudy", "category": "system"},
+    # Disinfection (G)
+    "G05": {"name": "Disinfection", "icon": "mdi:bacteria", "category": "disinfection"},
+    # Protection (A)
+    "A11": {"name": "Low Pressure Sensor", "icon": "mdi:gauge-low", "category": "protection"},
+    "A29": {"name": "High Pressure Sensor", "icon": "mdi:gauge-full", "category": "protection"},
+    # Fan (F)
+    "F22": {"name": "Manual Fan Speed", "icon": "mdi:fan", "category": "fan"},
+    # Defrost (D)
+    "D21": {"name": "Electric Heater Defrost", "icon": "mdi:heating-coil", "category": "defrost"},
+    "D26": {"name": "Defrost Communication Cascade", "icon": "mdi:link-variant", "category": "defrost"},
+    # Zone (Z)
+    "Z17": {"name": "AT Compensation Curve Zone 2", "icon": "mdi:chart-line", "category": "zones"},
 }
 
 # Select parameters (multi-option)
+# Categories: H=System, Z=Zone, F=Fan, C=Compressor, P=Pump, A=Protection, E=EEV
 SELECT_PARAMS: Final = {
+    # Main control
     "Mode": {
         "name": "Operating Mode",
         "icon": "mdi:hvac",
+        "category": "system",
         "options": {
             "0": "Hot Water",
             "1": "Heating",
@@ -496,17 +575,39 @@ SELECT_PARAMS: Final = {
             "4": "Hot Water + Cooling",
         },
     },
+    # System (H)
     "H07": {
         "name": "Control Mode",
         "icon": "mdi:remote",
+        "category": "system",
         "options": {
             "0": "Display Control",
             "1": "Remote Control",
         },
     },
+    "H18": {
+        "name": "Electric Heater Stage",
+        "icon": "mdi:heating-coil",
+        "category": "system",
+        "options": {
+            "1": "Stage 1",
+            "2": "Stage 2",
+            "3": "Stage 3",
+        },
+    },
+    "H20": {
+        "name": "3-way Valve Polarity",
+        "icon": "mdi:valve",
+        "category": "system",
+        "options": {
+            "0": "Hot Water - ON",
+            "1": "Hot Water - OFF",
+        },
+    },
     "H21": {
         "name": "Temperature Unit",
         "icon": "mdi:thermometer",
+        "category": "system",
         "options": {
             "0": "°C",
             "1": "°F",
@@ -515,6 +616,7 @@ SELECT_PARAMS: Final = {
     "H25": {
         "name": "Temp Control Selection",
         "icon": "mdi:target",
+        "category": "system",
         "options": {
             "0": "Outlet Water Temp",
             "1": "Room Temp",
@@ -522,19 +624,10 @@ SELECT_PARAMS: Final = {
             "3": "Inlet Water Temp",
         },
     },
-    "H27": {
-        "name": "EVI Mode",
-        "icon": "mdi:molecule",
-        "options": {
-            "0": "No EVI",
-            "1": "EVI for Cooling",
-            "2": "EVI for Heating",
-            "3": "All EVI",
-        },
-    },
     "H28": {
         "name": "DHW Function",
         "icon": "mdi:water-boiler",
+        "category": "system",
         "options": {
             "0": "Disabled",
             "1": "Enabled",
@@ -544,6 +637,7 @@ SELECT_PARAMS: Final = {
     "H30": {
         "name": "Indoor Unit Type",
         "icon": "mdi:hvac",
+        "category": "system",
         "options": {
             "0": "None",
             "1": "Type 1",
@@ -554,6 +648,7 @@ SELECT_PARAMS: Final = {
     "H31": {
         "name": "Circulation Pump Type",
         "icon": "mdi:pump",
+        "category": "system",
         "options": {
             "0": "No Flow Detection",
             "1": "Grundfos 25-75",
@@ -563,9 +658,41 @@ SELECT_PARAMS: Final = {
             "5": "APM25 12-130",
         },
     },
+    "H37": {
+        "name": "DHW Temp Sourcing",
+        "icon": "mdi:thermometer",
+        "category": "system",
+        "options": {
+            "0": "DHW Tank Sensor",
+            "1": "External Modbus",
+        },
+    },
+    "H38": {
+        "name": "Language",
+        "icon": "mdi:translate",
+        "category": "system",
+        "options": {
+            "0": "English",
+            "1": "Chinese",
+            "2": "Polish",
+            "3": "German",
+            "4": "French",
+            "5": "Italian",
+            "6": "Spanish",
+            "7": "Portuguese",
+            "8": "Russian",
+            "9": "Czech",
+            "10": "Hungarian",
+            "11": "Romanian",
+            "12": "Turkish",
+            "13": "Greek",
+        },
+    },
+    # Zone (Z)
     "Z01": {
         "name": "Multi-Zone Control",
         "icon": "mdi:home-group",
+        "category": "zones",
         "options": {
             "0": "None",
             "1": "Zone 1-S",
@@ -577,6 +704,111 @@ SELECT_PARAMS: Final = {
             "7": "Zone 1-P",
             "8": "Zone 2-P",
             "9": "Zone 1&2-P",
+        },
+    },
+    # Fan (F)
+    "F01": {
+        "name": "Fan Motor Type",
+        "icon": "mdi:fan",
+        "category": "fan",
+        "options": {
+            "1": "Double",
+            "3": "DC",
+            "4": "DC External Drive",
+        },
+    },
+    "F10": {
+        "name": "Fan Quantity",
+        "icon": "mdi:fan",
+        "category": "fan",
+        "options": {
+            "0": "One Fan",
+            "1": "Two Fans",
+        },
+    },
+    # Compressor (C)
+    "C04": {
+        "name": "Model Selection",
+        "icon": "mdi:cog",
+        "category": "compressor",
+        "options": {
+            "0": "Model 0",
+            "1": "Model 1",
+            "2": "Model 2",
+            "3": "Model 3",
+        },
+    },
+    "C06": {
+        "name": "Frequency Control Mode",
+        "icon": "mdi:sine-wave",
+        "category": "compressor",
+        "options": {
+            "0": "Auto",
+            "1": "Manual",
+        },
+    },
+    # Pump (P)
+    "P01": {
+        "name": "Main Pump Mode",
+        "icon": "mdi:pump",
+        "category": "pump",
+        "options": {
+            "0": "Continuous",
+            "1": "Interval",
+            "2": "On Demand",
+        },
+    },
+    "P05": {
+        "name": "DHW Pump Mode",
+        "icon": "mdi:pump",
+        "category": "pump",
+        "options": {
+            "0": "Off",
+            "1": "On",
+            "2": "Auto",
+        },
+    },
+    "P06": {
+        "name": "Main Pump Manual Control",
+        "icon": "mdi:pump",
+        "category": "pump",
+        "options": {
+            "0": "Auto",
+            "1": "Manual On",
+            "2": "Manual Off",
+        },
+    },
+    # Protection (A)
+    "A21": {
+        "name": "Sensor Type",
+        "icon": "mdi:thermometer",
+        "category": "protection",
+        "options": {
+            "0": "5K",
+            "1": "2K",
+        },
+    },
+    "A26": {
+        "name": "Refrigerant Type",
+        "icon": "mdi:molecule",
+        "category": "protection",
+        "options": {
+            "0": "R32",
+            "1": "R290",
+            "2": "R32-1",
+            "3": "R290-1",
+            "4": "R32-2",
+            "5": "R290-2",
+        },
+    },
+    # EEV (E)
+    "E01": {
+        "name": "EEV Adjust Mode",
+        "icon": "mdi:tune-variant",
+        "category": "eev",
+        "options": {
+            "0": "Auto",
+            "1": "Manual",
         },
     },
 }

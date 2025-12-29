@@ -19,26 +19,68 @@ _LOGGER = logging.getLogger(__name__)
 # Translation keys for select entities
 SELECT_TRANSLATIONS = {
     "en": {
+        # Main
         "Mode": "Operating Mode",
+        # System (H)
         "H07": "Control Mode",
+        "H18": "Electric Heater Stage",
+        "H20": "3-way Valve Polarity",
         "H21": "Temperature Unit",
         "H25": "Temp Control Selection",
-        "H27": "EVI Mode",
         "H28": "DHW Function",
         "H30": "Indoor Unit Type",
         "H31": "Circulation Pump Type",
+        "H37": "DHW Temp Sourcing",
+        "H38": "Language",
+        # Zone (Z)
         "Z01": "Multi-Zone Control",
+        # Fan (F)
+        "F01": "Fan Motor Type",
+        "F10": "Fan Quantity",
+        # Compressor (C)
+        "C04": "Model Selection",
+        "C06": "Frequency Control Mode",
+        # Pump (P)
+        "P01": "Main Pump Mode",
+        "P05": "DHW Pump Mode",
+        "P06": "Main Pump Manual Control",
+        # Protection (A)
+        "A21": "Sensor Type",
+        "A26": "Refrigerant Type",
+        # EEV (E)
+        "E01": "EEV Adjust Mode",
     },
     "pl": {
+        # Główne
         "Mode": "Tryb pracy",
+        # System (H)
         "H07": "Tryb sterowania",
+        "H18": "Stopień grzałki elektrycznej",
+        "H20": "Polaryzacja zaworu 3-drogowego",
         "H21": "Jednostka temperatury",
         "H25": "Wybór sterowania temperaturą",
-        "H27": "Tryb EVI",
         "H28": "Funkcja CWU",
         "H30": "Typ jednostki wewnętrznej",
         "H31": "Typ pompy obiegowej",
+        "H37": "Źródło temp. CWU",
+        "H38": "Język",
+        # Strefa (Z)
         "Z01": "Sterowanie wielostrefowe",
+        # Wentylator (F)
+        "F01": "Typ silnika wentylatora",
+        "F10": "Liczba wentylatorów",
+        # Sprężarka (C)
+        "C04": "Wybór modelu",
+        "C06": "Tryb sterowania częstotliwością",
+        # Pompa (P)
+        "P01": "Tryb głównej pompy",
+        "P05": "Tryb pompy CWU",
+        "P06": "Ręczne sterowanie główną pompą",
+        # Zabezpieczenie (A)
+        "A21": "Typ czujnika",
+        "A26": "Typ czynnika chłodniczego",
+        # EEV (E)
+        "E01": "Tryb regulacji EEV",
     },
 }
 
@@ -55,6 +97,15 @@ SELECT_OPTIONS_PL = {
         "0": "Sterowanie wyświetlaczem",
         "1": "Zdalne sterowanie",
     },
+    "H18": {
+        "1": "Stopień 1",
+        "2": "Stopień 2",
+        "3": "Stopień 3",
+    },
+    "H20": {
+        "0": "CW - ZAŁ",
+        "1": "CW - WYŁ",
+    },
     "H21": {
         "0": "°C",
         "1": "°F",
@@ -64,12 +115,6 @@ SELECT_OPTIONS_PL = {
         "1": "Temp. pokojowa",
         "2": "Temp. bufora",
         "3": "Temp. wody wlotowej",
-    },
-    "H27": {
-        "0": "Bez EVI",
-        "1": "EVI dla chłodzenia",
-        "2": "EVI dla ogrzewania",
-        "3": "Pełne EVI",
     },
     "H28": {
         "0": "Wyłączone",
@@ -90,6 +135,26 @@ SELECT_OPTIONS_PL = {
         "4": "APM25 9-130",
         "5": "APM25 12-130",
     },
+    "H37": {
+        "0": "Czujnik zbiornika CWU",
+        "1": "Zewnętrzny Modbus",
+    },
+    "H38": {
+        "0": "Angielski",
+        "1": "Chiński",
+        "2": "Polski",
+        "3": "Niemiecki",
+        "4": "Francuski",
+        "5": "Włoski",
+        "6": "Hiszpański",
+        "7": "Portugalski",
+        "8": "Rosyjski",
+        "9": "Czeski",
+        "10": "Węgierski",
+        "11": "Rumuński",
+        "12": "Turecki",
+        "13": "Grecki",
+    },
     "Z01": {
         "0": "Brak",
         "1": "Strefa 1-S",
@@ -101,6 +166,56 @@ SELECT_OPTIONS_PL = {
         "7": "Strefa 1-P",
         "8": "Strefa 2-P",
         "9": "Strefa 1&2-P",
+    },
+    "F01": {
+        "1": "Podwójny",
+        "3": "DC",
+        "4": "DC zewn. sterownik",
+    },
+    "F10": {
+        "0": "Jeden wentylator",
+        "1": "Dwa wentylatory",
+    },
+    "C04": {
+        "0": "Model 0",
+        "1": "Model 1",
+        "2": "Model 2",
+        "3": "Model 3",
+    },
+    "C06": {
+        "0": "Auto",
+        "1": "Ręczny",
+    },
+    "P01": {
+        "0": "Ciągły",
+        "1": "Interwałowy",
+        "2": "Na żądanie",
+    },
+    "P05": {
+        "0": "Wyłączona",
+        "1": "Włączona",
+        "2": "Auto",
+    },
+    "P06": {
+        "0": "Auto",
+        "1": "Ręcznie ZAŁ",
+        "2": "Ręcznie WYŁ",
+    },
+    "A21": {
+        "0": "5K",
+        "1": "2K",
+    },
+    "A26": {
+        "0": "R32",
+        "1": "R290",
+        "2": "R32-1",
+        "3": "R290-1",
+        "4": "R32-2",
+        "5": "R290-2",
+    },
+    "E01": {
+        "0": "Auto",
+        "1": "Ręczny",
     },
 }
 

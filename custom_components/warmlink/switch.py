@@ -19,26 +19,48 @@ _LOGGER = logging.getLogger(__name__)
 # Translation keys for switch entities
 SWITCH_TRANSLATIONS = {
     "en": {
+        # System (H)
         "Power": "Power",
         "H01": "Power-off Memory",
         "H05": "Cooling Function",
         "H22": "Silent Mode",
+        "H27": "EVI Function",
+        "H33": "Fan+Comp Driver Integrated",
+        "H36": "Weather Compensation",
+        # Disinfection (G)
         "G05": "Disinfection",
+        # Protection (A)
         "A11": "Low Pressure Sensor",
         "A29": "High Pressure Sensor",
+        # Fan (F)
         "F22": "Manual Fan Speed",
+        # Defrost (D)
         "D21": "Electric Heater Defrost",
+        "D26": "Defrost Cascade Communication",
+        # Zone (Z)
+        "Z17": "Weather Comp Zone 2",
     },
     "pl": {
+        # System (H)
         "Power": "Zasilanie",
         "H01": "Pamięć po wyłączeniu",
         "H05": "Funkcja chłodzenia",
         "H22": "Tryb cichy",
+        "H27": "Funkcja EVI",
+        "H33": "Zintegrowany sterownik wentyl.+sprężarki",
+        "H36": "Kompensacja pogodowa",
+        # Dezynfekcja (G)
         "G05": "Dezynfekcja",
+        # Zabezpieczenie (A)
         "A11": "Czujnik niskiego ciśnienia",
         "A29": "Czujnik wysokiego ciśnienia",
+        # Wentylator (F)
         "F22": "Ręczna prędkość wentylatora",
+        # Odszranianie (D)
         "D21": "Grzałka odszraniania",
+        "D26": "Komunikacja kaskady odszraniania",
+        # Strefa (Z)
+        "Z17": "Kompensacja pogodowa strefa 2",
     },
 }
 
