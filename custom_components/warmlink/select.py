@@ -20,67 +20,67 @@ _LOGGER = logging.getLogger(__name__)
 SELECT_TRANSLATIONS = {
     "en": {
         # Main
-        "Mode": "Operating Mode",
+        "Mode": "(Mode) Operating Mode",
         # System (H)
-        "H07": "Control Mode",
-        "H18": "Electric Heater Stage",
-        "H20": "3-way Valve Polarity",
-        "H21": "Temperature Unit",
-        "H25": "Temp Control Selection",
-        "H28": "DHW Function",
-        "H30": "Indoor Unit Type",
-        "H31": "Circulation Pump Type",
-        "H37": "DHW Temp Sourcing",
-        "H38": "Language",
+        "H07": "(H07) Control Mode",
+        "H18": "(H18) Electric Heater Stage",
+        "H20": "(H20) 3-way Valve Polarity",
+        "H21": "(H21) Temperature Unit",
+        "H25": "(H25) Temp Control Selection",
+        "H28": "(H28) DHW Function",
+        "H30": "(H30) Indoor Unit Type",
+        "H31": "(H31) Circulation Pump Type",
+        "H37": "(H37) DHW Temp Sourcing",
+        "H38": "(H38) Language",
         # Zone (Z)
-        "Z01": "Multi-Zone Control",
+        "Z01": "(Z01) Multi-Zone Control",
         # Fan (F)
-        "F01": "Fan Motor Type",
-        "F10": "Fan Quantity",
+        "F01": "(F01) Fan Motor Type",
+        "F10": "(F10) Fan Quantity",
         # Compressor (C)
-        "C04": "Model Selection",
-        "C06": "Frequency Control Mode",
+        "C04": "(C04) Model Selection",
+        "C06": "(C06) Frequency Control Mode",
         # Pump (P)
-        "P01": "Main Pump Mode",
-        "P05": "DHW Pump Mode",
-        "P06": "Main Pump Manual Control",
+        "P01": "(P01) Main Pump Mode",
+        "P05": "(P05) DHW Pump Mode",
+        "P06": "(P06) Main Pump Manual Control",
         # Protection (A)
-        "A21": "Sensor Type",
-        "A26": "Refrigerant Type",
+        "A21": "(A21) Sensor Type",
+        "A26": "(A26) Refrigerant Type",
         # EEV (E)
-        "E01": "EEV Adjust Mode",
+        "E01": "(E01) EEV Adjust Mode",
     },
     "pl": {
         # Główne
-        "Mode": "Tryb pracy",
+        "Mode": "(Mode) Tryb pracy",
         # System (H)
-        "H07": "Tryb sterowania",
-        "H18": "Stopień grzałki elektrycznej",
-        "H20": "Polaryzacja zaworu 3-drogowego",
-        "H21": "Jednostka temperatury",
-        "H25": "Wybór sterowania temperaturą",
-        "H28": "Funkcja CWU",
-        "H30": "Typ jednostki wewnętrznej",
-        "H31": "Typ pompy obiegowej",
-        "H37": "Źródło temp. CWU",
-        "H38": "Język",
+        "H07": "(H07) Tryb sterowania",
+        "H18": "(H18) Stopień grzałki elektrycznej",
+        "H20": "(H20) Polaryzacja zaworu 3-drogowego",
+        "H21": "(H21) Jednostka temperatury",
+        "H25": "(H25) Wybór sterowania temperaturą",
+        "H28": "(H28) Funkcja CWU",
+        "H30": "(H30) Typ jednostki wewnętrznej",
+        "H31": "(H31) Typ pompy obiegowej",
+        "H37": "(H37) Źródło temp. CWU",
+        "H38": "(H38) Język",
         # Strefa (Z)
-        "Z01": "Sterowanie wielostrefowe",
+        "Z01": "(Z01) Sterowanie wielostrefowe",
         # Wentylator (F)
-        "F01": "Typ silnika wentylatora",
-        "F10": "Liczba wentylatorów",
+        "F01": "(F01) Typ silnika wentylatora",
+        "F10": "(F10) Liczba wentylatorów",
         # Sprężarka (C)
-        "C04": "Wybór modelu",
-        "C06": "Tryb sterowania częstotliwością",
+        "C04": "(C04) Wybór modelu",
+        "C06": "(C06) Tryb sterowania częstotliwością",
         # Pompa (P)
-        "P01": "Tryb głównej pompy",
-        "P05": "Tryb pompy CWU",
-        "P06": "Ręczne sterowanie główną pompą",
+        "P01": "(P01) Tryb głównej pompy",
+        "P05": "(P05) Tryb pompy CWU",
+        "P06": "(P06) Ręczne sterowanie główną pompą",
         # Zabezpieczenie (A)
-        "A21": "Typ czujnika",
-        "A26": "Typ czynnika chłodniczego",
+        "A21": "(A21) Typ czujnika",
+        "A26": "(A26) Typ czynnika chłodniczego",
         # EEV (E)
-        "E01": "Tryb regulacji EEV",
+        "E01": "(E01) Tryb regulacji EEV",
     },
 }
 

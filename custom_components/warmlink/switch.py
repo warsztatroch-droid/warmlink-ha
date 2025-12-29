@@ -19,10 +19,120 @@ _LOGGER = logging.getLogger(__name__)
 # Translation keys for switch entities (primary switches only)
 SWITCH_TRANSLATIONS = {
     "en": {
-        "Power": "Power",
+        "Power": "(Power) Main Power",
+        # System (H)
+        "H01": "(H01) Remote On/Off Control",
+        "H02": "(H02) Manual Defrost",
+        "H03": "(H03) Holiday Mode",
+        "H04": "(H04) Silent Mode",
+        "H05": "(H05) ECO Mode",
+        "H06": "(H06) Anti-Legionella",
+        "H08": "(H08) Display Lock",
+        "H09": "(H09) Child Lock",
+        "H11": "(H11) Auto Restart",
+        "H12": "(H12) Energy Saving Mode",
+        "H13": "(H13) Boost Mode",
+        "H14": "(H14) Night Mode",
+        "H15": "(H15) Frost Protection",
+        "H16": "(H16) DHW Priority",
+        "H17": "(H17) Quiet Mode",
+        # Disinfection (G)
+        "G05": "(G05) Disinfection Enable",
+        # Fan (F)
+        "F07": "(F07) Fan Variable Speed",
+        "F08": "(F08) Fan Auto Speed",
+        # Pump (P)
+        "P03": "(P03) Pump Anti-Block",
+        "P04": "(P04) DHW Pump Enable",
+        "P07": "(P07) Circulation Pump Enable",
+        "P08": "(P08) Solar Pump Enable",
+        "P09": "(P09) Boiler Pump Enable",
+        # Protection (A)
+        "A01": "(A01) High Pressure Protection",
+        "A02": "(A02) Low Pressure Protection",
+        "A07": "(A07) Electric Heater Enable",
+        "A08": "(A08) Emergency Mode Enable",
+        "A09": "(A09) Compressor Preheating",
+        "A10": "(A10) Antifreeze Enable",
+        "A11": "(A11) Exhaust Overtemp Protect",
+        "A12": "(A12) Flow Switch Enable",
+        "A13": "(A13) Water Level Switch Enable",
+        "A14": "(A14) Phase Loss Protection",
+        "A15": "(A15) Phase Sequence Protection",
+        # Defrost (D)
+        "D04": "(D04) Force Defrost",
+        "D05": "(D05) Auto Defrost Enable",
+        "D06": "(D06) Electric Defrost Enable",
+        "D07": "(D07) Hot Gas Defrost Enable",
+        # Zone (Z)
+        "Z14": "(Z14) Zone 1 Enable",
+        "Z15": "(Z15) Zone 2 Enable",
+        "Z16": "(Z16) Mixing Valve Enable",
+        # EEV (E)
+        "E04": "(E04) EEV Manual Mode",
+        "E05": "(E05) EEV Auto Adjust",
+        # Compressor (C)
+        "C05": "(C05) Compressor Manual Mode",
+        "C07": "(C07) Dual Compressor",
+        "C08": "(C08) Compressor Rotation",
     },
     "pl": {
-        "Power": "Zasilanie",
+        "Power": "(Power) Zasilanie główne",
+        # System (H)
+        "H01": "(H01) Zdalne wł/wył",
+        "H02": "(H02) Ręczne odszranianie",
+        "H03": "(H03) Tryb urlopowy",
+        "H04": "(H04) Tryb cichy",
+        "H05": "(H05) Tryb ECO",
+        "H06": "(H06) Anty-legionella",
+        "H08": "(H08) Blokada wyświetlacza",
+        "H09": "(H09) Blokada rodzicielska",
+        "H11": "(H11) Auto restart",
+        "H12": "(H12) Tryb oszczędzania energii",
+        "H13": "(H13) Tryb boost",
+        "H14": "(H14) Tryb nocny",
+        "H15": "(H15) Ochrona przed mrozem",
+        "H16": "(H16) Priorytet CWU",
+        "H17": "(H17) Tryb cichy",
+        # Dezynfekcja (G)
+        "G05": "(G05) Włącz dezynfekcję",
+        # Wentylator (F)
+        "F07": "(F07) Zmienna prędkość wentylatora",
+        "F08": "(F08) Auto prędkość wentylatora",
+        # Pompa (P)
+        "P03": "(P03) Anty-zablokowanie pompy",
+        "P04": "(P04) Włącz pompę CWU",
+        "P07": "(P07) Włącz pompę obiegową",
+        "P08": "(P08) Włącz pompę solarną",
+        "P09": "(P09) Włącz pompę kotła",
+        # Ochrona (A)
+        "A01": "(A01) Ochrona wysokiego ciśnienia",
+        "A02": "(A02) Ochrona niskiego ciśnienia",
+        "A07": "(A07) Włącz grzałkę elektryczną",
+        "A08": "(A08) Włącz tryb awaryjny",
+        "A09": "(A09) Podgrzewanie sprężarki",
+        "A10": "(A10) Włącz ochronę przed zamarzaniem",
+        "A11": "(A11) Ochrona przegrzania wylotu",
+        "A12": "(A12) Włącz presostat przepływu",
+        "A13": "(A13) Włącz czujnik poziomu wody",
+        "A14": "(A14) Ochrona zanikania fazy",
+        "A15": "(A15) Ochrona sekwencji faz",
+        # Odszranianie (D)
+        "D04": "(D04) Wymuś odszranianie",
+        "D05": "(D05) Włącz auto odszranianie",
+        "D06": "(D06) Odszranianie elektryczne",
+        "D07": "(D07) Odszranianie gorącym gazem",
+        # Strefa (Z)
+        "Z14": "(Z14) Włącz strefę 1",
+        "Z15": "(Z15) Włącz strefę 2",
+        "Z16": "(Z16) Włącz zawór mieszający",
+        # EEV (E)
+        "E04": "(E04) Tryb ręczny EEV",
+        "E05": "(E05) Auto regulacja EEV",
+        # Sprężarka (C)
+        "C05": "(C05) Tryb ręczny sprężarki",
+        "C07": "(C07) Podwójna sprężarka",
+        "C08": "(C08) Rotacja sprężarek",
     },
 }
 

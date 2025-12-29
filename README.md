@@ -22,16 +22,16 @@ Custom integration for Phinx/Warmlink heat pumps connected via cloud.linked-go.c
 
 ## Entity Examples
 
-| Nazwa polska                              | English Name                            |
-| ----------------------------------------- | --------------------------------------- |
-| Temperatura wody wylotowej (T02)          | Outlet Water Temperature (T02)          |
-| Temperatura zewnętrzna (T04)              | Ambient Temperature (T04)               |
-| Temperatura zadana CWU (R01)              | DHW Target Temperature (R01)            |
-| Częstotliwość sprężarki (T30)             | Compressor Frequency (T30)              |
-| Pobór mocy ODU (Power In ODU)             | ODU Power Input (Power In ODU)          |
-| Strefa 1 temp. pokojowa (Zone 1 Room Temp)| Zone 1 Room Temperature (Zone 1 Room Temp) |
-| Temperatura wewnętrzna (DP4)              | Indoor Temperature (DP4)                |
-| Dezynfekcja (G05)                         | Disinfection (G05)                      |
+| Nazwa polska                               | English Name                               |
+| ------------------------------------------ | ------------------------------------------ |
+| Temperatura wody wylotowej (T02)           | Outlet Water Temperature (T02)             |
+| Temperatura zewnętrzna (T04)               | Ambient Temperature (T04)                  |
+| Temperatura zadana CWU (R01)               | DHW Target Temperature (R01)               |
+| Częstotliwość sprężarki (T30)              | Compressor Frequency (T30)                 |
+| Pobór mocy ODU (Power In ODU)              | ODU Power Input (Power In ODU)             |
+| Strefa 1 temp. pokojowa (Zone 1 Room Temp) | Zone 1 Room Temperature (Zone 1 Room Temp) |
+| Temperatura wewnętrzna (DP4)               | Indoor Temperature (DP4)                   |
+| Dezynfekcja (G05)                          | Disinfection (G05)                         |
 
 ## Installation
 
@@ -77,48 +77,48 @@ This integration works with heat pumps using the Warmlink mobile app, including:
 
 ### Temperature Sensors (Read-only)
 
-| Code | Description                   | Unit  |
-| ---- | ----------------------------- | ----- |
-| T01  | Inlet Water Temperature       | °C    |
-| T02  | Outlet Water Temperature      | °C    |
-| T03  | Coil Temperature              | °C    |
-| T04  | Ambient Temperature           | °C    |
-| T05  | Suction Temperature           | °C    |
-| T08  | DHW Tank Temperature          | °C    |
-| T09  | Room Temperature              | °C    |
-| T12  | Discharge Temperature         | °C    |
-| T30  | Compressor Frequency          | Hz    |
-| T32  | Max Compressor Frequency      | Hz    |
-| T39  | Water Flow Rate               | L/min |
-| T55  | Outlet Temp After Heater      | °C    |
+| Code | Description              | Unit  |
+| ---- | ------------------------ | ----- |
+| T01  | Inlet Water Temperature  | °C    |
+| T02  | Outlet Water Temperature | °C    |
+| T03  | Coil Temperature         | °C    |
+| T04  | Ambient Temperature      | °C    |
+| T05  | Suction Temperature      | °C    |
+| T08  | DHW Tank Temperature     | °C    |
+| T09  | Room Temperature         | °C    |
+| T12  | Discharge Temperature    | °C    |
+| T30  | Compressor Frequency     | Hz    |
+| T32  | Max Compressor Frequency | Hz    |
+| T39  | Water Flow Rate          | L/min |
+| T55  | Outlet Temp After Heater | °C    |
 
 ### Energy & Power Sensors (Read-only)
 
-| Code              | Description              | Unit |
-| ----------------- | ------------------------ | ---- |
-| Power In(Total)   | Total Power Input        | kW   |
-| Capacity Out(Total)| Total Heat Output       | kW   |
-| COP/EER(Total)    | Efficiency Coefficient   | -    |
-| Power In(ODU)     | ODU Power Input          | kW   |
-| Capacity Out(ODU) | ODU Heat Output          | kW   |
-| Heating Con.(ODU) | Heating Energy Consumed  | kWh  |
-| Heating Gen.(ODU) | Heating Energy Generated | kWh  |
-| Cooling Con.(ODU) | Cooling Energy Consumed  | kWh  |
-| Cooling Gen.(ODU) | Cooling Energy Generated | kWh  |
-| DHW Con.(ODU)     | DHW Energy Consumed      | kWh  |
-| DHW Gen.(ODU)     | DHW Energy Generated     | kWh  |
+| Code                | Description              | Unit |
+| ------------------- | ------------------------ | ---- |
+| Power In(Total)     | Total Power Input        | kW   |
+| Capacity Out(Total) | Total Heat Output        | kW   |
+| COP/EER(Total)      | Efficiency Coefficient   | -    |
+| Power In(ODU)       | ODU Power Input          | kW   |
+| Capacity Out(ODU)   | ODU Heat Output          | kW   |
+| Heating Con.(ODU)   | Heating Energy Consumed  | kWh  |
+| Heating Gen.(ODU)   | Heating Energy Generated | kWh  |
+| Cooling Con.(ODU)   | Cooling Energy Consumed  | kWh  |
+| Cooling Gen.(ODU)   | Cooling Energy Generated | kWh  |
+| DHW Con.(ODU)       | DHW Energy Consumed      | kWh  |
+| DHW Gen.(ODU)       | DHW Energy Generated     | kWh  |
 
 ### Zone & Indoor Sensors (Read-only)
 
-| Code               | Description           | Unit |
-| ------------------ | --------------------- | ---- |
-| Zone 1 Room Temp   | Zone 1 Room Temp      | °C   |
-| Zone 2 Room Temp   | Zone 2 Room Temp      | °C   |
-| Zone 2 Mixing Temp | Zone 2 Mixing Temp    | °C   |
-| Zone 2 Mixing Valve| Zone 2 Mixing Valve   | %    |
-| DP4                | Indoor Temperature    | °C   |
-| DP5                | Indoor Humidity       | %    |
-| DP6                | Dew Point Temperature | °C   |
+| Code                | Description           | Unit |
+| ------------------- | --------------------- | ---- |
+| Zone 1 Room Temp    | Zone 1 Room Temp      | °C   |
+| Zone 2 Room Temp    | Zone 2 Room Temp      | °C   |
+| Zone 2 Mixing Temp  | Zone 2 Mixing Temp    | °C   |
+| Zone 2 Mixing Valve | Zone 2 Mixing Valve   | %    |
+| DP4                 | Indoor Temperature    | °C   |
+| DP5                 | Indoor Humidity       | %    |
+| DP6                 | Dew Point Temperature | °C   |
 
 ### Setpoint Controls (Read-Write)
 
