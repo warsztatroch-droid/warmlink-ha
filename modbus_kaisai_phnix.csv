@@ -21,18 +21,21 @@
 #
 # 3. DATA TYPES
 # -------------
-# TEMP  - Signed, 0.1°C resolution. Formula: T*10. Range: -30~97°C
-#         Example: 25°C = 250, -25°C = -250 (bit15=1 for negative)
-#         Value 32767 indicates sensor fault
-# DIGI1 - Unsigned, unit 1. Display 123 = data 123
-# DIGI2 - Unsigned, unit 10. Display 1230 = data 123
-# DIGI3 - Unsigned, unit 100. Display 12300 = data 123
-# DIGI4 - Unsigned, unit 100. Display 12300 = data 123
-# DIGI5 - Unsigned, unit 0.1. Display 12.3 = data 123
-# DIGI6 - Unsigned, unit 0.001. Display 0.123 = data 123
-# DIGI9 - Unsigned, unit 0.01. Display 0.12 = data 12
-# ENUM  - Enumeration, discrete values
-# BINARY- Bitfield, each bit has meaning
+# TEMP   - Signed, 0.1C resolution. Formula: T*10. Range: -30~97C
+#          Example: 25C = 250, -25C = -250 (bit15=1 for negative)
+#          Value 32767 indicates sensor fault
+# DIGI1  - Unsigned, unit 1. Display 123 = data 123
+# DIGI2  - Unsigned, unit 10. Display 1230 = data 123
+# DIGI3  - Unsigned, unit 100. Display 12300 = data 123
+# DIGI5  - Unsigned, unit 0.1. Display 12.3 = data 123
+# DIGI6  - Unsigned, unit 0.001. Display 0.123 = data 123
+# DIGI9  - Unsigned, unit 0.01. Display 0.12 = data 12
+# ENUM   - Enumeration, discrete values
+# BINARY - Bitfield, each bit has meaning
+#
+# Register ranges:
+#   1xxx - Read-Write control registers
+#   2xxx - Read-Only status/sensor registers
 #
 # ============================================
 Parameter address,Parameter name,Parameter code,Standard num,Mode,Description,Data type,Setting range
