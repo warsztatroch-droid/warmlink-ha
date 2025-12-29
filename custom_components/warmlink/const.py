@@ -239,13 +239,21 @@ PROTOCOL_CODES_VERSION: Final = [
     "DisplayVer",             # Display version (Modbus 2112)
 ]
 
-# All protocol codes for full data fetch
+# All protocol codes for full data fetch - MUST include all params used by sensors/switches/selects/numbers
 PROTOCOL_CODES_ALL: Final = (
     PROTOCOL_CODES_STATUS + 
     PROTOCOL_CODES_TEMPS + 
     PROTOCOL_CODES_SETPOINTS +
     PROTOCOL_CODES_ENERGY +
-    PROTOCOL_CODES_VERSION
+    PROTOCOL_CODES_VERSION +
+    PROTOCOL_CODES_CONFIG +           # H01, H05, H07, H21, H22, H25, H27, H36 etc.
+    PROTOCOL_CODES_DISINFECTION +     # G01-G05
+    PROTOCOL_CODES_PROTECTION +       # A03, A11, A29 etc.
+    PROTOCOL_CODES_PUMP_FAN +         # P01, P02, F01, F22 etc.
+    PROTOCOL_CODES_DEFROST +          # D01, D21 etc.
+    PROTOCOL_CODES_COMPRESSOR +       # C01-C06
+    PROTOCOL_CODES_ZONE +             # Z01, Z02 etc.
+    PROTOCOL_CODES_EEV                # E01, E02 etc.
 )
 
 # Common codes for regular polling (subset for efficiency)
