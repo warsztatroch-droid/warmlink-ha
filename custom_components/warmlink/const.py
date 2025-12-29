@@ -58,6 +58,23 @@ HVAC_MODE_HEATING_HOT_WATER: Final = "4"
 HVAC_MODE_COOLING_HOT_WATER: Final = "5"
 
 # Protocol codes - VERIFIED via API testing + Modbus CSV mapping
+# =============================================================================
+# PROTOCOL CODE CATEGORIES:
+# T - Temperature sensors (read-only, Modbus 2xxx)
+# R - Setpoints/Target temperatures (read-write, Modbus 1157-1239)
+# A - Protection parameters (read-write, Modbus 1037-1058)
+# H - System configuration (read-write, Modbus 1018-1041)
+# C - Compressor parameters (read-write, Modbus 1218-1223)
+# D - Defrost parameters (read-write, Modbus 1105-1126)
+# E - EEV (Electronic Expansion Valve) parameters (read-write, Modbus 1131-1138)
+# F - Fan parameters (read-write, Modbus 1059-1104)
+# G - Disinfection/Anti-legionella (read-write, Modbus 1152-1156)
+# P - Pump parameters (read-write, Modbus 1197-1205)
+# Z - Zone control (read-write, Modbus 1069-1076)
+# O - Outputs/Load status (read-only, Modbus 2018-2022)
+# L - Load/Energy Level coordination (read-write, Modbus 5091+) - cascade systems
+# DP - Display Panel sensors (read-only, Modbus 2178-2179)
+# =============================================================================
 PROTOCOL_CODES_STATUS: Final = [
     "Power",        # 0=off, 1=on (Modbus 1011)
     "Mode",         # 0=HotWater, 1=Heating, 2=Cooling, 3=HW+Heating, 4=HW+Cooling (Modbus 1012)
@@ -65,8 +82,11 @@ PROTOCOL_CODES_STATUS: Final = [
     "Power State",  # Read-only power state (Modbus 2011)
 ]
 
-# Temperature sensors - from Modbus CSV registers 2045-2068
-PROTOCOL_CODES_TEMPS: Final = [
+# =============================================================================
+# T - TEMPERATURE SENSORS (Read-only, Modbus 2042-2077)
+# =============================================================================
+# Main temperatures
+PROTOCOL_CODES_T_TEMPS: Final = [
     "T01",  # Inlet Water Temp (Modbus 2045)
     "T02",  # Outlet Water Temp (Modbus 2046)
     "T03",  # Coil Temp (Modbus 2049)
@@ -78,33 +98,50 @@ PROTOCOL_CODES_TEMPS: Final = [
     "T09",  # Room Temp (Modbus 2058)
     "T10",  # EVI Inlet Temp (Modbus 2063)
     "T11",  # EVI Outlet Temp (Modbus 2064)
-    "T12",  # Exhaust Temp (Modbus 2053)
+    "T12",  # Exhaust/Discharge Temp (Modbus 2053)
     "T14",  # Distributor Tube Temp (Modbus 2050)
-    "T15",  # Low Pressure (Modbus 2069)
-    "T27",  # Fan Speed 1 (Modbus 2074)
-    "T28",  # Fan Speed 2 (Modbus 2075)
-    "T29",  # Target Fan Speed (Modbus 2076)
-    "T30",  # Compressor Frequency (Modbus 2071)
-    "T31",  # Compressor Working Frequency (Modbus 2072)
-    "T32",  # Max Compressor Frequency from Driver (Modbus 2073)
     "T33",  # IPM Fault Temp
-    "T34",  # AC Input Voltage (Modbus 2062)
-    "T35",  # AC Input Current (Modbus 2057)
-    "T36",  # Compressor Phase Current (Modbus 2042)
-    "T37",  # DC Bus Voltage (Modbus 2043)
-    "T38",  # IPM Temp (Modbus 2044)
-    "T39",  # Water Flow Rate (Modbus 2077)
-    "T46",  # External Fan Driver IPM Temp
-    "T47",  # External Fan Driver Power
-    "T48",  # External Fan Driver Current
+    "T38",  # IPM Module Temp (Modbus 2044)
     "T49",  # Evaporation Temperature (Modbus 2065)
     "T50",  # Exhaust Superheat (Modbus 2066)
     "T51",  # Superheat (Modbus 2067)
     "T55",  # Outlet Temp After Electric Heater (Modbus 2068)
 ]
 
-# Setpoints - from Modbus CSV registers 1157-1177
-PROTOCOL_CODES_SETPOINTS: Final = [
+# Electrical parameters (also use T prefix)
+PROTOCOL_CODES_T_ELECTRICAL: Final = [
+    "T15",  # Low Pressure (Modbus 2069) - bar
+    "T34",  # AC Input Voltage (Modbus 2062) - V
+    "T35",  # AC Input Current (Modbus 2057) - A
+    "T36",  # Compressor Phase Current (Modbus 2042) - A
+    "T37",  # DC Bus Voltage (Modbus 2043) - V
+    "T39",  # Water Flow Rate (Modbus 2077) - L/min
+    "T46",  # External Fan Driver IPM Temp
+    "T47",  # External Fan Driver Power - kW
+    "T48",  # External Fan Driver Current - A
+]
+
+# Compressor/Fan frequency and speed (also use T prefix)
+PROTOCOL_CODES_T_FREQUENCY: Final = [
+    "T27",  # Fan Motor 1 Speed (Modbus 2074) - RPM
+    "T28",  # Fan Motor 2 Speed (Modbus 2075) - RPM
+    "T29",  # Target Fan Speed (Modbus 2076) - RPM
+    "T30",  # Compressor Frequency (Modbus 2071) - Hz
+    "T31",  # Compressor Working Frequency (Modbus 2072) - Hz
+    "T32",  # Max Compressor Frequency from Driver (Modbus 2073) - Hz
+]
+
+# Combined T codes for backward compatibility
+PROTOCOL_CODES_TEMPS: Final = (
+    PROTOCOL_CODES_T_TEMPS +
+    PROTOCOL_CODES_T_ELECTRICAL +
+    PROTOCOL_CODES_T_FREQUENCY
+)
+
+# =============================================================================
+# R - SETPOINTS / TARGET TEMPERATURES (Read-write, Modbus 1157-1239)
+# =============================================================================
+PROTOCOL_CODES_R_SETPOINTS: Final = [
     "R01",  # DHW Target Temp (Modbus 1157, range R36-R37)
     "R02",  # Heating Target Temp (Modbus 1158, range R10-R11)
     "R03",  # Cooling Target Temp (Modbus 1159, range R08-R09)
@@ -122,6 +159,9 @@ PROTOCOL_CODES_SETPOINTS: Final = [
     "R37",  # Max DHW Target Temp (Modbus 1177)
     "R70",  # Target Room Temp (Modbus 1239)
 ]
+
+# Alias for backward compatibility
+PROTOCOL_CODES_SETPOINTS: Final = PROTOCOL_CODES_R_SETPOINTS
 
 # Energy and Performance - from Modbus CSV
 PROTOCOL_CODES_ENERGY: Final = [
@@ -150,8 +190,10 @@ PROTOCOL_CODES_CLIMATE: Final = [
     "DP6",                  # Dew Point Temperature
 ]
 
-# Configuration parameters - from Modbus CSV
-PROTOCOL_CODES_CONFIG: Final = [
+# =============================================================================
+# H - SYSTEM CONFIGURATION (Read-write, Modbus 1018-1041)
+# =============================================================================
+PROTOCOL_CODES_H_CONFIG: Final = [
     "H01",  # Enable Power-off Memory (Modbus 1018)
     "H05",  # Enable Cooling Function (Modbus 1021)
     "H07",  # Control Mode (Modbus 1023)
@@ -166,11 +208,17 @@ PROTOCOL_CODES_CONFIG: Final = [
     "H29",  # Operation Code (Modbus 1034)
     "H30",  # Indoor Unit Type (Modbus 1036)
     "H31",  # Circulation Pump Type (Modbus 1041)
+    "H33",  # Fan+Comp Driver Integrated (Modbus 1019)
     "H36",  # Enable Weather Compensation (Modbus 1236)
 ]
 
-# Protection parameters - from Modbus CSV
-PROTOCOL_CODES_PROTECTION: Final = [
+# Alias for backward compatibility
+PROTOCOL_CODES_CONFIG: Final = PROTOCOL_CODES_H_CONFIG
+
+# =============================================================================
+# A - PROTECTION PARAMETERS (Read-write, Modbus 1037-1058)
+# =============================================================================
+PROTOCOL_CODES_A_PROTECTION: Final = [
     "A03",  # Shutdown Ambient Temp (Modbus 1037)
     "A04",  # Antifreeze Temp (Modbus 1038)
     "A05",  # Antifreeze Temp Difference (Modbus 1039)
@@ -182,15 +230,29 @@ PROTOCOL_CODES_PROTECTION: Final = [
     "A26",  # Refrigerant Type (Modbus 1054)
     "A29",  # Enable High Pressure Sensor (Modbus 1058)
     "A31",  # Electric Heater On AT (Modbus 1049)
+    "A32",  # Electric Heater Delay Comp On Time (Modbus 1050)
+    "A34",  # Crank Preheating Time (Modbus 1064)
+    "A35",  # Electric Heater OFF Temp Diff (Modbus 1031)
 ]
 
-# Pump and Fan - from Modbus CSV
-PROTOCOL_CODES_PUMP_FAN: Final = [
+# Alias for backward compatibility
+PROTOCOL_CODES_PROTECTION: Final = PROTOCOL_CODES_A_PROTECTION
+
+# =============================================================================
+# P - PUMP PARAMETERS (Read-write, Modbus 1197-1205)
+# =============================================================================
+PROTOCOL_CODES_P_PUMP: Final = [
     "P01",  # Main Circulation Pump Mode (Modbus 1197)
     "P02",  # Pump Interval Time (Modbus 1198)
     "P05",  # DHW Pump Mode (Modbus 1201)
     "P06",  # Main Pump Manual Control (Modbus 1202)
     "P10",  # Circulation Pump Speed (Modbus 1205)
+]
+
+# =============================================================================
+# F - FAN PARAMETERS (Read-write, Modbus 1059-1104)
+# =============================================================================
+PROTOCOL_CODES_F_FAN: Final = [
     "F01",  # Fan Motor Type (Modbus 1059)
     "F10",  # Fan Quantity (Modbus 1074)
     "F18",  # Min Fan Speed Cooling (Modbus 1081)
@@ -199,12 +261,15 @@ PROTOCOL_CODES_PUMP_FAN: Final = [
     "F23",  # Rated DC Fan Speed (Modbus 1089)
     "F25",  # Max Fan Speed Cooling (Modbus 1103)
     "F26",  # Max Fan Speed Heating (Modbus 1104)
-    "T27",  # Fan Motor 1 Speed (Modbus 2074)
-    "T28",  # Fan Motor 2 Speed (Modbus 2075)
 ]
 
-# Defrosting parameters - from Modbus CSV
-PROTOCOL_CODES_DEFROST: Final = [
+# Combined P+F for backward compatibility
+PROTOCOL_CODES_PUMP_FAN: Final = PROTOCOL_CODES_P_PUMP + PROTOCOL_CODES_F_FAN
+
+# =============================================================================
+# D - DEFROST PARAMETERS (Read-write, Modbus 1105-1126)
+# =============================================================================
+PROTOCOL_CODES_D_DEFROST: Final = [
     "D01",  # Defrost Start Ambient Temp (Modbus 1105)
     "D02",  # Heating Time Before Defrost (Modbus 1106)
     "D03",  # Defrost Interval Time (Modbus 1107)
@@ -212,10 +277,16 @@ PROTOCOL_CODES_DEFROST: Final = [
     "D19",  # Max Defrost Time (Modbus 1124)
     "D20",  # Defrost Frequency (Modbus 1125)
     "D21",  # Enable Electric Heater Defrost (Modbus 1126)
+    "D26",  # Enable Cascade Defrost (Modbus 1129)
 ]
 
-# Compressor parameters - from Modbus CSV
-PROTOCOL_CODES_COMPRESSOR: Final = [
+# Alias for backward compatibility
+PROTOCOL_CODES_DEFROST: Final = PROTOCOL_CODES_D_DEFROST
+
+# =============================================================================
+# C - COMPRESSOR PARAMETERS (Read-write, Modbus 1218-1223)
+# =============================================================================
+PROTOCOL_CODES_C_COMPRESSOR: Final = [
     "C01",  # Manual Compressor Frequency (Modbus 1218)
     "C02",  # Min Compressor Frequency (Modbus 1219)
     "C03",  # Max Compressor Frequency (Modbus 1220)
@@ -223,8 +294,13 @@ PROTOCOL_CODES_COMPRESSOR: Final = [
     "C06",  # Frequency Control Mode (Modbus 1223)
 ]
 
-# Disinfection (anti-legionella) - from Modbus CSV
-PROTOCOL_CODES_DISINFECTION: Final = [
+# Alias for backward compatibility
+PROTOCOL_CODES_COMPRESSOR: Final = PROTOCOL_CODES_C_COMPRESSOR
+
+# =============================================================================
+# G - DISINFECTION / ANTI-LEGIONELLA (Read-write, Modbus 1152-1156)
+# =============================================================================
+PROTOCOL_CODES_G_DISINFECTION: Final = [
     "G01",  # Disinfection Water Temp (Modbus 1152)
     "G02",  # Disinfection Duration (Modbus 1153)
     "G03",  # Disinfection Start Time (Modbus 1154)
@@ -232,31 +308,49 @@ PROTOCOL_CODES_DISINFECTION: Final = [
     "G05",  # Enable Disinfection (Modbus 1156)
 ]
 
-# Zone control - from Modbus CSV
-PROTOCOL_CODES_ZONE: Final = [
+# Alias for backward compatibility
+PROTOCOL_CODES_DISINFECTION: Final = PROTOCOL_CODES_G_DISINFECTION
+
+# =============================================================================
+# Z - ZONE CONTROL (Read-write, Modbus 1069-1076)
+# =============================================================================
+PROTOCOL_CODES_Z_ZONE: Final = [
     "Z01",  # Enable Multi-Zone (Modbus 1069)
     "Z02",  # Zone 1 Target RT (Modbus 1070)
     "Z04",  # Zone 2 Target RT (Modbus 1072)
     "Z06",  # Zone 1 Heating Target WT (Modbus 1075)
     "Z07",  # Zone 2 Mixing Target WT (Modbus 1076)
+    "Z17",  # Zone 2 AT Compensation Curve Enable
 ]
 
-# EEV (Electronic Expansion Valve) - from Modbus CSV
-PROTOCOL_CODES_EEV: Final = [
+# Alias for backward compatibility
+PROTOCOL_CODES_ZONE: Final = PROTOCOL_CODES_Z_ZONE
+
+# =============================================================================
+# E - EEV (Electronic Expansion Valve) (Read-write, Modbus 1131-1138)
+# =============================================================================
+PROTOCOL_CODES_E_EEV: Final = [
     "E01",  # EEV Adjust Mode (Modbus 1131)
     "E02",  # Target Superheat Heating (Modbus 1132)
     "E03",  # EEV Initial Steps Heating (Modbus 1133)
     "E07",  # EEV Min Steps (Modbus 1137)
     "E08",  # EEV Initial Steps Cooling (Modbus 1138)
-    "O15",  # EEV Steps read-only (Modbus 2020)
-    "O17",  # EVI EEV Steps read-only (Modbus 2022)
 ]
 
-# Outputs/Load status - from Modbus CSV
-PROTOCOL_CODES_OUTPUTS: Final = [
-    "O01~023",  # Load Output status (Modbus 2019)
-    "O25",      # Load Output (Modbus 2018)
+# Alias for backward compatibility
+PROTOCOL_CODES_EEV: Final = PROTOCOL_CODES_E_EEV
+
+# =============================================================================
+# O - OUTPUTS / LOAD STATUS (Read-only, Modbus 2018-2022)
+# =============================================================================
+PROTOCOL_CODES_O_OUTPUTS: Final = [
+    "O15",  # EEV Steps (Modbus 2020)
+    "O17",  # EVI EEV Steps (Modbus 2022)
+    "O25",  # Load Output (Modbus 2018)
 ]
+
+# Alias for backward compatibility  
+PROTOCOL_CODES_OUTPUTS: Final = PROTOCOL_CODES_O_OUTPUTS
 
 # Firmware versions - from Modbus CSV
 PROTOCOL_CODES_VERSION: Final = [
@@ -267,22 +361,26 @@ PROTOCOL_CODES_VERSION: Final = [
     "DisplayVer",             # Display version (Modbus 2112)
 ]
 
-# All protocol codes for full data fetch - MUST include all params used by sensors/switches/selects/numbers
+# =============================================================================
+# ALL PROTOCOL CODES - Full data fetch
+# =============================================================================
+# MUST include all params used by sensors/switches/selects/numbers
 PROTOCOL_CODES_ALL: Final = (
-    PROTOCOL_CODES_STATUS + 
-    PROTOCOL_CODES_TEMPS + 
-    PROTOCOL_CODES_SETPOINTS +
-    PROTOCOL_CODES_ENERGY +
-    PROTOCOL_CODES_CLIMATE +          # Zone temps, indoor temp/humidity, dew point
-    PROTOCOL_CODES_VERSION +
-    PROTOCOL_CODES_CONFIG +           # H01, H05, H07, H21, H22, H25, H27, H36 etc.
-    PROTOCOL_CODES_DISINFECTION +     # G01-G05
-    PROTOCOL_CODES_PROTECTION +       # A03, A11, A29 etc.
-    PROTOCOL_CODES_PUMP_FAN +         # P01, P02, F01, F22 etc.
-    PROTOCOL_CODES_DEFROST +          # D01, D21 etc.
-    PROTOCOL_CODES_COMPRESSOR +       # C01-C06
-    PROTOCOL_CODES_ZONE +             # Z01, Z02 etc.
-    PROTOCOL_CODES_EEV                # E01, E02 etc.
+    PROTOCOL_CODES_STATUS +           # Power, Mode, ModeState
+    PROTOCOL_CODES_TEMPS +            # T01-T55 (temps, electrical, frequency)
+    PROTOCOL_CODES_SETPOINTS +        # R01-R70 (target temperatures)
+    PROTOCOL_CODES_ENERGY +           # Power In/Out, COP, energy consumption
+    PROTOCOL_CODES_CLIMATE +          # Zone temps, indoor temp/humidity (DP4-6)
+    PROTOCOL_CODES_VERSION +          # Firmware versions
+    PROTOCOL_CODES_CONFIG +           # H - System config
+    PROTOCOL_CODES_PROTECTION +       # A - Protection parameters
+    PROTOCOL_CODES_DISINFECTION +     # G - Disinfection/Anti-legionella
+    PROTOCOL_CODES_PUMP_FAN +         # P - Pump + F - Fan
+    PROTOCOL_CODES_DEFROST +          # D - Defrost
+    PROTOCOL_CODES_COMPRESSOR +       # C - Compressor
+    PROTOCOL_CODES_ZONE +             # Z - Zone control
+    PROTOCOL_CODES_EEV +              # E - EEV
+    PROTOCOL_CODES_OUTPUTS            # O - Outputs/Load status
 )
 
 # Common codes for regular polling (subset for efficiency)
