@@ -6,6 +6,7 @@ DEFAULT_NAME: Final = "Warmlink"
 
 # Configuration keys
 CONF_LANGUAGE: Final = "language"
+CONF_DEVICES: Final = "devices"
 SUPPORTED_LANGUAGES: Final = ["en", "pl"]
 
 # API Configuration - VERIFIED via API testing

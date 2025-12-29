@@ -9,11 +9,20 @@
           "password": "Hasło",
           "language": "Język nazw czujników"
         }
+      },
+      "devices": {
+        "title": "Wybór urządzeń",
+        "description": "Znaleziono {device_count} urządzenie(a). Wybierz które dodać:",
+        "data": {
+          "devices": "Urządzenia"
+        }
       }
     },
     "error": {
       "cannot_connect": "Nie można połączyć z API Warmlink",
       "invalid_auth": "Nieprawidłowy email lub hasło",
+      "no_devices": "Nie znaleziono urządzeń na tym koncie",
+      "no_devices_selected": "Wybierz przynajmniej jedno urządzenie",
       "unknown": "Nieoczekiwany błąd"
     },
     "abort": {
@@ -26,7 +35,8 @@
         "title": "Opcje Warmlink",
         "data": {
           "scan_interval": "Interwał odświeżania (sekundy)",
-          "language": "Język nazw czujników"
+          "language": "Język nazw czujników",
+          "devices": "Aktywne urządzenia"
         }
       }
     }

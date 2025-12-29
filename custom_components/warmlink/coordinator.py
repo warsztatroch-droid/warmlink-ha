@@ -30,6 +30,7 @@ class WarmLinkCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         hass: HomeAssistant,
         api: WarmLinkAPI,
         update_interval: timedelta,
+        selected_devices: list[str] | None = None,
     ) -> None:
         """Initialize the coordinator."""
         super().__init__(
@@ -39,6 +40,7 @@ class WarmLinkCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             update_interval=update_interval,
         )
         self.api = api
+        self._selected_devices = selected_devices
 
     async def _async_update_data(self) -> dict[str, Any]:
         """Fetch data from API.
@@ -48,7 +50,16 @@ class WarmLinkCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         """
         try:
             # Get device list - returns objectResult with device_code, deviceStatus, etc.
-            devices = await self.api.get_devices()
+            all_devices = await self.api.get_devices()
+            
+            # Filter to selected devices only
+            if self._selected_devices:
+                devices = {
+                    code: info for code, info in all_devices.items()
+                    if code in self._selected_devices
+                }
+            else:
+                devices = all_devices
             
             for device_code, device_info in devices.items():
                 # Only fetch data for online devices

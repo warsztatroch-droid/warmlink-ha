@@ -9,7 +9,7 @@ from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from .const import DOMAIN, UPDATE_INTERVAL
+from .const import DOMAIN, UPDATE_INTERVAL, CONF_DEVICES
 from .api import WarmLinkAPI
 from .coordinator import WarmLinkCoordinator
 
@@ -40,10 +40,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         _LOGGER.error("Failed to login to Warmlink API: %s", ex)
         return False
 
+    # Get selected devices from config
+    selected_devices = entry.data.get(CONF_DEVICES)
+
     coordinator = WarmLinkCoordinator(
         hass,
         api=api,
         update_interval=timedelta(seconds=UPDATE_INTERVAL),
+        selected_devices=selected_devices,
     )
 
     await coordinator.async_config_entry_first_refresh()
