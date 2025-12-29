@@ -310,3 +310,271 @@ MODBUS_REGISTERS: Final = {
     2071: "T30",  # Compressor Frequency
     2077: "T39",  # Water Flow Rate
 }
+
+# ============================================
+# MODBUS DATA TYPE CONVERSIONS
+# ============================================
+# Based on Modbus RTU specification from modbus_kaisai_phnix.csv
+# TEMP  - Signed, 0.1°C resolution. Value / 10. 32767 = sensor fault
+# DIGI1 - Unsigned, unit 1. No conversion
+# DIGI2 - Unsigned, unit 10. Value / 10
+# DIGI3 - Unsigned, unit 100. Value / 100
+# DIGI5 - Unsigned, unit 0.1. Value / 10
+# DIGI6 - Unsigned, unit 0.001. Value / 1000
+# DIGI9 - Unsigned, unit 0.01. Value / 100
+# ENUM  - Discrete values. No conversion
+# BINARY - Bitfield. No conversion
+
+# Data type for each protocol code (code -> (data_type, divisor))
+# Note: API already returns scaled values for most codes, but we need this for Modbus direct
+DATA_TYPE_MAP: Final = {
+    # Temperature sensors (TEMP type - API already returns °C)
+    "T01": ("TEMP", 1),
+    "T02": ("TEMP", 1),
+    "T03": ("TEMP", 1),
+    "T04": ("TEMP", 1),
+    "T05": ("TEMP", 1),
+    "T06": ("TEMP", 1),
+    "T07": ("TEMP", 1),
+    "T08": ("TEMP", 1),
+    "T09": ("TEMP", 1),
+    "T10": ("TEMP", 1),
+    "T11": ("TEMP", 1),
+    "T12": ("TEMP", 1),
+    "T14": ("TEMP", 1),
+    "T33": ("TEMP", 1),
+    "T38": ("TEMP", 1),
+    "T49": ("TEMP", 1),
+    "T50": ("TEMP", 1),
+    "T51": ("TEMP", 1),
+    "T55": ("TEMP", 1),
+    
+    # Setpoints (TEMP type)
+    "R01": ("TEMP", 1),
+    "R02": ("TEMP", 1),
+    "R03": ("TEMP", 1),
+    "R04": ("TEMP", 1),
+    "R05": ("TEMP", 1),
+    "R06": ("TEMP", 1),
+    "R07": ("TEMP", 1),
+    "R08": ("TEMP", 1),
+    "R09": ("TEMP", 1),
+    "R10": ("TEMP", 1),
+    "R11": ("TEMP", 1),
+    "R16": ("TEMP", 1),
+    "R17": ("TEMP", 1),
+    "R36": ("TEMP", 1),
+    "R37": ("TEMP", 1),
+    "R70": ("TEMP", 1),
+    
+    # Pressure (DIGI5 - 0.1 bar resolution)
+    "T15": ("DIGI5", 10),
+    
+    # Current (DIGI5 - 0.1 A resolution)
+    "T35": ("DIGI5", 10),
+    "T36": ("DIGI5", 10),
+    
+    # Voltage (DIGI1 - no conversion)
+    "T34": ("DIGI1", 1),
+    "T37": ("DIGI1", 1),
+    
+    # Frequencies (DIGI1 - Hz)
+    "T30": ("DIGI1", 1),
+    "T31": ("DIGI1", 1),
+    "T32": ("DIGI1", 1),
+    
+    # Fan speeds (DIGI1 - RPM)
+    "T27": ("DIGI1", 1),
+    "T28": ("DIGI1", 1),
+    "T29": ("DIGI1", 1),
+    
+    # Water flow (DIGI9 - 0.01 L/min)
+    "T39": ("DIGI9", 100),
+    
+    # Power (DIGI5 - 0.1 kW)
+    "Power In(Total)": ("DIGI5", 10),
+    "Capacity Out(Total)": ("DIGI5", 10),
+    
+    # COP/EER (DIGI9 - 0.01 resolution)
+    "COP/EER(Total)": ("DIGI9", 100),
+    
+    # Energy (DIGI1 - kWh)
+    "Comsuption Power": ("DIGI1", 1),
+    
+    # ENUM types (discrete values)
+    "Power": ("ENUM", 1),
+    "Mode": ("ENUM", 1),
+    "ModeState": ("ENUM", 1),
+    "Power State": ("ENUM", 1),
+    "H01": ("ENUM", 1),
+    "H05": ("ENUM", 1),
+    "H07": ("ENUM", 1),
+    "H18": ("ENUM", 1),
+    "H20": ("ENUM", 1),
+    "H21": ("ENUM", 1),
+    "H22": ("ENUM", 1),
+    "H25": ("ENUM", 1),
+    "H27": ("ENUM", 1),
+    "H28": ("ENUM", 1),
+    "H30": ("ENUM", 1),
+    "H31": ("ENUM", 1),
+    "A11": ("ENUM", 1),
+    "A29": ("ENUM", 1),
+    "F01": ("ENUM", 1),
+    "F10": ("ENUM", 1),
+    "F22": ("ENUM", 1),
+    "G05": ("ENUM", 1),
+    "Z01": ("ENUM", 1),
+}
+
+# Writable parameters with their ranges and units
+WRITABLE_PARAMS: Final = {
+    # Main setpoints (temperature controls)
+    "R01": {"name": "DHW Target Temp", "min": 20, "max": 65, "step": 0.5, "unit": "°C"},
+    "R02": {"name": "Heating Target Temp", "min": 20, "max": 65, "step": 0.5, "unit": "°C"},
+    "R03": {"name": "Cooling Target Temp", "min": 7, "max": 25, "step": 0.5, "unit": "°C"},
+    "R70": {"name": "Room Target Temp", "min": 5, "max": 27, "step": 0.5, "unit": "°C"},
+    
+    # Temperature differences
+    "R04": {"name": "Heating On Diff", "min": 0, "max": 10, "step": 0.5, "unit": "°C"},
+    "R05": {"name": "Heating Standby Diff", "min": 0, "max": 10, "step": 0.5, "unit": "°C"},
+    "R06": {"name": "Cooling On Diff", "min": 0, "max": 10, "step": 0.5, "unit": "°C"},
+    "R07": {"name": "Cooling Standby Diff", "min": 0, "max": 10, "step": 0.5, "unit": "°C"},
+    "R16": {"name": "DHW On Diff", "min": 0, "max": 10, "step": 0.5, "unit": "°C"},
+    "R17": {"name": "DHW Standby Diff", "min": 0, "max": 10, "step": 0.5, "unit": "°C"},
+    
+    # Zone control
+    "Z02": {"name": "Zone 1 Target RT", "min": 10, "max": 35, "step": 0.5, "unit": "°C"},
+    "Z04": {"name": "Zone 2 Target RT", "min": 10, "max": 35, "step": 0.5, "unit": "°C"},
+    
+    # Disinfection (Anti-Legionella)
+    "G01": {"name": "Disinfection Temp", "min": 60, "max": 75, "step": 1, "unit": "°C"},
+    "G02": {"name": "Disinfection Duration", "min": 5, "max": 60, "step": 5, "unit": "min"},
+    "G04": {"name": "Disinfection Interval", "min": 1, "max": 30, "step": 1, "unit": "days"},
+    
+    # Fan speed settings
+    "F18": {"name": "Min Fan Speed Cooling", "min": 10, "max": 1300, "step": 10, "unit": "rpm"},
+    "F19": {"name": "Min Fan Speed Heating", "min": 10, "max": 1300, "step": 10, "unit": "rpm"},
+    "F25": {"name": "Max Fan Speed Cooling", "min": 10, "max": 1300, "step": 10, "unit": "rpm"},
+    "F26": {"name": "Max Fan Speed Heating", "min": 10, "max": 1300, "step": 10, "unit": "rpm"},
+    
+    # Defrosting
+    "D01": {"name": "Defrost Start AT", "min": -37, "max": 45, "step": 1, "unit": "°C"},
+    "D03": {"name": "Defrost Interval", "min": 10, "max": 90, "step": 5, "unit": "min"},
+    "D19": {"name": "Max Defrost Time", "min": 1, "max": 20, "step": 1, "unit": "min"},
+    
+    # Compressor
+    "C02": {"name": "Min Compressor Freq", "min": 20, "max": 60, "step": 1, "unit": "Hz"},
+    "C03": {"name": "Max Compressor Freq", "min": 50, "max": 120, "step": 1, "unit": "Hz"},
+}
+
+# Switch parameters (binary on/off)
+SWITCH_PARAMS: Final = {
+    "Power": {"name": "Power", "icon": "mdi:power"},
+    "H01": {"name": "Power-off Memory", "icon": "mdi:memory"},
+    "H05": {"name": "Cooling Function", "icon": "mdi:snowflake"},
+    "H22": {"name": "Silent Mode", "icon": "mdi:volume-off"},
+    "G05": {"name": "Disinfection", "icon": "mdi:bacteria"},
+    "A11": {"name": "Low Pressure Sensor", "icon": "mdi:gauge-low"},
+    "A29": {"name": "High Pressure Sensor", "icon": "mdi:gauge-full"},
+    "F22": {"name": "Manual Fan Speed", "icon": "mdi:fan"},
+    "D21": {"name": "Electric Heater Defrost", "icon": "mdi:heating-coil"},
+}
+
+# Select parameters (multi-option)
+SELECT_PARAMS: Final = {
+    "Mode": {
+        "name": "Operating Mode",
+        "icon": "mdi:hvac",
+        "options": {
+            "0": "Hot Water",
+            "1": "Heating",
+            "2": "Cooling",
+            "3": "Hot Water + Heating",
+            "4": "Hot Water + Cooling",
+        },
+    },
+    "H07": {
+        "name": "Control Mode",
+        "icon": "mdi:remote",
+        "options": {
+            "0": "Display Control",
+            "1": "Remote Control",
+        },
+    },
+    "H21": {
+        "name": "Temperature Unit",
+        "icon": "mdi:thermometer",
+        "options": {
+            "0": "°C",
+            "1": "°F",
+        },
+    },
+    "H25": {
+        "name": "Temp Control Selection",
+        "icon": "mdi:target",
+        "options": {
+            "0": "Outlet Water Temp",
+            "1": "Room Temp",
+            "2": "Buffer Tank Temp",
+            "3": "Inlet Water Temp",
+        },
+    },
+    "H27": {
+        "name": "EVI Mode",
+        "icon": "mdi:molecule",
+        "options": {
+            "0": "No EVI",
+            "1": "EVI for Cooling",
+            "2": "EVI for Heating",
+            "3": "All EVI",
+        },
+    },
+    "H28": {
+        "name": "DHW Function",
+        "icon": "mdi:water-boiler",
+        "options": {
+            "0": "Disabled",
+            "1": "Enabled",
+            "2": "Only DHW",
+        },
+    },
+    "H30": {
+        "name": "Indoor Unit Type",
+        "icon": "mdi:hvac",
+        "options": {
+            "0": "None",
+            "1": "Type 1",
+            "2": "Type 2",
+            "3": "Type 3",
+        },
+    },
+    "H31": {
+        "name": "Circulation Pump Type",
+        "icon": "mdi:pump",
+        "options": {
+            "0": "No Flow Detection",
+            "1": "Grundfos 25-75",
+            "2": "Grundfos 25-105",
+            "3": "Grundfos 25-125",
+            "4": "APM25 9-130",
+            "5": "APM25 12-130",
+        },
+    },
+    "Z01": {
+        "name": "Multi-Zone Control",
+        "icon": "mdi:home-group",
+        "options": {
+            "0": "None",
+            "1": "Zone 1-S",
+            "2": "Zone 2-S",
+            "3": "Zone 1&2-S",
+            "4": "Zone 1-T",
+            "5": "Zone 2-T",
+            "6": "Zone 1&2-T",
+            "7": "Zone 1-P",
+            "8": "Zone 2-P",
+            "9": "Zone 1&2-P",
+        },
+    },
+}
