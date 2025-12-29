@@ -79,10 +79,18 @@ class WarmLinkCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                     value = code_data.get("value")
                     if value is not None:
                         try:
-                            # Try to convert to float for numeric values
-                            device_info["_parsed_data"][code] = float(value)
+                            # Convert to float
+                            float_value = float(value)
+                            device_info["_parsed_data"][code] = float_value
                         except (ValueError, TypeError):
                             device_info["_parsed_data"][code] = value
+                
+                # Log energy parameters for debugging
+                energy_codes = ["Power In(Total)", "Capacity Out(Total)", "COP/EER(Total)", 
+                               "Power In(ODU)", "Capacity Out(ODU)"]
+                for ec in energy_codes:
+                    if ec in device_info["_parsed_data"]:
+                        _LOGGER.info("Energy data %s: %s", ec, device_info["_parsed_data"][ec])
                     
                     # Store range info for setpoints
                     range_start = code_data.get("range_start")
