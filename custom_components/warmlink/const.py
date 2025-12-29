@@ -81,17 +81,26 @@ PROTOCOL_CODES_TEMPS: Final = [
     "T12",  # Exhaust Temp (Modbus 2053)
     "T14",  # Distributor Tube Temp (Modbus 2050)
     "T15",  # Low Pressure (Modbus 2069)
+    "T27",  # Fan Speed 1 (Modbus 2074)
+    "T28",  # Fan Speed 2 (Modbus 2075)
+    "T29",  # Target Fan Speed (Modbus 2076)
     "T30",  # Compressor Frequency (Modbus 2071)
     "T31",  # Compressor Working Frequency (Modbus 2072)
+    "T32",  # Max Compressor Frequency from Driver (Modbus 2073)
+    "T33",  # IPM Fault Temp
     "T34",  # AC Input Voltage (Modbus 2062)
     "T35",  # AC Input Current (Modbus 2057)
     "T36",  # Compressor Phase Current (Modbus 2042)
     "T37",  # DC Bus Voltage (Modbus 2043)
     "T38",  # IPM Temp (Modbus 2044)
     "T39",  # Water Flow Rate (Modbus 2077)
+    "T46",  # External Fan Driver IPM Temp
+    "T47",  # External Fan Driver Power
+    "T48",  # External Fan Driver Current
     "T49",  # Evaporation Temperature (Modbus 2065)
     "T50",  # Exhaust Superheat (Modbus 2066)
     "T51",  # Superheat (Modbus 2067)
+    "T55",  # Outlet Temp After Electric Heater (Modbus 2068)
 ]
 
 # Setpoints - from Modbus CSV registers 1157-1177
