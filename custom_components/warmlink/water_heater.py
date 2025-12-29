@@ -80,7 +80,7 @@ class WarmLinkWaterHeater(CoordinatorEntity[WarmLinkCoordinator], WaterHeaterEnt
         model = device_data.get("custModel") or device_data.get("productId") or "Heat Pump"
         
         self._attr_unique_id = f"{DOMAIN}_{device_code}_water_heater"
-        self._attr_name = f"{device_name} Hot Water"
+        self._attr_name = "Zasobnik CWU"
         
         self._attr_device_info = {
             "identifiers": {(DOMAIN, device_code)},

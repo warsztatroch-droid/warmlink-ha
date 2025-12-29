@@ -736,11 +736,11 @@ SELECT_PARAMS: Final = {
         "icon": "mdi:hvac",
         "category": "system",
         "options": {
-            "0": "Hot Water",
-            "1": "Heating",
-            "2": "Cooling",
-            "3": "Hot Water + Heating",
-            "4": "Hot Water + Cooling",
+            "0": "Ciepła woda",
+            "1": "Ogrzewanie",
+            "2": "Chłodzenie",
+            "3": "CW + Ogrzewanie",
+            "4": "CW + Chłodzenie",
         },
     },
     # System (H)
@@ -768,8 +768,8 @@ SELECT_PARAMS: Final = {
         "icon": "mdi:valve",
         "category": "system",
         "options": {
-            "0": "Hot Water - ON",
-            "1": "Hot Water - OFF",
+            "0": "CWU - ZAŁ",
+            "1": "CWU - WYŁ",
         },
     },
     "H21": {

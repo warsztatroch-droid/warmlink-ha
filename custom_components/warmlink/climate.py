@@ -103,7 +103,7 @@ class WarmLinkClimate(CoordinatorEntity[WarmLinkCoordinator], ClimateEntity):
         model = device_data.get("custModel") or device_data.get("productId") or "Heat Pump"
         
         self._attr_unique_id = f"{DOMAIN}_{device_code}_climate"
-        self._attr_name = device_name
+        self._attr_name = "Pompa ciepła"
         
         # Device info for grouping entities
         self._attr_device_info = {
