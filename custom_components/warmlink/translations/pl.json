@@ -1,0 +1,59 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Warmlink Pompa Ciepła",
+        "description": "Wprowadź dane logowania do konta Warmlink",
+        "data": {
+          "username": "Email",
+          "password": "Hasło"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Nieprawidłowy email lub hasło",
+      "cannot_connect": "Nie można połączyć się z API Warmlink",
+      "unknown": "Wystąpił nieznany błąd"
+    },
+    "abort": {
+      "already_configured": "Konto już skonfigurowane"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opcje Warmlink",
+        "data": {
+          "update_interval": "Interwał odświeżania (sekundy)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "inlet_temperature": {
+        "name": "Temperatura na wejściu"
+      },
+      "outlet_temperature": {
+        "name": "Temperatura na wyjściu"
+      },
+      "ambient_temperature": {
+        "name": "Temperatura zewnętrzna"
+      },
+      "tank_temperature": {
+        "name": "Temperatura zasobnika"
+      },
+      "cop": {
+        "name": "COP"
+      }
+    },
+    "binary_sensor": {
+      "fault": {
+        "name": "Awaria"
+      },
+      "online": {
+        "name": "Online"
+      }
+    }
+  }
+}

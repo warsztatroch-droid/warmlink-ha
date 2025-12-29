@@ -1,0 +1,59 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Warmlink Heat Pump",
+        "description": "Enter your Warmlink account credentials",
+        "data": {
+          "username": "Email",
+          "password": "Password"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Invalid username or password",
+      "cannot_connect": "Cannot connect to Warmlink API",
+      "unknown": "Unknown error occurred"
+    },
+    "abort": {
+      "already_configured": "Account already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Warmlink Options",
+        "data": {
+          "update_interval": "Update interval (seconds)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "inlet_temperature": {
+        "name": "Inlet Temperature"
+      },
+      "outlet_temperature": {
+        "name": "Outlet Temperature"
+      },
+      "ambient_temperature": {
+        "name": "Ambient Temperature"
+      },
+      "tank_temperature": {
+        "name": "Tank Temperature"
+      },
+      "cop": {
+        "name": "COP"
+      }
+    },
+    "binary_sensor": {
+      "fault": {
+        "name": "Fault"
+      },
+      "online": {
+        "name": "Online"
+      }
+    }
+  }
+}

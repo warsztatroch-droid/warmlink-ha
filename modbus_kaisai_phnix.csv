@@ -1,0 +1,635 @@
+Parameter address,Parameter name,Parameter code,Standard num,Mode,Description,Data type,Setting range
+1011,Power,Power,--,Read-write,0-OFF/1-ON,ENUM,0~1
+1012,Mode,Mode,--,Read-write,0-Hot Water/1-Heating/2-Cooling/3-Hot Water+Heating/4-Hot Water+Cooling,ENUM,--
+1014,1014,1014,--,Read-write,--,DIGI1,--
+1016,Manual Control,hanControl,--,Read-write,bit0：Manual defrost(0-off 1-on) bit1：A key mute(0-off 1-on) bit2：A key heating(0-off 1-on) bit3：A key Refill Valve(0-off 1-on),BINARY,--
+1017,test10,test10,--,Read-write,--,DIGI1,0~8
+1018,Enable Power-off Memory,H01,--,Read-write,0-【NO】/1-【YES】,ENUM,0~1
+1019,Fan Motor Driver and Comp. Driver Integrated,H33,--,Read-write,0-【NO】/1-【YES】,ENUM,0~1
+1020,ERP Testing Mode,H34,--,Read-write,--,DIGI1,0~3
+1021,Enable Cooling Function,H05,--,Read-write,0-【NO】/1-【YES】,ENUM,0~1
+1022,test4,test4,--,Read-write,--,DIGI9,-100~100
+1023,Control Mode,H07,--,Read-write,0-【Display Control】 1-【RemoteControl】,ENUM,0~1
+1024,Unit Address,H10,--,Read-write,1~32,DIGI1,1~32
+1025,language,H38,--,Read-write,Wire controller displays language,ENUM,0~13
+1026,H,H,--,Read-write,--,DIGI1,0~65535
+1027,Enable EVI,H27,--,Read-write,0- 【no EVI】/1-【EVI for cooling】/2-【EVI for heating】/3-【All EVI】,ENUM,0~3
+1028,Heating/Cooling and Hot Water Function Enabled,H28,--,Read-write,0-【NO】/1-【YES】/2-【Only DHW】,ENUM,0~2
+1029,Temperature Unit,H21,--,Read-write,0-【℃】/1-【℉】,ENUM,0~1
+1030,Enable Silent Mode,H22,--,Read-write,0-【NO】/1-【YES】,ENUM,0~1
+1031,Electric Heater OFF Temp. Diff,A35,--,Read-write,0~30℃,TEMP,0~30
+1032,Electric Heater Stage,H18,--,Read-write,1-【Stage1】/2-【Stage2】/3-【Stage3】,ENUM,1~3
+1033,3-way Valve Polarity,H20,--,Read-write,0-【Hot Water-ON】/1-【Hot Water-OFF】,ENUM,0~1
+1034,Operation Code,H29,--,Read-write,0-20,DIGI1,0~20
+1035,Temp. Control Selection,H25,--,Read-write,0-【Outlet Water Temp.】 1-【Room Temp.】 2-【Buffer Tank Temp.】 3-【Inlet Water Temp.】,ENUM,0~3
+1036,Indoor Unit Type,H30,--,Read-write,0-None /1-1st Type /2-2nd Type/3-3rd Type,ENUM,0~3
+1037,Shutdown Ambient Temp.,A03,--,Read-write,-40.0~10.0℃,TEMP,-40~10
+1038,Antifreeze Temp.,A04,--,Read-write,A22~10.0℃,TEMP,$1053$~10
+1039,Antifreeze Temp. Difference,A05,--,Read-write,1.0~50.0℃,TEMP,1~50
+1040,Max. Exhaust Temp.,A06,--,Read-write,60.0~130.0℃,TEMP,60~130
+1041,Circulation Pump Type,H31,--,Read-write,0-【No Flow Detection】 1-【Grundfos(25~75)】 2-【Grundfos(25~105)】 3-【Grundfos(25~125)】 4-【APM25(9~130)】 5-【APM25(12~130)】,ENUM,0~5
+1042,Enable Low Pressure Sensor,A11,--,Read-write,0-【NO】/1-【YES】,ENUM,0~1
+1043,Min. Outlet Water Temp. Protect,A23,--,Read-write,-30~20℃,TEMP,-30~20
+1044,Excess Temp. Diff. Between Inlet and Outlet Temp.,A24,--,Read-write,0~30℃,TEMP,0~30
+1045,Force Switch Mode Time,H32,--,Read-write,1~300min,DIGI1,1~300
+1046,DHW Temp. Sourcing,H99,--,Read-only,--,DIGI1,0~1
+1047,Enable Defrosting Communication in Cascade,D26,--,Read-write,0-【NO】/1-【YES】,ENUM,0~1
+1048,DHW Temp. Sourcing,H37,--,Read-write,0-【DHW Tank Sensor】 1-【External from Modbus 】,ENUM,0~1
+1049,Electric Heater On AT,A31,--,Read-write,-30~60℃,TEMP,-30~60
+1050,Electric Heater Delays Comp. On Time,A32,--,Read-write,10~999min,DIGI1,10~999
+1051,Min. AT for Cooling,A30,--,Read-write,-30~60℃,TEMP,-30~60
+1052,Ambient/Suction/Coil Sensor Type,A21,--,Read-write,0-5K/1-2K,ENUM,0~1
+1053,Min. Antifreeze Temp.,A22,--,Read-write,-20.0~10.0℃,TEMP,-20~10
+1054,Refrigerant Type,A26,--,Read-write,0-R32/1-R290/2-R32-1/3-R290-1/4-R32-2/5-R290-2/6-R32-3/7-R290-3 / 0-99,DIGI1,0~99
+1055,Minimum Evaporation Temp. of Cooling,A25,--,Read-write,-50℃~30℃,TEMP,-50~30
+1056,Temp. Diff. of Limiting Frequency,A27,--,Read-write,-20℃~95℃,TEMP,-20~95
+1057,Temp. Diff. Between Outlet and DHW Temp.,A28,--,Read-write,-20℃~95℃,TEMP,-20~95
+1058,Enable High Pressure Sensor,A29,--,Read-write,0-【NO】/1-【YES】,ENUM,0~1
+1059,Fan Motor Type,F01,--,Read-write,1-【Double】/3-【DC】/4-【DC_ExternalDrive】,ENUM,1~4
+1060,Coil Temp.. for Max. Fan Speed in Cooling,F02,--,Read-write,-15.0~60.0℃,TEMP,-15~60
+1062,Coil Temp.. for Min. Fan Speed in Cooling,F03,--,Read-write,-15.0~60.0℃,TEMP,-15~60
+1063,Electric Heater Opening Temp. Diff,A33,--,Read-write,0~20℃,TEMP,0~20
+1064,Crank preheating time,A34,--,Read-write,0~360min,DIGI1,0~360
+1066,Coil Temp.. for Max. Fan Speed in Heating,F05,--,Read-write,-15.0~60.0℃,TEMP,-15~60
+1068,Coil Temp.. for Min. Fan Speed in Heating,F06,--,Read-write,-15.0~60.0℃,TEMP,-15~60
+1069,Enable Multi-Zone Control,Z01,--,Read-write,0-None/1-Zone 1-S/2-Zone 2-S/3-Zone 1&2-S /4-Zone 1-T/5-Zone 2-T/6-Zone 1&2-T /7-Zone 1-P/8-Zone 2-P/9-Zone 1&2-P,ENUM,0~9
+1070,Zone 1 Target RT,Z02,--,Read-write,10℃~35℃,TEMP,10~35
+1071,Zone 1 RT Diff. to Start,Z03,--,Read-write,0℃~10℃,TEMP,0~10
+1072,Zone 2 Target RT,Z04,--,Read-write,10℃~35℃,TEMP,10~35
+1073,Zone 2 RT Diff. to Start,Z05,--,Read-write,0℃~10℃,TEMP,0~10
+1074,Fan Quantity,F10,--,Read-write,0-【One fan】/1-【Two fans】,ENUM,0~1
+1075,Zone 1 Heating Target Outlet WT,Z06,--,Read-write,R10-R11,TEMP,$1164$~$1165$
+1076,Zone 2 Mixing Target Outlet WT,Z07,--,Read-write,R10-Z15,TEMP,$1164$~$1135$
+1077,Enable AT Compensation Curve Zone 2,Z17,--,Read-write,0-【NO】/1-【YES】,ENUM,0~1
+1078,Zone 2 Cure Slope,Zone 2 Cure Slope,--,Read-write,--,DIGI5,0~4
+1079,Zone 2 Curve Offset,Zone 2 Curve Offset,--,Read-write,--,DIGI5,0~60
+1080,Mixing Valve Manual Adjustment Ratio (0% for Auto,Z08,--,Read-write,0-100%,DIGI1,0~100
+1081,Min. Fan Speed in Cooling,F18,--,Read-write,10~1300r,DIGI1,10~1300
+1082,Mixing Valve Opening Time,Z09,--,Read-write,0~2000s,DIGI1,0~2000
+1083,Min. Fan Speed in Heating,F19,--,Read-write,10~1300r,DIGI1,10~1300
+1084,Mixing Valve Closing Time,Z10,--,Read-write,0-2000s,DIGI1,0~2000
+1085,Mixing Valve Adjustment P(PID),Z11,--,Read-write,0-10.0,DIGI5,0~10
+1087,Enable Manual-control Fan Speed,F22,--,Read-write,0-【NO】/1-【YES】,ENUM,0~1
+1088,Mixing Valve Adjustment I(PID),Z12,--,Read-write,0-10.0,DIGI5,0~10
+1089,Rated DC Fan Motor Speed,F23,--,Read-write,10~1300r,DIGI1,10~1300
+1090,Mixing Valve PID Period,Z13,--,Read-write,1-20 min,DIGI1,1~20
+1101,CT to Reduce Two Fans to One in Cooling,F28,--,Read-write,-30~60℃,TEMP,-30~60
+1102,CT to Stop Single Fan in Cooling,F29,--,Read-write,-30~60℃,TEMP,-30~60
+1103,Max. Fan Speed in Cooling,F25,--,Read-write,10~1300r,DIGI1,10~1300
+1104,Max. Fan Speed in Heating,F26,--,Read-write,10~1300r,DIGI1,10~1300
+1105,Ambient Temp. of Starting Defrosting,D01,--,Read-write,-37~45℃,TEMP,-37~45
+1106,Heating Operation Time Before Defrosting,D02,--,Read-write,0~120min,DIGI1,0~120
+1107,Interval Time Between Defrosting Cycles,D03,--,Read-write,10~90min,DIGI1,10~90
+1108,Exhaust Temp. Correction for Defrosting Cycle,D04,--,Read-write,0~150℃,TEMP,0~150
+1109,Defrosting Suction Pressure 1,D05-1,--,Read-write,0~45bar,DIGI5,0~45
+1110,Defrosting Suction Pressure 2,D05-2,--,Read-write,0~45bar,DIGI5,0~45
+1111,Defrosting Cycle Time Correction,D06,--,Read-write,0~120min,DIGI1,0~120
+1112,Ambient Temp. of Start Sliding Defrosting,D07,--,Read-write,-37~45℃,TEMP,-37~45
+1113,Suction Temp. of Start Sliding Defrosting,D08,--,Read-write,-37~45℃,TEMP,-37~45
+1114,Ambient Temp. of Stop Sliding Defrosting,D09,--,Read-write,-37~45℃,TEMP,-37~45
+1115,Suction Temp. of Stop Sliding Defrosting,D10,--,Read-write,-37~45℃,TEMP,-37~45
+1116,Min. Inlet Water Temp. of Defrosting,D11,--,Read-write,4~65℃,TEMP,4~65
+1117,Suction Pressure of Forced Defrosting,D12,--,Read-write,0~45bar,DIGI5,0~45
+1118,Heating Operation Time Before Forced Defrosting,D13,--,Read-write,0~360min,DIGI1,0~360
+1119,Fan Motor Power Ratio to Extend Defrosting Cycle,D14,--,Read-write,0-5.00,DIGI9,0~5
+1120,Fan Motor Power Ratio to Enter Forced Defrosting,D15,--,Read-write,0-5.00,DIGI9,0~5
+1121,Max. Fan Motor Power to Enter Forced Defrosting,D16,--,Read-write,50-1000W,DIGI1,50~1000
+1122,Coil Temp. of Exit Defrosting,D17,--,Read-write,-37~45℃,TEMP,-37~45
+1123,Distributor Tube Temp. of Exit Defrosting,D18,--,Read-write,-37~80℃,TEMP,-37~80
+1124,Max. Defrosting Time,D19,--,Read-write,0~20min,DIGI1,0~20
+1125,Defrosting Frequency,D20,--,Read-write,30-90Hz,DIGI1,30~90
+1126,Enable Electric Heater During Defrosting,D21,--,Read-write,0-NO/1-YES,ENUM,0~1
+1127,Water Flow of Defrosting,D22,--,Read-write,0-50,DIGI9,0~50
+1128,Max. Defrosting Cycle by Fan Motor Power,D23,--,Read-write,0~240min,DIGI1,0~240
+1129,Defrosting Heating Source in Heating / DHW Mode,D24,--,Read-write,0-【Stay Current Circuit】 1-【DHW Circuit】 2-【Heating Circuit】,ENUM,0~2
+1130,Max. Water Temp. Decrease during Defrosting,D25,--,Read-write,2~65℃,TEMP,2~65
+1131,EEV Adjust Mode,E01,--,Read-write,0-【Manual】/1-【Auto】/2-【Smart】,ENUM,0~2
+1132,Target Superheat for Heating,E02,--,Read-write,-20.0~20.0℃,TEMP,-20~20
+1133,EEV Initial Steps for Heating,E03,--,Read-write,0~500N,DIGI1,0~500
+1134,Steps of Mixing Valve in Cooling,Z14,--,Read-write,0-100%,DIGI1,0~100
+1135,Zone 2 Max. Water Target Temp.,Z15,--,Read-write,R10-99℃,TEMP,$1164~99
+1137,EEV Min. Steps,E07,--,Read-write,0~500N,DIGI1,0~500
+1138,EEV Initial Steps for Cooling,E08,--,Read-write,0~500N,DIGI1,0~500
+1139,EVI EEV: Adjustment Mode,E09,--,Read-write,0-【Manual】/1-【Auto】,ENUM,0~1
+1140,EVI EEV: Initial Steps,E10,--,Read-write,0~500N,DIGI1,0~500
+1141,DefrstForceAmbient,DefrstForceAmbient,--,Read-write,-30℃~30℃,TEMP,-30~30
+1142,EEV Initial Steps for Heating2,E03-2,--,Read-write,0~500N,DIGI1,0~500
+1143,EVI EEV Target Superheat Degree,E13,--,Read-write,-20.0~20.0℃,TEMP,-20~20
+1144,EVI EEV Min. Steps,E14,--,Read-write,0~500N,DIGI1,0~500
+1145,IntervalSecondsReport,IntevalSeconds,--,Read-write,30~300s(Only available within 3 hours),DIGI1,30~300
+1147,Defrosting EEV Steps,E17,--,Read-write,10~500N,DIGI1,10~500
+1148,Target Superheat for Cooling,E18,--,Read-write,-10~10℃,TEMP,-10~10
+1149,EEV Adjustment Range In Smart Mode,E19,--,Read-write,0%--300%,DIGI1,0~300
+1152,Disinfection Water Temp.,G01,--,Read-write,60~70℃,TEMP,60~70
+1153,Time Duration of Disinfection,G02,--,Read-write,0~60min,DIGI1,0~60
+1154,Disinfection Starting Time,G03,--,Read-write,0~23h,DIGI1,0~23
+1155,Interval Period of Disinfection,G04,--,Read-write,1~30days,DIGI1,1~30
+1156,Enable Disinfection,G05,--,Read-write,0-【NO】/1-【YES】,ENUM,0~1
+1157,Domestic Hot Water / DHW Target Temp.,R01,--,Read-write,R36~R37℃,TEMP,$1176$~$1177$
+1158,Heating Target Temp.,R02,--,Read-write,R10~R11℃,TEMP,$1164$~$1165$
+1159,Cooling Target Temp.,R03,--,Read-write,R08~R09℃,TEMP,$1162$~$1163$
+1160,Temp. Diff. for Power-on in Heating,R04,--,Read-write,0~10℃,TEMP,0~10
+1161,Temp. Diff. for Standby in Heating,R05,--,Read-write,0~10℃,TEMP,0~10
+1162,Min. Cooling Target Temp.,R08,--,Read-write,-30.0~R09℃,TEMP,-30~$1163$
+1163,Max. Cooling Target Temp.,R09,--,Read-write,R08~80.0℃,TEMP,$1162$~80
+1164,Min. Heating Target Temp.,R10,--,Read-write,-30.0~R11℃,TEMP,-30~$1165$
+1165,Max. Heating Target Temp.,R11,--,Read-write,R10~99℃,TEMP,$1164$~99
+1166,Temp. Diff. of Exiting Overhigh Outlet Temp.,R15,--,Read-write,0~15℃,TEMP,0~15
+1167,Low AT for Water Temp. Limit On,R29,--,Read-write,R30~4℃,TEMP,$1168$~4
+1168,Low AT for Water Temp. Limit Off,R30,--,Read-write,-35~R29℃,TEMP,-35~$1167$
+1169,Max. Limit Outlet Water Temp. at Low AT,R31,--,Read-write,20~85℃,TEMP,20~85
+1170,High AT for Water Temp. Limit On,R32,--,Read-write,0.1~R33℃,TEMP,0.1~$1171$
+1171,High AT for Water Temp. Limit Off,R33,--,Read-write,R32~60℃,TEMP,$1170$~60
+1172,Max. Limit Outlet Water Temp. at High AT,R34,--,Read-write,20~85℃,TEMP,20~85
+1173,Location of Electric Heater,R35,--,Read-write,0-【Not Available】/1-【Main Water Circuit】/2-【DHW Tank】/3-【Buffer Tank】,ENUM,0~3
+1174,Temp. Diff. for Power-on in Cooling,R06,--,Read-write,0~10℃,TEMP,0~10
+1175,Temp. Diff. for Standby in Cooling,R07,--,Read-write,0~10℃,TEMP,0~10
+1176,Min. DHW Target Temp.,R36,--,Read-write,0~R37℃,TEMP,0~$1177$
+1177,Max. DHW Target Temp.,R37,--,Read-write,R36~85℃,TEMP,$1176$~85
+1191,app_heartbeat,app_heartbeat,--,Read-write,app used,DIGI1,0~23205
+1192,AT for Auto-start Heating Mode,R39,--,Read-write,5~20℃,TEMP,5~20
+1193,AT for Main Circulation Pump in Smart Mode,R40,--,Read-write,-10~60℃,TEMP,-10~60
+1194,AT for DHW Pump in Smart Mode,R41,--,Read-write,-10~60℃,TEMP,-10~60
+1195,Temp. Diff. for Power-on in DHW,R16,--,Read-write,0~10℃,TEMP,0~10
+1196,Temp. Diff. for Standby in DHW,R17,--,Read-write,0~10℃,TEMP,0~10
+1197,Main Circulation Pump Operation Mode,P01,--,Read-write,0-【Always On】/1-【Saving】/2-【Interval】,ENUM,0~2
+1198,Interval Time,P02,--,Read-write,1~120min,DIGI1,1~120
+1199,Operation Duration Time,P03,--,Read-write,1~30min,DIGI1,1~30
+1200,EEV Initial Steps for Heating1,E03-1,--,Read-write,0-500N,DIGI1,0~500
+1201,DHW Pump Operation Mode,P05,--,Read-write,0-【Always On】/1-【Saving】/2-【Interval】,ENUM,0~2
+1202,Main Circulation Pump Manual Control,P06,--,Read-write,0-OFF/1-ON,ENUM,0~1
+1203,Circulation Pump Protection Period,P09,--,Read-write,0-30 days,DIGI1,0~30
+1205,Speed of Circulation Pump,P10,--,Read-write,0~100%,DIGI1,0~100
+1206,EEV Initial Steps for Heating3,E03-3,--,Read-write,0-500N,DIGI1,0~500
+1207,EEV Initial Steps for Heating4,E03-4,--,Read-write,0-500N,DIGI1,0~500
+1208,EEV Initial Steps for Heating5,E03-5,--,Read-write,0-500N,DIGI1,0~500
+1209,EEV Min. Steps1,E07-1,--,Read-write,0-500N,DIGI1,0~500
+1210,EEV Min. Steps2,E07-2,--,Read-write,0-500N,DIGI1,0~500
+1211,EEV Min. Steps3,E07-3,--,Read-write,0-500N,DIGI1,0~500
+1212,Test1,Test1,--,Read-write,-10~10,TEMP,-10~10
+1213,Test2,Test2,--,Read-write,-10~10,TEMP,-10~10
+1214,Test3,Test3,--,Read-write,-10~10,TEMP,-10~10
+1215,EEV Min. Steps4,E07-4,--,Read-write,0-500N,DIGI1,0~500
+1216,EEV Min. Steps5,E07-5,--,Read-write,0-500N,DIGI1,0~500
+1217,Max. Comp. Frequency in Cooling at High Ambient Temp.,C11,--,Read-write,0-120Hz,DIGI1,0~120
+1218,Manual Comp. Frequency,C01,--,Read-write,0~120Hz,DIGI1,0~120
+1219,Min. Comp. Frequency,C02,--,Read-write,20~60Hz,DIGI1,20~60
+1220,Max. Comp. Frequency,C03,--,Read-write,30~120Hz,DIGI1,30~120
+1221,Model Selection,C04,--,Read-write,0~99,DIGI1,0~100
+1222,Min. Comp. Frequency in Cooling at Low Ambient Temp.,C05,--,Read-write,0~60Hz,DIGI1,0~60
+1223,Frequency Control Mode,C06,--,Read-write,1-120,DIGI1,1~120
+1224,Resonance Point 1,C07,--,Read-write,0-120Hz,DIGI1,0~120
+1225,Resonance Point 2,C08,--,Read-write,0-120Hz,DIGI1,0~120
+1226,Resonance Point 3,C09,--,Read-write,0-120Hz,DIGI1,0~120
+1227,Min. Comp. Frequency in Heating at Low Ambient Temp.,C10,--,Read-write,0-120Hz,DIGI1,0~120
+1228,Max. Outlet Water Temp. in Heating,R42,--,Read-write,20~85℃,TEMP,20~85
+1229,Max. Limit Target Water Temp. at Low AT in Heating,R43,--,Read-write,20~85℃,TEMP,20~85
+1230,Max. Limit Target Water Temp. at High AT in Heating,R44,--,Read-write,20~85℃,TEMP,20~85
+1231,AT to Start Electric Heater Without Delay,R45,--,Read-write,-50~20℃,TEMP,-50~20
+1232,Temp. Diff. between Max. DHW Target Temp. & Max. Outlet Temp.,R46,--,Read-write,0~25℃,TEMP,0~25
+1233,AT to Start Frequency Limit in Cooling,R60,--,Read-write,0-60℃,TEMP,0~60
+1234,compensate slope,compensate_slope,--,Read-write,--,DIGI5,0~3.5
+1235,compensate offset,compensate_offset,--,Read-write,--,TEMP,0~75
+1236,H36/Z16 Enable Positive Weather Compensation,H36,--,Read-write,0-【NO】/1-【YES】,ENUM,0~1
+1237,AT to Stop Frequency Limit in Cooling,R61,--,Read-write,0-60℃,TEMP,0~60
+1238,Max. Heat Pump Outlet Water Temp.,R62,--,Read-write,40-95℃,TEMP,40~95
+1239,Target Room Temp.,R70,--,Read-write,5~27℃,TEMP,5~27
+1240,Room Temp. Diff. for Power-on in Heating,R71,--,Read-write,0.1~3℃,TEMP,0.1~3
+1241,Room Temp. Diff. for Standby in Heating,R72,--,Read-write,0.1~3℃,TEMP,0.1~3
+1242,Room Temp. Diff. for Power-on in Cooling,R73,--,Read-write,0.1~3℃,TEMP,0.1~3
+1243,Room Temp. Diff. for Standby in Cooling,R74,--,Read-write,0.1~3℃,TEMP,0.1~3
+1244,Timer_Mute_On_En,Timer_Mute_On_En,--,Read-write,--,ENUM,0~1
+1245,TimerMuteOnHour,TimerMuteOnHour,--,Read-write,--,DIGI1,0~23
+1246,TimerMuteOnMinute,TimerMuteOnMinute,--,Read-write,--,DIGI1,0~59
+1247,Timer_Mute_Off_En,Timer_Mute_Off_En,--,Read-write,--,ENUM,0~1
+1248,TimerMuteOffHour,TimerMuteOffHour,--,Read-write,--,DIGI1,0~23
+1249,TimerMuteOffMinute,TimerMuteOffMinute,--,Read-write,--,DIGI1,0~59
+1250,System Time Enable,1250,--,Read-write,system time enable,DIGI1,0~1
+1251,System Current Min,1251,--,Read-write,system current min,DIGI1,0~59
+1252,System Current Hour,1252,--,Read-write,system current hour,DIGI1,0~23
+1253,System Current Day,1253,--,Read-write,system current day,DIGI1,1~31
+1254,System Current Month,1254,--,Read-write,system current month,DIGI1,1~12
+1255,System Current Year,1255,--,Read-write,system current year,DIGI1,0~99
+1256,Frist_Period_Power_ONOFF_Start,KG1,--,Read-write,--,DIGI1,--
+1256-H,Frist_Period_Power_ONOFF_Start_Hour,KG1-H,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~23
+1256-L,Frist_Period_Power_ONOFF_Start_Min,KG1-L,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~59
+1257,Frist_Period_Power_ONOFF_End,KG2,--,Read-write,--,DIGI1,--
+1257-H,Frist_Period_Power_ONOFF_End_Hour,KG2-H,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~23
+1257-L,Frist_Period_Power_ONOFF_End_Min,KG2-L,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~59
+1258,Second_Period_Power_ONOFF_Start,KG3,--,Read-write,--,DIGI1,--
+1258-H,Second_Period_Power_ONOFF_Start_Hour,KG3-H,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~23
+1258-L,Second_Period_Power_ONOFF_Start_Min,KG3-L,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~49
+1259,Second_Period_Power_ONOFF_End,KG4,--,Read-write,--,DIGI1,--
+1259-H,Second_Period_Power_ONOFF_End_Hour,KG4-H,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~23
+1259-L,Second_Period_Power_ONOFF_End_Min,KG4-L,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~59
+1260,Third_Period_Power_ONOFF_Start,KG5,--,Read-write,--,DIGI1,--
+1260-H,Third_Period_Power_ONOFF_Start_Hour,KG5-H,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~23
+1260-L,Third_Period_Power_ONOFF_Start_Min,KG5-L,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~59
+1261,Third_Period_Power_ONOFF_End,KG6,--,Read-write,--,DIGI1,--
+1261-H,Third_Period_Power_ONOFF_End_Hour,KG6-H,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~23
+1261-L,Third_Period_Power_ONOFF_End_Min,KG6-L,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~59
+1262,Fourth_Period_Power_ONOFF_Start,KG7,--,Read-write,--,DIGI1,--
+1262-H,Fourth_Period_Power_ONOFF_Start_Hour,KG7-H,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~23
+1262-L,Fourth_Period_Power_ONOFF_Start_Min,KG7-L,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~59
+1263,Fourth_Period_Power_ONOFF_End,KG8,--,Read-write,--,DIGI1,--
+1263-H,Fourth_Period_Power_ONOFF_End_Hour,KG8-H,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~23
+1263-L,Fourth_Period_Power_ONOFF_End_Min,KG8-L,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~59
+1264,Fifth_Period_Power_ONOFF_Start,KG9,--,Read-write,--,DIGI1,--
+1264-H,Fifth_Period_Power_ONOFF_Start_Hour,KG9-H,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~23
+1264-L,Fifth_Period_Power_ONOFF_Start_Min,KG9-L,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~59
+1265,Fifth_Period_Power_ONOFF_End,KG10,--,Read-write,--,DIGI1,--
+1265-H,Fifth_Period_Power_ONOFF_End_Hour,KG10-H,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~23
+1265-L,Fifth_Period_Power_ONOFF_End_Min,KG10-L,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~59
+1266,Sixth_Period_Power_ONOFF_Start,KG11,--,Read-write,--,DIGI1,--
+1266-H,Sixth_Period_Power_ONOFF_Start_Hour,KG11-H,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~23
+1266-L,Sixth_Period_Power_ONOFF_Start_Min,KG11-L,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~59
+1267,Sixth_Period_Power_ONOFF_End,KG12,--,Read-write,--,DIGI1,--
+1267-H,Sixth_Period_Power_ONOFF_End_Hour,KG12-H,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~23
+1267-L,Sixth_Period_Power_ONOFF_End_Min,KG12-L,--,Read-write,high 8 bits: hour low 8 bits: minute,DIGI1,0~59
+1268,First_Second_Period(Enable/Disable),KG13~KG28,--,Read-write,--,BINARY,--
+1269,Third_Fourth_Period(Enable/Disable),KG29~KG44,--,Read-write,--,BINARY,--
+1270,Fifth_Sixth_Period(Enable/Disable),KG45~KG60,--,Read-write,--,BINARY,--
+1281,Mode&Temp.&Power Timer1 Start,M1 Start,--,Read-write,--,DIGI1,--
+1281-H,Mode&Temp.&Power Timer1 Start_H,M1 Start_H,--,Read-write,--,DIGI1,0~23
+1281-L,Mode&Temp.&Power Timer1 Start_L,M1 Start_L,--,Read-write,--,DIGI1,0~59
+1282,Mode&Temp.&Power Timer1 End,M1 End,--,Read-write,--,DIGI1,--
+1282-H,Mode&Temp.&Power Timer1 End-H,M1 End-H,--,Read-write,--,DIGI1,0~23
+1282-L,Mode&Temp.&Power Timer1 End-L,M1 End-L,--,Read-write,--,DIGI1,0~59
+1283,Mode&Temp.&Power Timer1 Hot Water Target,M1 Hot Water Target,--,Read-write,R36-R37,TEMP,$1176$~$1177$
+1284,Mode&Temp.&Power Timer1 Heating Target,M1 Heating Target,--,Read-write,R10~R11,TEMP,$1164$~$1165$
+1285,Mode&Temp.&Power Timer1 Cooling Target,M1 Cooling Target,--,Read-write,R08~R09,TEMP,$1162$~$1163$
+1286,Mode&Temp.&Power Timer1 Mode,M1 Mode,--,Read-write,--,ENUM,--
+1287,Mode&Temp.&Power Timer1 Max. Power,M1 Max. Power,--,Read-write,0.0-99.9kW,DIGI5,0~99.9
+1288,Mode&Temp.&Power Timer2 Start,M2 Start,--,Read-write,--,DIGI1,--
+1288-H,Mode&Temp.&Power Timer2 Start-H,M2 Start-H,--,Read-write,--,DIGI1,0~23
+1288-L,Mode&Temp.&Power Timer2 Start-L,M2 Start-L,--,Read-write,--,DIGI1,0~59
+1289,Mode&Temp.&Power Timer2 End,M2 End,--,Read-write,--,DIGI1,--
+1289-H,Mode&Temp.&Power Timer2 End-H,M2 End-H,--,Read-write,--,DIGI1,0~23
+1289-L,Mode&Temp.&Power Timer2 End-L,M2 End-L,--,Read-write,--,DIGI1,0~59
+1290,Mode&Temp.&Power Timer2 Hot Water Target,M2 Hot Water Target,--,Read-write,R36-R37,TEMP,$1176$~$1177$
+1291,Mode&Temp.&Power Timer2 Heating Target,M2 Heating Target,--,Read-write,R10~R11,TEMP,$1164$~$1165$
+1292,Mode&Temp.&Power Timer2 Cooling Target,M2 Cooling Target,--,Read-write,R08~R09,TEMP,$1162$~$1163$
+1293,Mode&Temp.&Power Timer2 Mode,M2 Mode,--,Read-write,--,ENUM,--
+1294,Mode&Temp.&Power Timer2 Max. Power,M2 Max. Power,--,Read-write,0.0-99.9kW,DIGI5,0~99.9
+1295,Mode&Temp.&Power Timer3 Start,M3 Start,--,Read-write,--,DIGI1,--
+1295-H,Mode&Temp.&Power Timer3 Start-H,M3 Start-H,--,Read-write,--,DIGI1,0~23
+1295-L,Mode&Temp.&Power Timer3 Start-L,M3 Start-L,--,Read-write,--,DIGI1,0~59
+1296,Mode&Temp.&Power Timer3 End,M3 End,--,Read-write,--,DIGI1,--
+1296-H,Mode&Temp.&Power Timer3 End-H,M3 End-H,--,Read-write,--,DIGI1,0~23
+1296-L,Mode&Temp.&Power Timer3 End-L,M3 End-L,--,Read-write,--,DIGI1,0~59
+1297,Mode&Temp.&Power Timer3 Hot Water Target,M3 Hot Water Target,--,Read-write,R36-R37,TEMP,$1176$~$1177$
+1298,Mode&Temp.&Power Timer3 Heating Target,M3 Heating Target,--,Read-write,R10~R11,TEMP,$1164$~$1165$
+1299,Mode&Temp.&Power Timer3 Cooling Target,M3 Cooling Target,--,Read-write,R08~R09,TEMP,$1162$~$1163$
+1300,Mode&Temp.&Power Timer3 Mode,M3 Mode,--,Read-write,--,ENUM,--
+1301,Mode&Temp.&Power Timer3 Max. Power,M3 Max. Power,--,Read-write,0.0-99.9kW,DIGI5,0~99.9
+1302,Mode&Temp.&Power Timer4 Start,M4 Start,--,Read-write,--,DIGI1,--
+1302-H,Mode&Temp.&Power Timer4 Start-H,M4 Start-H,--,Read-write,--,DIGI1,0~23
+1302-L,Mode&Temp.&Power Timer4 Start-L,M4 Start-L,--,Read-write,--,DIGI1,0~59
+1303,Mode&Temp.&Power Timer4 End,M4 End,--,Read-write,--,DIGI1,--
+1303-H,Mode&Temp.&Power Timer4 End-H,M4 End-H,--,Read-write,--,DIGI1,0~23
+1303-L,Mode&Temp.&Power Timer4 End-L,M4 End-L,--,Read-write,--,DIGI1,0~59
+1304,Mode&Temp.&Power Timer4 Hot Water Target,M4 Hot Water Target,--,Read-write,R36-R37,TEMP,$1176$~$1177$
+1305,Mode&Temp.&Power Timer4 Heating Target,M4 Heating Target,--,Read-write,R10~R11,TEMP,$1164$~$1165$
+1306,Mode&Temp.&Power Timer4 Cooling Target,M4 Cooling Target,--,Read-write,R08~R09,TEMP,$1162$~$1163$
+1307,Mode&Temp.&Power Timer4 Mode,M4 Mode,--,Read-write,--,ENUM,--
+1308,Mode&Temp.&Power Timer4 Max. Power,M4 Max. Power,--,Read-write,0.0-99.9kW,DIGI5,0~99.9
+1309,Mode&Temp.&Power Timer5 Start,M5 Start,--,Read-write,--,DIGI1,--
+1309-H,Mode&Temp.&Power Timer5 Start-H,M5 Start-H,--,Read-write,--,DIGI1,0~23
+1309-L,Mode&Temp.&Power Timer5 Start-L,M5 Start-L,--,Read-write,--,DIGI1,0~59
+1310,Mode&Temp.&Power Timer5 End,M5 End,--,Read-write,--,DIGI1,--
+1310-H,Mode&Temp.&Power Timer5 End-H,M5 End-H,--,Read-write,--,DIGI1,0~23
+1310-L,Mode&Temp.&Power Timer5 End-L,M5 End-L,--,Read-write,--,DIGI1,0~59
+1311,Mode&Temp.&Power Timer5 Hot Water Target,M5 Hot Water Target,--,Read-write,R36-R37,TEMP,$1176$~$1177$
+1312,Mode&Temp.&Power Timer5 Heating Target,M5 Heating Target,--,Read-write,R10~R11,TEMP,$1164$~$1165$
+1313,Mode&Temp.&Power Timer5 Cooling Target,M5 Cooling Target,--,Read-write,R08~R09,TEMP,$1162$~$1163$
+1314,Mode&Temp.&Power Timer5 Mode,M5 Mode,--,Read-write,--,ENUM,--
+1315,Mode&Temp.&Power Timer5 Max. Power,M5 Max. Power,--,Read-write,0.0-99.9kW,DIGI5,0~99.9
+1316,Mode&Temp.&Power Timer6 Start,M6 Start,--,Read-write,--,DIGI1,--
+1316-H,Mode&Temp.&Power Timer6 Start-H,M6 Start-H,--,Read-write,--,DIGI1,0~23
+1316-L,Mode&Temp.&Power Timer6 Start-L,M6 Start-L,--,Read-write,--,DIGI1,0~59
+1317,Mode&Temp.&Power Timer6 End,M6 End,--,Read-write,--,DIGI1,--
+1317-H,Mode&Temp.&Power Timer6 End-H,M6 End-H,--,Read-write,--,DIGI1,0~23
+1317-L,Mode&Temp.&Power Timer6 End-L,M6 End-L,--,Read-write,--,DIGI1,0~59
+1318,Mode&Temp.&Power Timer6 Hot Water Target,M6 Hot Water Target,--,Read-write,R36-R37,TEMP,$1176$~$1177$
+1319,Mode&Temp.&Power Timer6 Heating Target,M6 Heating Target,--,Read-write,R10~R11,TEMP,$1164$~$1165$
+1320,Mode&Temp.&Power Timer6 Cooling Target,M6 Cooling Target,--,Read-write,R08~R09,TEMP,$1162$~$1163$
+1321,Mode&Temp.&Power Timer6 Mode,M6 Mode,--,Read-write,--,ENUM,--
+1322,Mode&Temp.&Power Timer6 Max. Power,M6 Max. Power,--,Read-write,0.0-99.9kW,DIGI5,0~99.9
+1323,Mode&Temp.&Power Timer1_2 Enalbe,M1_2 Enalbe,--,Read-write,--,BINARY,--
+1324,Mode&Temp.&Power Timer3_4 Enalbe,M3_4 Enalbe,--,Read-write,--,BINARY,--
+1325,Mode&Temp.&Power Timer5_6 Enalbe,M5_6 Enalbe,--,Read-write,--,BINARY,--
+1326,Warm Water Cir. Pump Timer1 Start,W1 Start,--,Read-write,--,DIGI1,--
+1326-H,Warm Water Cir. Pump Timer1 Start-H,W1 Start-H,--,Read-write,--,DIGI1,0~23
+1326-L,Warm Water Cir. Pump Timer1 Start-L,W1 Start-L,--,Read-write,--,DIGI1,0~59
+1327,Warm Water Cir. Pump Timer1 End,W1 End,--,Read-write,--,DIGI1,--
+1327-H,Warm Water Cir. Pump Timer1 End-H,W1 End-H,--,Read-write,--,DIGI1,0~23
+1327-L,Warm Water Cir. Pump Timer1 End-L,W1 End-L,--,Read-write,--,DIGI1,0~59
+1328,Warm Water Cir. Pump Timer2 Start,W2 Start,--,Read-write,--,DIGI1,--
+1328-H,Warm Water Cir. Pump Timer2 Start-H,W2 Start-H,--,Read-write,--,DIGI1,0~23
+1328-L,Warm Water Cir. Pump Timer2 Start-L,W2 Start-L,--,Read-write,--,DIGI1,0~59
+1329,Warm Water Cir. Pump Timer2 End,W2 End,--,Read-write,--,DIGI1,--
+1329-H,Warm Water Cir. Pump Timer2 End-H,W2 End-H,--,Read-write,--,DIGI1,0~23
+1329-L,Warm Water Cir. Pump Timer2 End-L,W2 End-L,--,Read-write,--,DIGI1,0~59
+1330,Warm Water Cir. Pump Timer3 Start,W3 Start,--,Read-write,--,DIGI1,--
+1330-H,Warm Water Cir. Pump Timer3 Start-H,W3 Start-H,--,Read-write,--,DIGI1,0~23
+1330-L,Warm Water Cir. Pump Timer3 Start-L,W3 Start-L,--,Read-write,--,DIGI1,0~59
+1331,Warm Water Cir. Pump Timer3 End,W3 End,--,Read-write,--,DIGI1,--
+1331-H,Warm Water Cir. Pump Timer3 End-H,W3 End-H,--,Read-write,--,DIGI1,0~23
+1331-L,Warm Water Cir. Pump Timer3 End-L,W3 End-L,--,Read-write,--,DIGI1,0~59
+1332,Warm Water Cir. Pump Timer1_2 Enalbe,W1_2 Enalbe,--,Read-write,--,BINARY,--
+1333,Warm Water Cir. Pump Timer3 Enalbe,W3 Enalbe,--,Read-write,--,BINARY,--
+1334,SG Ready Application,SG01,--,Read-write,--,ENUM,0~2
+1335,Block Time of Mode 1,SG02,--,Read-write,--,DIGI1,0~120
+1336,Limited Power in Solar Low Mode 2,SG03,--,Read-write,--,DIGI5,0~99.9
+1337,Limited Power in Solar Medium Mode 3,SG04,--,Read-write,--,DIGI5,0~99.9
+1338,Additional hot water temp. in Mode 4,SG05,--,Read-write,--,TEMP,0~25
+1339,Additional heating water temp. in Mode 4,SG06,--,Read-write,--,TEMP,0~25
+1340,Additional Cooling water temp. in Mode 4,SG07,--,Read-write,--,TEMP,0~25
+1341,Turn on the electric heater immediately in Mode 4,SG08,--,Read-write,--,ENUM,0~1
+1342,Low Pressure of Limiting Frequency,A38,--,Read-write,0.0~20.0bar,DIGI5,0.0~20.0
+1343,Max. Current Value,A39,--,Read-write,0.0~50.0A,DIGI5,0.0~50.0
+1344,Rated Water Flow,A40,--,Read-write,0.00~9.99m³/h,DIGI9,0.00~9.99
+1345,External pump selection,H40,--,Read-write,0-Hot Water Pump/ 1-Warm Water Cir. Pump/ 2-Off signal when defrosting,ENUM,0~2
+1346,Password for unmodified parameters,H41,--,Read-write,--,DIGI1,66~999
+1347,Max. Comp. Frequency in DHW mode,C12,--,Read-write,30~C03Hz,DIGI1,30~$1220$
+1348,P of Comp. Frequency PID,C13,--,Read-write,--,DIGI1,0~10
+1349,I of Comp. Frequency PID,C14,--,Read-write,--,DIGI1,0~10
+1350,D of Comp. Frequency PID,C15,--,Read-write,--,DIGI1,0~10
+1351,P of EEV PID,E20,--,Read-write,--,DIGI1,0~10
+1352,I of EEV PID,E21,--,Read-write,--,DIGI1,0~10
+1353,Test11,Test11,--,Read-write,--,TEMP,-10.0~10.0
+1354,Test12,Test12,--,Read-write,--,TEMP,-10.0~10.0
+1355,Test9,Test9,--,Read-write,--,TEMP,-10.0~10.0
+1356,AT for bottom plate heater turned on,H42,--,Read-write,-20.0~20.0℃,TEMP,-20.0~20.0
+1357,Diff. of No Pump On at Low Water Temp.,Z19,--,Read-write,0~25℃,TEMP,0~25
+1358,Enable Zone 1 Water Pump in Cooling,Z20,--,Read-write,--,ENUM,0~1
+1371,Factory Test Mode,FT0,EnTestMode,Read-write,--,ENUM,0~3
+1372,Power,FT1,EnPowerTest,Read-write,--,ENUM,0~1
+1373,Mode,FT2,SetModeTest,Read-write,--,ENUM,--
+1374,Target Temp.,FT3,SetTargetTempTest,Read-write,--,TEMP,0.0~99.9
+1375,Compressor Frequency,FT4,SetCompFreqTest,Read-write,--,DIGI1,0~120
+1376,Target Speed of Fan1,FT5,SetTargetFan1SpeedTest,Read-write,--,DIGI1,0~1300
+1377,Target Speed of Fan2,FT6,SetTargetFan2SpeedTest,Read-write,--,DIGI1,0~1300
+1378,EEV Steps,FT7,SetEEVStepsTest,Read-write,--,DIGI1,0~550
+1379,EVI Steps,FT8,SetEVIStepsTest,Read-write,--,DIGI1,0~550
+1380,Speed of Circulation Pump,FT9,SetWaterPumpSpeedTest,Read-write,--,DIGI1,0~100
+1381,P99,P99,--,Read-write,--,DIGI1,0~100
+1382,End OT Cooling,DP2-temp,--,Read-write,4~25℃,TEMP,4~25
+1384,Offset dew point,DP3-TEMP,--,Read-write,-10~10℃,TEMP,-10~10
+1385,Dew point monitoring,DP1-temp,--,Read-write,0-NO 1-YES,ENUM,0~1
+1387,Dew point control function,DP1,--,Read-write,0-OFF/1-Temp. & Humidity Sensor/2-ON,ENUM,0~2
+1388,Dew Point Temp. Offset Value,DP2,--,Read-write,-10~10,TEMP,-10~10
+1389,Temp. diff. between indoor&outdoor temp. to stop,DP3,--,Read-write,4~25,TEMP,4~25
+1402,Min. Defrost Time,D29,--,Read-write,--,DIGI1,0~20
+1404,Enable Showing COP and Heating Output,H45,--,Read-write,0-No/1-Yes,ENUM,0~1
+1405,Unit Max. Power Limit,/,--,Read-write,0.0~99.9kW,DIGI5,0~99.9
+1422,Low PV Max. Load Ratio,EMS01,--,Read-write,0~100%,DIGI1,0~100
+1423,Colling Mode Target Temp. Compen.,EMS02,--,Read-write,0~20℃,TEMP,0~20
+1424,Heating Mode Target Temp. Compen.,EMS03,--,Read-write,0~20℃,TEMP,0~20
+1425,DHW Mode Target Temp. Compen.,EMS04,--,Read-write,0~20℃,TEMP,0~20
+1426,Zone Room Target Temp. Compen.,EMS05,--,Read-write,0~20℃,TEMP,0~20
+1427,Max. Selling Power,EMS06,--,Read-write,--,DIGI1,0~6000
+1429,Allow Disinfection in Standby & Off Mode,G06,--,Read-write,--,ENUM,0~1
+1431,test66,test66,--,Read-write,0~20.0,DIGI5,0~20
+1432,Target Temp. Diff. for Pump Speed Control,P11,--,Read-write,0~20℃,TEMP,0~20
+1433,Pump Speed Adjust Range for Each Period,P12,--,Read-write,0~10N,DIGI1,0~10
+1435,Refill Valve Start Cycle (for IDU),P13,--,Read-write,0~200days,DIGI1,0~200
+1436,Refill Valve Working Duration (for IDU),P14,--,Read-write,0~6000s,DIGI1,0~6000
+1437,Bottom Heater Delays Off Time after Defrost,D30,--,Read-write,0~60Min,DIGI1,0~60
+1438,Target Water Pressure (for IDU),P15,--,Read-write,0.0~20.0Bar,DIGI5,0.0~20.0
+1444,Stop Refilling Pressure Diff. (for IDU),P16,--,Read-write,0.0~5.0bar,DIGI5,0.0~5.0
+2011,Power State,Power State,--,Read-only,0-OFF/1-ON,ENUM,--
+2012,Mode State,ModeState,--,Read-only,0-Cooling/1-Heating/2-Defrost/3-Disinfection/4-Hot water,ENUM,--
+2013,Compressor Limit Temp.,2013,--,Read-only,Compensate Limit Temp,TEMP,--
+2014,HeatPump Standby Target Temp.,2014,--,Read-only,Compensate Set Temp,TEMP,--
+2015,2015,2015,--,Read-only,--,DIGI1,--
+2018,Load Output,O25,--,Read-only,--,BINARY,--
+2019,Load Output,O01~023,--,Read-only,--,BINARY,--
+2020,EEV Steps,O15,Sys1EEVSteps,Read-only,--,DIGI1,--
+2022,EVI EEV Steps,O17,Sys1EVIEEVSteps,Read-only,--,DIGI1,--
+2023,Number of startup times of the compressor,T57,--,Read-only,X times,DIGI1,--
+2024,Backup Heater Running Time in DHW Mode,T58,--,Read-only,Hour,DIGI1,--
+2025,Backup Heater Running Time in Heating mode,T59,--,Read-only,Hour,DIGI1,--
+2026,DSP_version,DSP_version,--,Read-only,--,DIGI1,--
+2027,PFC_version,PFC_version,--,Read-only,--,DIGI1,--
+2028,EEPROM,EEPROM,--,Read-only,--,DIGI1,--
+2029,InputCurrent1,InputCurrent1,--,Read-only,--,DIGI5,--
+2030,InputCurrent2,InputCurrent2,--,Read-only,--,DIGI5,--
+2031,InputCurrent3,InputCurrent3,--,Read-only,--,DIGI5,--
+2032,Compressor running time,T60,--,Read-only,h,DIGI1,--
+2034,Switch State,S01~S10,--,Read-only,--,BINARY,--
+2035,Heating Returning Water Temp.,T40,--,Read-only,--,TEMP,--
+2036,Heating Leaving Water Temp.,T41,--,Read-only,--,TEMP,--
+2037,Mix Tube Outlet Water Temp.,T42,--,Read-only,--,TEMP,--
+2038,DHW Returning Water Temp.,T43,--,Read-only,--,TEMP,--
+2039,DHW Leaving Water Temp.,T44,--,Read-only,--,TEMP,--
+2040,3rd IDU Dialing Status,S_IDU,--,Read-only,--,DIGI1,--
+2041,IDU.WaterPressure,IDU.WaterPressure,--,Read-only,--,DIGI5,--
+2042,Phase Current of Compressor,T36,Sys1CompCurrent,Read-only,--,DIGI5,--
+2043,DC Power Bus Voltage,T37,Sys1BusDCVoltage,Read-only,--,DIGI1,--
+2044,IPM Temp.,T38,Sys1IPMTemp,Read-only,--,TEMP,--
+2045,Inlet Water Temp.,T01,InletWaterTemp,Read-only,--,TEMP,--
+2046,Outlet Water Temp.,T02,OutletWaterTemp,Read-only,--,TEMP,--
+2047,DHW Tank Temp.,T08,WaterTankTemp,Read-only,--,TEMP,--
+2048,Ambient Temp. (AT),T04,AT,Read-only,--,TEMP,--
+2049,Coil Temp.,T03,Sys1Coil1Temp,Read-only,--,TEMP,--
+2050,Distributor Tube Temp.,T14,Sys1OTCTemp,Read-only,--,TEMP,--
+2051,Suction Temp.,T05,Sys1SuctionTemp,Read-only,--,TEMP,--
+2052,Buffer Tank Temp.,T07,--,Read-only,Buffer Tank Temp,TEMP,--
+2053,Exhaust Temp.,T12,Sys1ExhaustTemp,Read-only,--,TEMP,--
+2054,Power Input(ODU+IDU),Power In(Total),--,Read-only,kW,DIGI5,--
+2055,Antifreeze Temp.,T06,--,Read-only,--,TEMP,--
+2057,AC Input Current,T35,--,Read-only,AC input current,DIGI5,--
+2058,Room Temp.,T09,--,Read-only,--,TEMP,--
+2059,Capacity Output(ODU+IDU),Capacity Out(Total),--,Read-only,kW,DIGI5,--
+2060,COP/EER(ODU+IDU),COP/EER(Total),--,Read-only,--,DIGI9,--
+2061,IPM High Fault Temp.,T33,--,Read-only,--,TEMP,--
+2062,AC Input Voltage,T34,--,Read-only,--,DIGI1,--
+2063,EVI Inlet Temp.,T10,Sys1EVIInletTemp,Read-only,--,TEMP,--
+2064,EVI Outlet Temp.,T11,Sys1EVIOutletTemp,Read-only,--,TEMP,--
+2065,Evaporation Temperature,T49,--,Read-only,--,TEMP,--
+2066,Exhaust Superheat,T50,--,Read-only,--,TEMP,--
+2067,Superheat,T51,--,Read-only,--,TEMP,--
+2068,Outlet Temp. after Electric Heater,T55,--,Read-only,--,TEMP,--
+2069,Low Pressure,T15,Sys1LowPressure,Read-only,--,DIGI5,--
+2071,Compressor Frequency,T30,--,Read-only,--,DIGI1,--
+2072,Operation Frequency of Compressor,T31,Sys1CompWorkingFreq,Read-only,--,DIGI1,--
+2073,Max. Frequency from Comp. Driver,T32,--,Read-only,--,DIGI1,--
+2074,Speed of Fan Motor 1,T27,Sys1ACFan1RealSpeed,Read-only,--,DIGI1,--
+2075,Speed of Fan Motor 2,T28,Sys1ACFan2RealSpeed,Read-only,--,DIGI1,--
+2076,Target Speed of Fan Motor,T29,--,Read-only,--,DIGI1,--
+2077,Water Flow Rate,T39,WaterFlowRateState,Read-only,--,DIGI9,--
+2078,Comsuption Power-H,Comsuption Power-H,--,Read-only,--,DIGI1,--
+2078+9,Comsuption Power,Comsuption Power,--,Read-only,Kw*h,DIGI1,--
+2079,Comsuption Power-L,Comsuption Power-L,--,Read-only,--,DIGI1,--
+2080,Driver Board Status,Driver Board Status,--,Read-only,--,DIGI1,--
+2081,Fault7,Fault7,--,Read-only,Fault,BINARY,--
+2082,Fault8,Fault8,--,Read-only,Fault,BINARY,--
+2083,Fault9,Fault9,--,Read-only,Fault,BINARY,--
+2084,Fault10,Fault10,--,Read-only,Fault,BINARY,--
+2085,Fault1,Fault1,--,Read-only,Fault,BINARY,--
+2086,Fault2,Fault2,--,Read-only,Fault,BINARY,--
+2087,Fault3,Fault3,--,Read-only,Fault,BINARY,--
+2088,Fault4,Fault4,--,Read-only,Fault,BINARY,--
+2089,Fault5,Fault5,--,Read-only,Fault,BINARY,--
+2090,Fault6,Fault6,--,Read-only,Fault,BINARY,--
+2104,Code Version,code_version,MainBoardSoftwareVer,Read-only,code_version,DIGI5,--
+2105,MainBoard Version,MainBoard Version,--,Read-only,--,DIGI1,--
+2108,Silent_Mode,Silent_Mode,--,Read-only,--,DIGI1,--
+2110,unsupported_mode,unsupported_mode,--,Read-only,--,DIGI1,--
+2111,Display_Program_Code,Display_Program_Code,--,Read-only,--,DIGI1,--
+2112,Display_Program_Version,Display_Program_Version,DisplayVer,Read-only,--,DIGI1,--
+2113,Display Firmware Version,Display Firmware Ver,--,Read-only,--,DIGI1,--
+2114,testxx,testxx,--,Read-only,--,DIGI1,--
+2115,Main Pump Speed Output PWM Duty,T_PWM_Out,--,Read-only,--,DIGI1,--
+2116,Main Pump Feedback PWM Duty,T_PWM_IN,--,Read-only,--,DIGI1,--
+2117,Heating Consumption H(ODU),Heating Con.H(ODU),--,Read-only,kW*h,DIGI1,--
+2117+8,Heating Consumption(ODU),Heating Con.(ODU),--,Read-only,kW*h,DIGI1,--
+2118,Heating Consumption L(ODU),Heating Con.L(ODU),--,Read-only,kW*h,DIGI1,--
+2119,Heating Generated H(ODU),Heating Gen.H(ODU),--,Read-only,kW*h,DIGI1,--
+2119+8,Heating Generated(ODU),Heating Gen.(ODU),--,Read-only,kW*h,DIGI1,--
+2120,Heating Generated L(ODU),Heating Gen.L(ODU),--,Read-only,--,DIGI1,--
+2121,Cooling Consumption H(ODU),Cooling Con. H(ODU),--,Read-only,kW*h,DIGI1,--
+2121+8,Cooling Consumption(ODU),Cooling Con.(ODU),--,Read-only,DIGI1,DIGI1,--
+2122,Cooling Consumption L(ODU),Cooling Con. L(ODU),--,Read-only,kW*h,DIGI1,--
+2123,Cooling Generated H(ODU),Cooling Gen.H(ODU),--,Read-only,kW*h,DIGI1,--
+2123+8,Cooling Generated(ODU),Cooling Gen.(ODU),--,Read-only,kW*h,DIGI1,--
+2124,Cooling Generated L(ODU),Cooling Gen.L(ODU),--,Read-only,kW*h,DIGI1,--
+2125,DHW Consumption H(ODU),DHW Con. H(ODU),--,Read-only,kW*h,DIGI1,--
+2125+8,DHW Consumption(ODU),DHW Con.(ODU),--,Read-only,kW*h,DIGI1,--
+2126,DHW Consumption L(ODU),DHW Con. L(ODU),--,Read-only,kW*h,DIGI1,--
+2127,DHW Generated H(ODU),DHW Gen.H(ODU),--,Read-only,kW*h,DIGI1,--
+2127+8,DHW Generated(ODU),DHW Gen.(ODU),--,Read-only,kW*h,DIGI1,--
+2128,DHW Generated L(ODU),DHW Gen.L(ODU),--,Read-only,kW*h,DIGI1,--
+2130,Exernal Fan Motor Driver IPM Temp.,T46,--,Read-only,--,TEMP,--
+2131,Exernal Fan Motor Driver Power,T47,--,Read-only,--,DIGI1,--
+2132,Exernal Fan Motor Driver Current,T48,--,Read-only,--,DIGI6,--
+2133,SG_Ready Status,SG_Ready Status,--,Read-only,--,ENUM,--
+2134,Mode&Temp.&Power Timer Status,Mode&Temp. Status,--,Read-only,--,ENUM,--
+2136,AT_Temp,AT_Temp,--,Read-only,--,TEMP,--
+2137,Power Input(ODU),Power In(ODU),--,Read-only,kW,DIGI5,--
+2138,Capacity Output(ODU),Capacity Out(ODU),--,Read-only,kW,DIGI5,--
+2139,Mainboard Freq. status,Main Freq. status,--,Read-only,--,DIGI1,--
+2140,Heating Consumption/Generated H(IDU),Heating Con.H(IDU),--,Read-only,kW*h,DIGI1,--
+2140+41,Heating Consumption/Generated(IDU),Heating Con.(IDU),--,Read-only,kW*h,DIGI1,--
+2141,Heating Consumption/Generated L(IDU),Heating Con.L(IDU),--,Read-only,kW*h,DIGI1,--
+2142,DHW Consumption/Generated H(IDU),DHW Con. H(IDU),--,Read-only,kW*h,DIGI1,--
+2142+2143,DHW Consumption/Generated(IDU),DHW Con.(IDU),--,Read-only,kW*h,DIGI1,--
+2143,DHW Consumption/Generated L(IDU),DHW Con. L(IDU),--,Read-only,kW*h,DIGI1,--
+2144,DisplayCommSucess,DisplayCommSucess,--,Read-only,%,DIGI1,--
+2145,InverterCommSucess,InverterCommSucess,--,Read-only,%,DIGI1,--
+2147,Capacity Output(IDU),Capacity Out(IDU),--,Read-only,kW,DIGI5,--
+2148,BufferTank Outlet(Test),T_Test01,--,Read-only,--,TEMP,--
+2149,BufferTank Inlet(Test),T_Test02,--,Read-only,--,TEMP,--
+2150,2150,2150,--,Read-only,--,DIGI1,--
+2151,EMS Strategy Command,EMS Strategy Command,--,Read-only,--,DIGI1,--
+2152,EMS_State,EMS_State,--,Read-only,--,DIGI1,--
+2153,Electricity_Price,Electricity_Price,--,Read-only,--,TEMP,--
+2154,OnGrid Power,OnGrid Power,--,Read-only,--,DIGI6,--
+2155,BatterySoC,BatterySoC,--,Read-only,--,DIGI5,--
+2156,BatteryPower,BatteryPower,--,Read-only,--,DIGI6,--
+2157,PV_Power,PV_Power,--,Read-only,--,DIGI6,--
+2158,NaturalGasPrice,NaturalGasPrice,--,Read-only,--,DIGI9,--
+2160,Zone 1 Room Temp,Zone 1 Room Temp,--,Read-only,--,TEMP,--
+2161,Zone 2 Mixing Temp,Zone 2 Mixing Temp,--,Read-only,--,TEMP,--
+2162,Zone 2 Room Temp,Zone 2 Room Temp,--,Read-only,--,TEMP,--
+2163,Zone 2 Mixing Valve Percentage,Zone 2 Mixing Valve,--,Read-only,--,DIGI1,--
+2164,Zone 1 Water Target,Zone 1 Water Target,--,Read-only,--,TEMP,--
+2165,Zone 2 Water Target,Zone 2 Water Target,--,Read-only,--,TEMP,--
+2166,zone_mixingvalve_operation_cnt,zone_mixingvalve_operation_cnt,--,Read-only,zone_mixingvalve_operation_cnt,DIGI1,--
+2178,Indoor Temp.,DP4,--,Read-only,--,TEMP,--
+2179,Indoor Humidity,DP5,--,Read-only,--,TEMP,--
+2180,Dew Point Temp.,DP6,--,Read-only,--,TEMP,--
+5091,P,L01,--,Read-write,0~99.0,DIGI5,0~99.0
+5092,I,L02,--,Read-write,0~99.0,DIGI5,0~99.0
+5093,D,L03,--,Read-write,0~99.0,DIGI5,0~99.0
+5094,Cycle of PID,L04,--,Read-write,0~100min,DIGI1,0~100
+5095,Percentage of Units Allowed to Defrost,L05,--,Read-write,0~100%,DIGI1,0~100
+5096,Quantity of Units in The Project,L06,--,Read-write,1~16,DIGI1,1~16
+5097,Temp. Control Selection,L07,--,Read-write,--,ENUM,0~2
+5098,Low Diff. Value of Optimal Load Ratio,L08,--,Read-write,-100~100%,Float,-100~100
+5099,High Diff. Value of Optimal Load Ratio,L09,--,Read-write,-100~100%,Float,-100~100
+5100,Power,L10,--,Read-write,--,ENUM,0~1
+5101,Mode,L11,--,Read-write,--,ENUM,0~4
+5102,Cooling Target Temp.,L12,--,Read-write,L15~L16,TEMP,$5106$~$5105$
+5103,Heating Target Temp.,L13,--,Read-write,L17~L18,TEMP,$5108$~$5107$
+5104,DHW Target Temp.,L14,--,Read-write,L19~L20,TEMP,$5110$~$5109$
+5105,Max. Cooling Target Temp.,L15,--,Read-write,-30.0~80℃,TEMP,-30~80
+5106,Min. Cooling Target Temp.,L16,--,Read-write,-30.0~80℃,TEMP,-30~80
+5107,Max. Heating Target Temp.,L17,--,Read-write,-30~90℃,TEMP,-30~90
+5108,Min. Heating Target Temp.,L18,--,Read-write,-30~90℃,TEMP,-30~90
+5109,Max. DHW Target Temp.,L19,--,Read-write,0~85℃,TEMP,0~85
+5110,Min. DHW Target Temp.,L20,--,Read-write,0~85℃,TEMP,0~85
+5111,Supported Mode of Project,L21,--,Read-write,--,ENUM,1~6
+5112,Enable weather compensation,L22,--,Read-write,--,ENUM,0~1
+5113,Slope,L23,--,Read-write,0~3.5,DIGI5,0~3.5
+5114,Offset,L24,--,Read-write,0~85,TEMP,0~85
+5115,Enable Energy level coordination,L25,--,Read-write,--,ENUM,0~1
+5116,Location of Electric Heater,L26,--,Read-write,0-【Not Available】/1-【Main Water Circuit】/2-【DHW Tank】/3-【Buffer Tank】,ENUM,0~3
+5117,Electric Heater Stage,L27,--,Read-write,1-【Stage1】/2-【Stage2】/3-【Stage3】,ENUM,1~3
+5118,Electric Heater On AT,L28,--,Read-write,-30~60℃,TEMP,-30~60
+5119,Electric Heater Delays On Time,L29,--,Read-write,10~999min,DIGI1,10~999
+5120,Electric Heater Forced On Time,L30,--,Read-write,10~1440min,DIGI1,10~1440
+5121,AT to Start Electric Heater Without Delay,L31,--,Read-write,-30~60℃,TEMP,-30~60
+5122,Electric Heater Off Temp. Diff,L32,--,Read-write,0-20℃,TEMP,0~20
+5123,Electric Heater Opening Temp.Diff,L33,--,Read-write,0-20℃,TEMP,0~20
+5124,Electric Heater On Load,L34,--,Read-write,0~100%,DIGI1,0~100
+5136,Centralized Control Software Code,L40,--,Read-only,--,DIGI1,--
+5137,Centralized Control Version,L41,--,Read-only,--,DIGI1,--
+5138,Operating Units,L42,--,Read-only,--,DIGI1,--
+5139,Average Frequency of Running,L43,--,Read-only,--,DIGI1,--
+5140,Average Load Ratio,L44,--,Read-only,--,DIGI1,--
+5141,Average Inlet Water Temp. of Running,L45,--,Read-only,--,TEMP,--
+5142,Average Outlet Water Temp. of Running,L46,--,Read-only,--,TEMP,--
+5143,DHW Tank Temp.,L47,--,Read-only,--,TEMP,--
+5144,Quantity of Units to Defrosting,L48,--,Read-only,--,DIGI1,--
+5145,Quantity of Units in Defrosting,L49,--,Read-only,--,DIGI1,--
+5146,PID Out Value,L50,--,Read-only,--,DIGI1,--
+5148,If change the unit mode,L52,--,Read-only,--,DIGI1,--
+5150,JK Power,L53,--,Read-only,--,ENUM,--
+5151,JK Run Mode,L54,--,Read-only,--,ENUM,--
+5152,OneKeyFlag,L56,--,Read-only,--,DIGI1,--
+5153,UnitCommFalutFlag,L57,--,Read-only,--,DIGI1,--
+5154,Communication Fault Rate,L58,--,Read-only,0~100%,DIGI1,--
+5155,SG Run Mode,L65,--,Read-only,0-No/1-MODE 1/2-MODE 2/3-MODE 3/4-MODE 4/5-NORMAL MODE,DIGI1,--
+5156,BMS Communication Enabled,L66,--,Read-only,0-NO/1-YES,DIGI1,--
+7001,Thermostat1_Power,RT1-1,--,Read-write,--,ENUM,0~1
+7002,Thermostat1_RoomTarget,RT1-2,--,Read-write,--,TEMP,8~30
+7003,Thermostat1_Zone_Selection,RT1-3,--,Read-write,--,ENUM,1~2
+7004,Thermostat1_Mode,Thermostat1_Mode,--,Read-write,--,ENUM,0~4
+7005,Thermostat1_Mute,Thermostat1_Mute,--,Read-write,--,ENUM,0~1
+7006,Thermostat1_EnvTemp,Thermostat1_EnvTemp,--,Read-only,--,TEMP,--
+7008,Thermostat1_Slope,RT1-9,--,Read-write,0.0~3.5,DIGI5,0~3.5
+7009,Thermostat1_Offset,RT1-10,--,Read-write,8~30℃,TEMP,8~30
+7060,Thermostat1_Code,RT1-4,--,Read-only,--,DIGI1,--
+7061,Thermostat1_Version,RT1-5,--,Read-only,--,DIGI1,--
+7062,Thermostat1_Selection,RT1-6,--,Read-only,--,BINARY,--
+7063,Thermostat1_RoomTemp,RT1-7,--,Read-only,--,TEMP,--
+7064,Thermostat1_NeedOn,RT1-8,--,Read-only,--,ENUM,--
+7065,Thermostat1_StateTarget,RT1-11,--,Read-only,--,TEMP,--
+7066,Thermostat1_MuteStatus,Thermostat1_MuteStatus,--,Read-only,--,ENUM,--
+7080,RT1-Fault,RT1-Fault,--,Read-only,--,DIGI1,--
+7091,Thermostat2_Power,RT2-1,--,Read-write,--,ENUM,0~1
+7092,Thermostat2_RoomTarget,RT2-2,--,Read-write,8~30℃,TEMP,8~30
+7093,Thermostat2_Zone_Selection,RT2-3,--,Read-write,1~2,ENUM,1~2
+7094,Thermostat2_Mode,Thermostat2_Mode,--,Read-write,--,ENUM,0~4
+7095,Thermostat2_Mute,Thermostat2_Mute,--,Read-write,--,ENUM,0~1
+7096,Thermostat2_EnvTemp,Thermostat2_EnvTemp,--,Read-only,--,TEMP,--
+7098,Thermostat2_Slope,RT2-9,--,Read-write,0.0~3.5,DIGI5,0~3.5
+7099,Thermostat2_Offset,RT2-10,--,Read-write,8~30℃,TEMP,8~30
+7150,Thermostat2_Code,RT2-4,--,Read-only,--,DIGI1,--
+7151,Thermostat2_Version,RT2-5,--,Read-only,--,DIGI1,--
+7152,Thermostat2_Selection,RT2-6,--,Read-only,--,ENUM,--
+7153,Thermostat2_RoomTemp,RT2-7,--,Read-only,--,TEMP,--
+7154,Thermostat2_NeedOn,RT2-8,--,Read-only,--,ENUM,--
+7155,Thermostat2_StateTarget,RT2-11,--,Read-only,--,ENUM,--
+7170,RT2-Fault,RT2-Fault,--,Read-only,--,DIGI1,--
+8001,EMS Strategy,EMS Strategy,--,Read-write,Command0~Command4,DIGI1,0~4
+8002,Electricity Price,Electricity Price,--,Read-write,--,TEMP,--
+8003,Battery Power,Battery Power,--,Read-write,--,Float,--
+8004,OnGridPower,OnGridPower,--,Read-write,--,Float,--
+8005,Battery SoC,Battery SoC,--,Read-write,0.0~100.0%,DIGI5,0~100
+8006,Power Limit,EMS07,--,Read-write,0.0~99.9kW,DIGI5,0~99.9
+8007,PV Power,PV Power,--,Read-only,--,Float,--
+8008,Natural Gas Price,Natural Gas Price,--,Read-only,--,DIGI9,--
+8010,Fault,Fault,--,Read-write,--,DIGI1,--

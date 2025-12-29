@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.env
+.venv/
+venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# APK decompiled resources (large, not needed for HA integration)
+decompiled/
+java/
+kotlin/
+lib/
+META-INF/
+res/
+assets/
+
+# Properties files (from APK)
+*.properties
+
+# Proto files
+*.proto
+
+# Test files with credentials
+test_warmlink_api.py
+test_warmlink_verified.py
+capture_warmlink.py
+
+# Other APK artifacts
+AndroidManifest.xml
+*.bks
+*.list

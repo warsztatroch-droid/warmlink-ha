@@ -1,0 +1,667 @@
+uploadDealersHeadIcon: "cloudservice/api/dealers/uploadDealersHeadIcon",
+      getPlatformStatus: "phnix-state/phnixState.json",
+      dictinfo_code: "cloudservice/api/dictinfo/querydictinfobycode",
+      show_product: "cloudservice/api/device/bindingProductShow",
+      get_newUserCount: "cloudservice/api/adminUser/newUserCount",
+      get_newDeviceCount: "cloudservice/api/device/getDeviceActiveCount",
+      get_newFaultCount: "cloudservice/api/iotDataFault/getNewFaultCount",
+      get_all_btn_role:
+        "cloudservice/api/organization/getAllDealersApplicationRoleByUserId",
+      news_subscription: "cloudservice/api/wechat/seqMsg",
+      cancel_subscription: "cloudservice/api/wechat/cancelSeqMsg",
+      check_user_subscription: "cloudservice/api/wechat/getSeqMsgByUserId",
+      check_user_isfollow: "cloudservice/api/wechat/isFollow",
+      pageListAfterCountDeviceOffline:
+        "cloudservice/api/device/behaviour/pageListAfterCountDeviceOffline",
+      updateDevicePushConfig:
+        "cloudservice/api/dealersPush/updateDevicePushConfig",
+      devicePushInfo_list: "cloudservice/api/dealersPush/listDevicePushInfo",
+      getDevicePushConfig: "cloudservice/api/dealersPush/getDevicePushConfig",
+      pageListByDeviceCode:
+        "cloudservice/api/device/behaviour/pageListByDeviceCode",
+      getDataByCode: "cloudservice/api/device/getDataByCode",
+      getSelectDeviceSendEmailById:
+        "cloudservice/api/fault/overseas/sendMail/selectDeviceSendEmailById",
+      deleteDeviceSendEmailById:
+        "cloudservice/api/fault/overseas/sendMail/deleteDeviceSendEmailById",
+      updateDeviceSendEmailById:
+        "cloudservice/api/fault/overseas/sendMail/updateDeviceSendEmailById",
+      getQueryAllSendMail:
+        "cloudservice/api/fault/overseas/sendMail/queryAllSendMail",
+      batchOperateSendMail:
+        "cloudservice/api/fault/overseas/sendMail/batchOperateSendMail",
+      getCodeNumberList:
+        "cloudservice/api/code/rel/number/listPageCodeNumberRel",
+      getCurveDataByTime: "cloudservice/api/device/getHistoryTimes",
+      camera_query: "cloudservice/api/projectCamera/pageList",
+      camera_update: "cloudservice/api/projectCamera/update",
+      device_query: "cloudservice/api/device/queryDevice",
+      device_querys_new: "cloudservice/api/device/v4/queryDevice",
+      device_query_new: "cloudservice/api/device/queryDeviceNew",
+      addUserFilterLogic: "cloudservice/api/device/addUserFilterLogic",
+      getUserFilterLogic: "cloudservice/api/device/getUserFilterLogic",
+      updateUserFilterLogic: "cloudservice/api/device/updateUserFilterLogic",
+      device_query_by_deviceCode:
+        "cloudservice/api/device/query_device_by_deviceCode",
+      device_delete: "cloudservice/api/device/deleteDevice",
+      device_create: "cloudservice/api/device/createDevice",
+      device_update: "cloudservice/api/device/updateDevice",
+      device_add_send_mail:
+        "cloudservice/api/fault/overseas/sendMail/addDeviceSendMail",
+      device_byId: "cloudservice/api/device/queryDeviceById",
+      device_byIds: "cloudservice/api/device/v3/queryDeviceById",
+      product_getAll: "cloudservice/api/product/getAllProduct",
+      device_byProjectId: "cloudservice/api/device/getByProjectId",
+      relate_devPro: "cloudservice/api/device/relateDeviceAndProject",
+      device_getStatus:
+        "cloudservice/api/device/getDeviceStatusMgsByDeviceCode",
+      device_faultData_query: "cloudservice/api/device/queryFaultDevice",
+      listAllDeviceFault: "cloudservice/api/device/v4/listAllDeviceFault",
+      device_audit_state_update: "cloudservice/api/deviceReviewRecord/update",
+      create_audit_record: "cloudservice/api/deviceReviewRecord/create",
+      device_audit_list: "cloudservice/api/deviceReviewRecord/query",
+      product_modelId: "cloudservice/api/product/getModelInfoByProductId",
+      lockDevice: "cloudservice/api/device/lockDevice",
+      unLockDevice: "cloudservice/api/phnixiot/unLockDevice",
+      unLockDeviceByK: "cloudservice/api/phnixiot/unLockDeviceByK",
+      unLockDeviceForInspection:
+        "cloudservice/api/phnixiot/unLockDeviceForInspection",
+      lockDeviceForInspection:
+        "cloudservice/api/phnixiot/lockDeviceForInspection",
+      unLockDeviceByKForInspection:
+        "cloudservice/api/phnixiot/unLockDeviceByKForInspection",
+      checkDeviceLockRecord: "cloudservice/api/deviceLockRecord/pageList",
+      getProductModel: "cloudservice/api/device/fault/getProductModel",
+      batchUnLockDevice: "cloudservice/api/phnixiot/batchUnLockDevice",
+      getWarranty: "cloudservice/api/device/fault/getWarranty",
+      get_address: "cloudservice/api/protocal/getAddressRangeByProtocalId",
+      config_address:
+        "cloudservice/api/productConfig/updateProductConfigAddress",
+      config_state: "cloudservice/api/productConfig/updateProductConfigState",
+      config_show: "cloudservice/api/productConfig/showProductConfig",
+      product_configOne:
+        "cloudservice/api/productConfig/updateProductConfigOne",
+      product_configMore:
+        "cloudservice/api/productConfig/createProductConfigMore",
+      state_configOne: "cloudservice/api/productConfig/getStateOneConfigV1",
+      state_configMore:
+        "cloudservice/api/productConfig/getStateMoreConfigByIdsV1",
+      get_moreConfigInfo: "cloudservice/api/productConfig/getMoreConfigInfo",
+      delete_state_configMore:
+        "cloudservice/api/productConfig/deleteStateMoreConfig",
+      get_config_byId:
+        "cloudservice/api/productConfig/getProductConfigModelById",
+      get_configMore_byId:
+        "cloudservice/api/productConfig/getMoreConfigModelByMoreConfigId",
+      update_configMore: "cloudservice/api/productConfig/updateMoreConfigModel",
+      refreshDeviceStatus: "cloudservice/api/device/refreshDeviceStatus",
+      get_addressInfo:
+        "cloudservice/api/device/getControlDetailStatusByDeviceCode",
+      getEnumDataByDetailId: "cloudservice/api/protocal/getEnumDataByDetailId",
+      get_configInfo: "cloudservice/api/productConfig/getAddressInfo",
+      getParameterValue: "cloudservice/api/device/getParameterChanges",
+      get_controlData: "cloudservice/api/device/getDeviceControlData",
+      switch_controlUpdate:
+        "cloudservice/api/device/updateDeviceControlSwithSate",
+      model_valueUpdate:
+        "cloudservice/api/device/updateDeviceControlModelValue",
+      model_dataUpdate: "cloudservice/api/device/updateDeviceControlModelData",
+      get_writeParam:
+        "cloudservice/api/device/getControlParamConfigByDeviceCode",
+      listStatusOrControlParamByDeviceCode:
+        "cloudservice/api/device/v4/listStatusOrControlParamByDeviceCode",
+      createDeviceContorlConfigData:
+        "cloudservice/api/device/createDeviceContorlConfigData",
+      DetailHistByHistId:
+        "cloudservice/api/protocal/getProtocalDetailHistByHistId",
+      updateProtocalFaultParamDesc:
+        "cloudservice/api/protocal/updateProtocalFaultParamDesc",
+      getBINARY: "cloudservice/api/protocal/getProtocalParamByDetailIdDistinct",
+      saveBINARY:
+        "cloudservice/api/device/createDeviceContorlConfigDataWithBinary",
+      resetDefaultValue: "cloudservice/api/productConfig/resetDefaultValue",
+      inventory_query: "cloudservice/api/device/getStock",
+      inventory_query_V2: "cloudservice/api/device/v2/getStock",
+      bind_inventory_device: "cloudservice/api/device/bound",
+      exportDeviceTemp: "cloudservice/api/device/exportDeviceTemp",
+      insertDeviceTempv2: "cloudservice/api/device/v2/insertDeviceTemp",
+      syncSnAndModelJob: "cloudservice/api/device/v2/syncSnAndModelJob",
+      getReportdevice: "cloudservice/api/phnixiot/getReportdevice",
+      updateReportdevice: "cloudservice/api/phnixiot/updateReportdevice",
+      listExceptionDevice: "cloudservice/api/device/listExceptionDevice",
+      sendDevicePassthroughInstructionV2:
+        "cloudservice/api/device/sendDevicePassthroughInstructionV2",
+      publishMsgToDeviceByOtaGet:
+        "cloudservice/api/device/publishMsgToDeviceByOtaGet",
+      sendDevicePassthroughInstruction:
+        "cloudservice/api/device/sendDevicePassthroughInstruction",
+      getRepairGuide: "cloudservice/api/repair/selectRepairGuide",
+      createRepairGuide: "cloudservice/api/repair/createRepairGuide",
+      repairGuide_delete: "cloudservice/api/repair/deleteRepairGuide",
+      updateRepairGuide: "cloudservice/api/repair/updateRepairGuide",
+      importRepairGuide_Excel: "cloudservice/api/repair/repairGuideImportExcel",
+      repairGuideExportExcel: "cloudservice/api/repair/exportExcel",
+      queryOrder:
+        "cloudservice/api/fault/overseas/order/info/listPageFaultOrderInfo",
+      queryRepairList:
+        "cloudservice/api/fault/overseas/order/info/listPageRepairOrderInfo",
+      updateOrderInfo:
+        "cloudservice/api/fault/overseas/order/info/updateOrderInfo",
+      updateOrderStatus:
+        "cloudservice/api/fault/overseas/order/info/updateOrderStatus",
+      getFaultPushFaultReason:
+        "cloudservice/api/fault/overseas/push/getFaultPushFaultReason",
+      updateFaultPushRules:
+        "cloudservice/api/fault/overseas/push/updateFaultPush",
+      initializeFaultPushRules:
+        "cloudservice/api/fault/overseas/push/faultPushInitialize",
+      queryFaultPushRules:
+        "cloudservice/api/fault/overseas/push/listPageFaultPush",
+      getFaultPushRulesById:
+        "cloudservice/api/fault/overseas/push/getFaultPushById",
+      updateMonitorFault: "cloudservice/api/dealers/updateMonitorFault",
+      queryOrderLog:
+        "cloudservice/api/fault/overseas/order/log/listPageOrderLog",
+      queryWarningLog:
+        "cloudservice/api/fault/overseas/export/eu/listPageExportEu",
+      queryRepairGuideRule:
+        "cloudservice/api/repair/guide/rule/listPageRepairGuideRule",
+      updateRepairGuideRule:
+        "cloudservice/api/repair/guide/rule/updateRepairGuideRule",
+      getRepairGuideRuleById:
+        "cloudservice/api/repair/guide/rule/getRepairGuideRuleById",
+      insertFaultExportEu:
+        "cloudservice/api/fault/overseas/export/eu/insertFaultExportEu",
+      getFaultOrderInfoById:
+        "cloudservice/api/fault/overseas/order/info/getFaultOrderInfoById",
+      queryFaultOrderPerson:
+        "cloudservice/api/fault/overseas/order/person/listWorkOrderProcessor",
+      transferredOrder:
+        "cloudservice/api/fault/overseas/order/info/transferred",
+      countFaultOrderGroupByOrderStatus:
+        "cloudservice/api/fault/overseas/order/info/countFaultOrderGroupByOrderStatus",
+      fault_now: "cloudservice/api/iotDataFault/getByIdAndCode",
+      fault_history: "cloudservice/api/iotDataFault/getHistoryInfo",
+      getInspectFault: "cloudservice/api/iotDataFault/getDeletedFaultInfo",
+      update_recoverTime: "cloudservice/api/iotDataFault/updateRecoverTime",
+      fault_define: "cloudservice/api/faultDef/getFaultType",
+      getFaultCode:
+        "cloudservice/api/protocal/listFaultInfoOfProtocolParamByProductId",
+      fault_queryDef: "cloudservice/api/faultDef/queryFaultDef",
+      fault_byCodeAndTime: "cloudservice/api/faultDef/getByCodeAndTime",
+      fault_update: "cloudservice/api/faultDef/updateFaultDef",
+      query_series: "cloudservice/api/productGroup/pageList",
+      add_series: "cloudservice/api/productGroup/insert",
+      update_series: "cloudservice/api/productGroup/update",
+      query_series_by_id: "cloudservice/api/productGroup/load",
+      product_query: "cloudservice/api/product/queryProduct",
+      product_queryV1: "cloudservice/api/tm/product/pageProductV1",
+      product_delete: "cloudservice/api/product/deleteProduct",
+      product_create: "cloudservice/api/tm/product/createProductV2",
+      product_update: "cloudservice/api/product/updateProduct",
+      product_refreshMns: "cloudservice/api/product/refreshMns",
+      product_byId: "cloudservice/api/product/queryProductById",
+      createPointCard: "cloudservice/api/pointCardConfig/createPointCardConfig",
+      updatePointCard: "cloudservice/api/pointCardConfig/updatePointCardConfig",
+      delPointCard: "cloudservice/api/pointCardConfig/deletePointCardConfig",
+      addProductSnapshotCurve:
+        "cloudservice/api/device/snapshot/addShowDataConfig",
+      editProductSnapshotCurve:
+        "cloudservice/api/device/snapshot/updateShowDataConfig",
+      getProductSnapshotCurve:
+        "cloudservice/api/device/snapshot/selectShowDataConfig",
+      delProductSnapshotCurve:
+        "cloudservice/api/device/snapshot/delShowDataConfig",
+      getSnapshotCurveData:
+        "cloudservice/api/device/snapshot/v2/selectShowCurveData",
+      addProductSnapshot: "cloudservice/api/device/snapshot/insert",
+      getSnapshotList: "cloudservice/api/device/snapshot/pageList",
+      getSnapshotDetailById: "cloudservice/api/device/snapshot/load",
+      updateSnapshotInfoById: "cloudservice/api/device/snapshot/update",
+      delSnapshotInfoById: "cloudservice/api/device/snapshot/delete",
+      getSnapshotDetailByIdOrDeviceCode:
+        "cloudservice/api/device/snapshot/dataList",
+      dataListDiff: "cloudservice/api/device/snapshot/dataListDiff",
+      dataListDiffWithMultiple:
+        "cloudservice/api/device/snapshot/dataListDiffWithMultiple",
+      selectCollectData: "cloudservice/api/device/snapshot/selectCollectData",
+      pageListSnapshotAdvancedConfig:
+        "cloudservice/api/device/snapshot/pageListSnapshotAdvancedConfig",
+      insertSnapshotAdvancedConfig:
+        "cloudservice/api/device/snapshot/insertSnapshotAdvancedConfig",
+      updateSnapshotAdvancedConfig:
+        "cloudservice/api/device/snapshot/updateSnapshotAdvancedConfig",
+      queryBatchModifyParameters:
+        "cloudservice/api/product/queryBatchModifyParameters",
+      updateBatchModifyParameters:
+        "cloudservice/api/product/updateBatchModifyParameters",
+      sieveBatchModifyParameters:
+        "cloudservice/api/product/sieveBatchModifyParameters",
+      createBatchModifyParameters:
+        "cloudservice/api/product/createBatchModifyParameters",
+      importBatchModifyParameters:
+        "cloudservice/api/product/v3/createBatchModifyParameters",
+      isExistProductAddress: "cloudservice/api/product/isExistProductAddress",
+      queryBatchTaskDetail: "cloudservice/api/product/queryBatchTaskDetail",
+      queryProtocalErrorMean:
+        "cloudservice/api/protocal/queryProtocalErrorMean",
+      setProductStep: "cloudservice/api/tm/product/updateSchedule",
+      configProductParams:
+        "cloudservice/api/protocal/batchConfigCustomerParametersList",
+      product_byIdV1: "cloudservice/api/tm/product/getProductV1",
+      product_updateV1: "cloudservice/api/tm/product/updateProductV1",
+      query_product_topic: "cloudservice/api/product/topic/queryTopic",
+      add_product_topic: "cloudservice/api/product/topic/createTopic",
+      edit_product_topic: "cloudservice/api/product/topic/updateTopic",
+      del_product_topic: "cloudservice/api/product/topic/deleteTopic",
+      copy_other_product_model: "cloudservice/api/fd/tm/copyThingModelV1",
+      create_model: "cloudservice/api/fd/tm/createThingModelV1",
+      isExist_outPutIdentifiers:
+        "cloudservice/api/fd/tm/isExistOutPutIdentifiers",
+      delete_model: "cloudservice/api/fd/tm/deleteThingModelV1",
+      get_model_tsl: "cloudservice/api/fd/tm/getThingModelTslV1",
+      get_model_history_version:
+        "cloudservice/api/fd/tm/listThingModelVersionV1",
+      publish_model: "cloudservice/api/fd/tm/publishThingModelV1",
+      get_model_draft_list: "cloudservice/api/fd/tm/queryThingModelDraftV1",
+      model_extend_config:
+        "cloudservice/api/fd/tm/queryThingModelExtendConfigV1",
+      query_model_published_detail:
+        "cloudservice/api/fd/tm/queryThingModelPublishedV1",
+      query_model_version_detail: "cloudservice/api/fd/tm/queryThingModelV1",
+      update_model_function: "cloudservice/api/fd/tm/updateThingModelV1",
+      export_thingmodels: "cloudservice/api/fd/tm/exportThingModelTslV1",
+      import_thingmodels: "cloudservice/api/fd/tm/importThingModelTslV1",
+      set_device_property:
+        "cloudservice/api/fd/device/handle/setDevicePropertyV1",
+      batch_set_device_property:
+        "cloudservice/api/fd/device/handle/batchSetDevicesPropertyV1",
+      get_device_property:
+        "cloudservice/api/fd/device/handle/queryDevicePropertyDataV1",
+      batch_get_device_property:
+        "cloudservice/api/fd/device/handle/batchQueryDevicePropertiesData",
+      set_device_server:
+        "cloudservice/api/fd/device/handle/invokeThingServiceV1",
+      batch_set_device_server:
+        "cloudservice/api/fd/device/handle/batchInvokeThingsServiceV1",
+      query_device_property_status:
+        "cloudservice/api/fd/device/handle/queryDevicePropertyStatus",
+      query_device_service_data:
+        "cloudservice/api/fd/device/handle/queryDeviceServiceData",
+      query_device_event_data:
+        "cloudservice/api/fd/device/handle/queryDeviceEventData",
+      query_sub_device_list: "cloudservice/api/sub/device/querySubDeviceList",
+      create_sub_device: "cloudservice/api/sub/device/createSubDevice",
+      delete_sub_device: "cloudservice/api/sub/device/deleteSubDevice",
+      get_customer_log: "cloudservice/api/deviceLog/getCustomerLog",
+      get_device_local_log: "cloudservice/api/deviceLog/getDeviceLocalLog",
+      project_bind_devices: "cloudservice/api/project/projectBindDevices",
+      deviceSendInfoToDevice: "cloudservice/api/messageForwarding/insert",
+      checkDeviceMessageForwarding:
+        "cloudservice/api/messageForwarding/pageList",
+      deleteDeviceMessageForwarding:
+        "cloudservice/api/messageForwarding/delete",
+      project_unbind_devices: "cloudservice/api/project/unBindDevices",
+      uploadFileImg: "cloudservice/api/upload/uploadFileImg",
+      delFileImg: "cloudservice/api/upload/deleteImageObject",
+      uploadProject: "cloudservice/api/project/uploadProject",
+      product_modelIrd: "cloudservice/api/product/getModelInfoByProductId",
+      protocal_queryAll: "cloudservice/api/protocal/queryAllProtocalBase",
+      protocal_analysisTest:
+        "cloudservice/api/protocal/getProtocalAnalysisTestData",
+      changeCenProjectState: "cloudservice/api/project/setCenControlProject",
+      getCustomerIdForIss: "cloudservice/api/adminUser/getCustomerIdForIss",
+      protocal_vertsion_query: "cloudservice/api/protocal/getProtocalVersion",
+      protocal_vertsion_create:
+        "cloudservice/api/protocal/createProtocalVersion",
+      protocal_vertsion_delete:
+        "cloudservice/api/protocal/deleteProtocalVersion",
+      protocal_query:
+        "cloudservice/api/protocal/queryProtocalBaseByProtocalName",
+      protocal_query_by_id: "cloudservice/api/protocal/getProtocalBaseById",
+      protocal_create: "cloudservice/api/protocal/createProtocalBaseInfo",
+      protocal_updata: "cloudservice/api/protocal/updateProtocalBaseInfo",
+      protocal_delete: "cloudservice/api/protocal/deleteProtocalBaseInfo",
+      protocal_byId:
+        "cloudservice/api/protocal/queryProtocalDetailByProtocalId",
+      protocal_create_detailedness:
+        "cloudservice/api/protocal/createProtocalDetailInfo",
+      protocal_details_id:
+        "cloudservice/api/protocal/getProtocalDetailInfoByDetailId",
+      protocal_delete_details:
+        "cloudservice/api/protocal/deleteProtocalDetailInfo",
+      protocal_chenge_detailsContent:
+        "cloudservice/api/protocal/updateProtocalDetailInfo",
+      history_details:
+        "cloudservice/api/protocal/getProtocalDetailHistByDetailId",
+      createDataType: "cloudservice/api/dataTypeDef/createDataType",
+      queryDataType: "cloudservice/api/dataTypeDef/queryDataType",
+      updateDataType: "cloudservice/api/dataTypeDef/updateDataType",
+      deleteDataType: "cloudservice/api/dataTypeDef/deleteDataType",
+      judgeDataTypeName: "cloudservice/api/dataTypeDef/judgeDataTypeName",
+      getDataTypeByName: "cloudservice/api/dataTypeDef/getDataTypeByName",
+      getEquipmentCurve:
+        "cloudservice/api/productConfig/getConfigIdByProductlId",
+      dealer_query: "cloudservice/api/dealers/queryDealers",
+      searchDealers: "cloudservice/api/dealers/searchDealers",
+      updateParent: "cloudservice/api/dealers/updateParent",
+      dealer_create: "cloudservice/api/dealers/createDealers",
+      dealer_updata: "cloudservice/api/dealers/updateDealers",
+      dealer_delete: "cloudservice/api/dealers/v2/deleteDealers",
+      dealer_parent_id: "cloudservice/api/dealers/getByParentId",
+      dealer_level_one: "cloudservice/api/dealers/getdealersBylevel",
+      dealer_id_getinfo: "cloudservice/api/dealers/queryDealersById",
+      getDealersInfoById: "cloudservice/api/dealers/v2/getDealersByIds",
+      Bound_dealer_button: "cloudservice/api/dealers/bandindDealers",
+      queryNationInfo: "cloudservice/api/nation/queryNationInfo",
+      getProjectById: "cloudservice/api/project/getProjectById",
+      getProjectTypes: "cloudservice/api/project/getProjectTypes",
+      getProjectsByType: "cloudservice/api/project/getProjectsByType",
+      getAllProjects: "cloudservice/api/project/getAllProjects",
+      deleteProject: "cloudservice/api/project/deleteProject",
+      updateProject: "cloudservice/api/project/updateProject",
+      createProject: "cloudservice/api/project/createProject",
+      updateProjectIsImportant:
+        "cloudservice/api/project/markProjectAsImportant",
+      checkOrMarkProject: "cloudservice/api/project/checkOrMarkProject",
+      createIotInfo: "cloudservice/api/iotInfo/createIotInfo",
+      updateIotInfo: "cloudservice/api/iotInfo/updateIotInfo",
+      queryIotInfo: "cloudservice/api/iotInfo/queryIotInfo",
+      queryIotInfoByID: "cloudservice/api/iotInfo/queryIotInfoByID",
+      deleteIotInfo: "cloudservice/api/iotInfo/deleteIotInfo",
+      queryCenCtrlModelList:
+        "cloudservice/api/cenCtrlModel/queryCenCtrlModelList",
+      createCenCtrlModel: "cloudservice/api/cenCtrlModel/createCenCtrlModel",
+      updateCenCtrlModel: "cloudservice/api/cenCtrlModel/updateCenCtrlModel",
+      deleteCenCtrlModel: "cloudservice/api/cenCtrlModel/deleteCenCtrlModel",
+      getCenCtrlModelById: "cloudservice/api/cenCtrlModel/getCenCtrlModelById",
+      queryCenCtrlModelDetailList:
+        "cloudservice/api/cenCtrlModel/queryCenCtrlModelDetailList",
+      createCenCtrlModelDetail:
+        "cloudservice/api/cenCtrlModel/createCenCtrlModelDetail",
+      updateCenCtrlModelDetail:
+        "cloudservice/api/cenCtrlModel/updateCenCtrlModelDetail",
+      updateCenCtrlModelDetailState:
+        "cloudservice/api/cenCtrlModel/updateCenCtrlModelDetailState",
+      deleteCenCtrlModelDetail:
+        "cloudservice/api/cenCtrlModel/deleteCenCtrlModelDetail",
+      createCustomerInfo: "cloudservice/api/customerInfo/createCustomerInfo",
+      deleteCustomerInfo: "cloudservice/api/customerInfo/deleteCustomerInfo",
+      getCustomerInfoById: "cloudservice/api/customerInfo/getCustomerInfoById",
+      updateCustomerInfo: "cloudservice/api/customerInfo/updateCustomerInfo",
+      getCustomerInfos: "cloudservice/api/customerInfo/getCustomerInfos",
+      createUser: "cloudservice/api/adminUser/createUser",
+      createUserType: "cloudservice/api/adminUser/querydictinfobycode",
+      updateUser: "cloudservice/api/adminUser/updateUser",
+      updatePwd: "cloudservice/api/adminUser/updatePwd",
+      judgeEmail: "cloudservice/api/adminUser/judgeEmail",
+      queryUser: "cloudservice/api/adminUser/queryUser",
+      getUserById: "cloudservice/api/adminUser/getUserById",
+      updateUserStatue: "cloudservice/api/adminUser/updateUserStatue",
+      deleteUser: "cloudservice/api/adminUser/deleteUser",
+      setUserDisable: "cloudservice/api/adminUser/setUserDisable",
+      get_auth_code: "cloudservice/api/adminUser/sendEmailToUser",
+      authCode_change_Pwd: "cloudservice/api/adminUser/updatePwdByNameAndCode",
+      login: "cloudservice/api/adminUser/login",
+      getUserByPhoneOrName: "cloudservice/api/member/getUserByPhoneOrName",
+      get_login_code: "cloudservice/api/adminUser/getCode",
+      check_code: "cloudservice/api/adminUser/v2/checkCode",
+      reset_pwd: "cloudservice/api/adminUser/updatePwdByNameAndCode",
+      get_register_code: "cloudservice/api/app/user/sendValidCode",
+      out_login: "cloudservice/api/adminUser/logout",
+      UserbyId_change_info: "cloudservice/api/adminUser/updateUserInfoById",
+      checkUserIsHad: "crmservice/api/app/user/checkUserIsHad",
+      crm_queryUserInfoList: "cloudservice/api/user/info/queryUserInfoList",
+      crm_createUserInfo: "cloudservice/api/user/info/createUserInfo",
+      crm_updateUserInfo: "cloudservice/api/user/info/updateUserInfo",
+      crm_deleteByUserId: "cloudservice/api/user/info/deleteByUserId",
+      crm_getUserInfoByUserId: "cloudservice/api/user/info/getUserInfoByUserId",
+      role_byName: "cloudservice/api/roleModel/getRoleModelByName",
+      role_byId: "cloudservice/api/roleModel/getRoleModelById",
+      role_delete: "cloudservice/api/roleModel/deleteRoleModelById",
+      role_create: "cloudservice/api/roleModel/createRoleModel",
+      role_update: "cloudservice/api/roleModel/updateRoleModel",
+      role_getButtons: "cloudservice/api/button/getAllButtons",
+      role_menuTree: "cloudservice/api/menu/getMenuTree",
+      analyse_fault: "cloudservice/api/StatisticsAnalysis/faultTypeAnalisus",
+      analyse_product: "cloudservice/api/StatisticsAnalysis/productAnalysis",
+      analyse_address: "cloudservice/api/StatisticsAnalysis/addressAnalysis",
+      analyse_time: "cloudservice/api/StatisticsAnalysis/timeAnalysis",
+      updated_EXcel_equipment: "cloudservice/api/device/excelImportDevice",
+      updated_EXcel_product: "cloudservice/api/product/excelImportProduct",
+      updated_EXcel_treaty:
+        "cloudservice/api/protocal/uploadProtocalExcelDataV2",
+      export_EXcel_treaty: "cloudservice/api/protocalExport/exportExcel",
+      updated_EXcel_project: "cloudservice/api/project/excelImportProject",
+      updated_EXcel_dealer: "cloudservice/api/dealers/excelImportDealers",
+      queryIotLog: "cloudservice/api/iotOperateLog/queryIotLog",
+      getOperateLogs: "cloudservice/api/operateLog/getOperateLogs",
+      queryIotData: "cloudservice/api/iotData/queryIotData",
+      queryIotDataFromMc:
+        "cloudservice/api/iotData/v2/queryIotCommunicationLog",
+      query_communication_device_log:
+        "cloudservice/api/communicationDevice/query_communicationDeviceLog_by_deviceCode_and_busiDate",
+      queryLoginLogs: "cloudservice/api/userOperateLog/queryOperateLogs",
+      queryDtuLogs: "cloudservice/api/dtuLog/pageList",
+      queryDtuFault: "cloudservice/api/dtuLog/queryDtuFault",
+      queryLoginUsers: "cloudservice/api/userOperateLog/getOnLineUserCount",
+      user_id_get_menu: "cloudservice/api/adminUser/getUserMenuByUserId",
+      button_estimate:
+        "cloudservice/api/adminUser/judgeButtonByUserIdAndButtonCode",
+      get_button_info: "cloudservice/api/button/getAllButtons",
+      get_btn_tree: "cloudservice/api/button/getButtonTree",
+      add_btn: "cloudservice/api/button/insert",
+      update_btn: "cloudservice/api/button/update",
+      del_btn: "cloudservice/api/button/delete",
+      getNotification: "cloudservice/api/push/pushList",
+      selectPushConfigData: "cloudservice/api/dealersPush/selectPushConfigData",
+      insertPushConfig: "cloudservice/api/dealersPush/insertPushConfig",
+      updatePushConfigData: "cloudservice/api/dealersPush/updatePushConfigData",
+      getPushConfigData: "cloudservice/api/dealersPush/getPushConfigData",
+      getlistAllAppMsg: "cloudservice/api/appManager/listAllAppMsg",
+      addNotification: "cloudservice/api/push/handleMsgPush",
+      updateNotification: "cloudservice/api/push/handleMsgPush",
+      deleteNotification: "cloudservice/api/push/delete",
+      downDeviceImportExcelTemp: "cloudservice/api/temp/downLoadDeviceTempFile",
+      sendOtaBeginSms: "cloudservice/api/device/ota/sendOtaBeginSms",
+      queryAllDeviceOtaInfo:
+        "cloudservice/api/device/ota/query_all_device_ota_info",
+      pushOtaFileDownload: "cloudservice/api/device/ota/push_OTA_file_download",
+      queryAllDeviceOtaTask:
+        "cloudservice/api/device/ota/query_all_device_ota_task",
+      queryAllDeviceOtaTaskRecord:
+        "cloudservice/api/device/ota/query_all_stop_device_ota_task",
+      queryDeviceOtaFileRecord:
+        "cloudservice/api/device/ota/query_device_ota_file_record",
+      uploadWifi: "cloudservice/api/device/ota/upLoadHf230",
+      uploadMcu: "cloudservice/api/device/ota/upLoadHf230McuOTAfile",
+      uploadDevice: "cloudservice/api/device/ota/upLoadDeviceOTAfile",
+      uploadDtu: "cloudservice/api/device/ota/upLoadDTUOTAfile",
+      uploadGateway: "cloudservice/api/device/ota/upLoadGatewayOTAfile",
+      uploadAllOtaFile: "cloudservice/api/device/ota/v2/uploadAllOtaFile",
+      uploadAllOtaFileV3: "cloudservice/api/device/ota/v3/uploadAllOtaFile",
+      delFile: "cloudservice/api/device/ota/delete_device_ota_file_record",
+      otaRollBack: "cloudservice/api/device/ota/otaRollBACK",
+      otaRollBackList: "cloudservice/api/device/ota/getOtaRollBACKList",
+      getWifiOtaList: "cloudservice/api/ota/getHf230OTAInfo",
+      wifiUploadApi: "cloudservice/api/ota/upLoadHf230",
+      otaCancle: "cloudservice/api/device/ota/otaCancle",
+      queryChildrenFirmwareList: "cloudservice/api/device/ota/ssid/pageList",
+      importBatchTaskDevice:
+        "cloudservice/api/device/ota/importBatchTaskDevice",
+      queryJob: "cloudservice/api/job/queryJob",
+      deleteJob: "cloudservice/api/job/deleteJob",
+      startJob: "cloudservice/api/job/restartJob",
+      pauseJob: "cloudservice/api/job/pauseJob",
+      resumeJob: "cloudservice/api/job/resumeJob",
+      insertJob: "cloudservice/api/job/insertJob",
+      updateJob: "cloudservice/api/job/updateJob",
+      queryConfigInfoByPage: "cloudservice/api/configinfo/queryConfigInfo",
+      updateConfigInfo: "cloudservice/api/configinfo/updateConfigInfo",
+      createConfigInfo: "cloudservice/api/configinfo/addConfigInfo",
+      register: "cloudservice/api/app/user/createUser",
+      getRegisterCode: "cloudservice/api/app/user/getCode",
+      get_Notify: "cloudservice/api/notice/selectAll",
+      checkOrderNoticeByUserId:
+        "cloudservice/api/notice/checkOrderNoticeByUserId",
+      get_updateLog: "cloudservice/api/version/selectAllVersion",
+      getIntroduceData: "cloudservice/api/introduction/selectPublishRichText",
+      bindAccount: "cloudservice/api/adminUser/bindingAccount",
+      updateBindAccount: "cloudservice/api/adminUser/v2/updateBindingAccount",
+      sendEmail: "cloudservice/api/adminUser/sendEmailToUser",
+      getCodeWithNewAccount: "cloudservice/api/adminUser/getCodeWithNewAccount",
+      getSlideImgs: "cloudservice/api/carousel/showCarousel",
+      getUserByUserName: "cloudservice/api/adminUser/getUserByUserName",
+      uploadUserHeadIcon: "cloudservice/api/user/uploadUserHeadIcon",
+      markRead: "cloudservice/api/noticeStatus/updateNoticeAsRead",
+      createApplication: "cloudservice/api/dealers/createApplication",
+      reCreateApplication: "cloudservice/api/dealers/reCreateApplication",
+      getCompanyList: "cloudservice/api/dealers/getDealersByUser",
+      getCompanyList_V2: "cloudservice/api/dealers/v2/getDealersByUser",
+      bowOutCompany: "cloudservice/api/dealers/withDrawal",
+      getApprovalCompany: "cloudservice/api/dealers/queryApplicationPage",
+      listDealersInfoByDealersName:
+        "cloudservice/api/dealers/listDealersInfoByDealersName",
+      approvalApplication: "cloudservice/api/dealers/approvalApplication",
+      transferAuthority: "cloudservice/api/dealers/handover",
+      getDealersStats: "cloudservice/api/device/countDeviceByKeyWord",
+      getDealersProject: "cloudservice/api/project/getProjectByDealersId",
+      getDealersProjectV3: "cloudservice/api/project/v3/getProjectByDealersId",
+      getDealersDevice: "cloudservice/api/device/queryDeviceByDealer",
+      queryImportantDevice: "cloudservice/api/device/queryImportantDevice",
+      getPointPosition:
+        "cloudservice/api/protocal/getAllProtocalDetailByProtocalId",
+      getOnlineDeviceNumber: "cloudservice/api/device/data/statistics/pageList",
+      getDeviceRatio:
+        "cloudservice/api/StatisticsAnalysis/deviceCountRatioByProduct",
+      getAddDeviceByDay:
+        "cloudservice/api/StatisticsAnalysis/deviceAddedAnalysisByDay",
+      homePageStatisticsZh: "cloudservice/api/device/homePageStatisticsZh",
+      homePageStatistics: "cloudservice/api/device/v2/homePageStatistics",
+      countDeviceOrProjectDaily:
+        "cloudservice/api/device/data/statistics/countDeviceOrProjectDaily",
+      getProjectIncreasedNum:
+        "cloudservice/api/project/project_increased_number",
+      getProjectAuditNum: "cloudservice/api/project/project_review_number",
+      getDeviceAuditNum: "cloudservice/api/project/device_review_number",
+      getDealersMember: "cloudservice/api/dealers/getUserByDealersId",
+      getDealersMemberV2: "cloudservice/api/dealers/v2/getUserByDealersId",
+      listAclRole: "cloudservice/api/roleModel/v2/listAclRole",
+      getCompanyRole: "cloudservice/api/roleModel/getDealerRoles",
+      addCompanyMember: "cloudservice/api/dealers/pullUser",
+      detachCompanyMember: "cloudservice/api/dealers/pushUser",
+      changeMemberRole: "cloudservice/api/dealers/updateUserRole",
+      createUserAndApplication:
+        "cloudservice/api/dealers/createUserAndApplication",
+      getSlideImg: "cloudservice/api/carousel/admin/selectAllCarousel",
+      addSlideImg: "cloudservice/api/carousel/addCarousel",
+      updateSlideImg: "cloudservice/api/carousel/updateCarousel",
+      deleteSlideImg: "cloudservice/api/carousel/deleteCarousel",
+      changeSlideImgIndex: "cloudservice/api/carousel/updateSequenceBath",
+      getMessage: "cloudservice/api/notice/adminUser/selectAllNotice",
+      addMessage: "cloudservice/api/notice/addNotice",
+      updateMessage: "cloudservice/api/notice/updateNotice",
+      deleteMessage: "cloudservice/api/notice/deleteNoticeByNoticeId",
+      getUpdateLog: "cloudservice/api/version/admin/selectAllVersion",
+      addUpdateLog: "cloudservice/api/version/addSystemVersion",
+      editUpdateLog: "cloudservice/api/version/updateSystemVersion",
+      deleteUpdateLog: "cloudservice/api/version/deleteSystemVersion",
+      getIntroduce: "cloudservice/api/introduction/admin/selectAllRichText",
+      addIntroduce: "cloudservice/api/introduction/insertRichText",
+      editIntroduce: "cloudservice/api/introduction/updateRichText",
+      deleteIntroduce:
+        "cloudservice/api/introduction/deleteRichTextByPrimaryKey",
+      getIntroduceDetail:
+        "cloudservice/api/introduction/admin/selectRichTextDetail",
+      getCameraList: "cloudservice/api/projectCamera/pageList",
+      delCamera: "cloudservice/api/projectCamera/delete",
+      getAddressHistoryValue:
+        "cloudservice/api/app/device/getAddressHistoryValue",
+      updateImportantStatus: "cloudservice/api/device/updateImportantStatus",
+      updateDeviceNickName: "cloudservice/api/device/updateDeviceNickName",
+      getAuthDeviceList: "cloudservice/api/device/getAuthDeviceList",
+      authDeviceRequest: "cloudservice/api/device/authDeviceRequest",
+      getInspectList: "cloudservice/api/device/fault/export/distributePageList",
+      createInspection: "cloudservice/api/device/fault/export/insert",
+      getPointCardConfigList:
+        "cloudservice/api/pointCardConfig/getPointCardConfigList",
+      getDeviceUserList: "cloudservice/api/app/device/getUserListByDeviceId",
+      updateDeviceControlSwitchSate:
+        "cloudservice/api/device/updateDeviceControlSwithSate",
+      getWriteParam: "cloudservice/api/protocal/getWriteParamByProtocalId",
+      getDeviceAddressValueByDeviceCode:
+        "cloudservice/api/device/getDeviceAddressValueByDeviceCode",
+      queryBatchTask: "cloudservice/api/device/ota/queryBatchTask",
+      createBatchTask: "cloudservice/api/device/ota/v4/createBatchTask",
+      createBatchTaskV4: "cloudservice/api/device/ota/v4/createBatchTask",
+      updateBatchTask: "cloudservice/api/device/ota/updateBatchTask",
+      delteBatchTask: "cloudservice/api/device/ota/delteBatchTask",
+      createBatchTaskV3: "cloudservice/api/device/ota/v3/createBatchTask",
+      sieveDeviceOtaInfo: "cloudservice/api/device/ota/v4/sieveDeviceOtaInfo",
+      searchSoftwareCode: "cloudservice/api/device/ota/searchSoftwareCode",
+      sendOtaUpgradeNotice: "cloudservice/api/device/ota/sendOtaUpgradeNotice",
+      searchVerBySoftwareCode:
+        "cloudservice/api/device/ota/searchVerBySoftwareCode",
+      uploadAppFile: "cloudservice/api/appManager/uploadApp",
+      addApp: "cloudservice/api/appManager/insert",
+      queryApp: "cloudservice/api/appManager/pageList",
+      updateApp: "cloudservice/api/appManager/update",
+      deleteApp: "cloudservice/api/appManager/delete",
+      deleteAppFile: "cloudservice/api/appManager/deleteApp",
+      updateBugFixsLog: "cloudservice/api/bugFeedback/updateBugFixsLog",
+      addBugFixsLog: "cloudservice/api/bugFeedback/addBugFixsLog",
+      updateBugFeedBack: "cloudservice/api/bugFeedback/updateBugFeedBack",
+      getBugFeedBackData: "cloudservice/api/bugFeedback/selectBugFeedBackPage",
+      getBugFeedBackDetail: "cloudservice/api/bugFeedback/getBugFeedBackInfo",
+      getBugFixsLogPage: "cloudservice/api/bugFeedback/selectBugFixsLogPage",
+      getProductMaintList:
+        "cloudservice/api/product/maint/selectProductMaintPage",
+      update_product_maint: "cloudservice/api/product/maint/updateProductMaint",
+      add_product_maint: "cloudservice/api/product/maint/createProductMaint",
+      selectPayPalOrderPage:
+        "cloudservice/api/dtuCardOrder/selectPayPalOrderPage",
+      getPayPalOrderCount: "cloudservice/api/dtuCardOrder/getPayPalOrderCount",
+      getPayPalOrderByPaymentId:
+        "cloudservice/api/dtuCardOrder/getPayPalOrderByPaymentId",
+      selectDtuCardPoolList:
+        "cloudservice/api/dtuCardOrder/selectDtuCardPoolList",
+      getDtuCardPoolByIccId:
+        "cloudservice/api/dtuCardOrder/getDtuCardPoolByIccId",
+      selectDtuCardPaySpecPage:
+        "cloudservice/api/dtuCardOrder/selectDtuCardPaySpecPage",
+      updateDtuCardPaySpec:
+        "cloudservice/api/dtuCardOrder/updateDtuCardPaySpec",
+      addDtuCardPaySpec: "cloudservice/api/dtuCardOrder/addDtuCardPaySpec",
+      createOrder: "cloudservice/api/dtuCardOrder/createOrder",
+      getPayPalUrl: "cloudservice/api/dtuCardOrder/paypal/pay",
+      SyncPayPalOrderDataToOurOrder:
+        "cloudservice/api/dtuCardOrder/paypal/successPay",
+      selectDtuCardPoolCount:
+        "cloudservice/api/dtuCardOrder/selectDtuCardPoolCount",
+      exportPayPalOrder: "cloudservice/api/dtuCardOrder/exportPayPalOrder",
+      o_getOrganizationTree:
+        "cloudservice/api/organization/getOrganizationTree",
+      o_getCompanyList: "cloudservice/api/organization/getCompanyList",
+      o_createCompany: "cloudservice/api/organization/createCompany",
+      o_updateCompany: "cloudservice/api/organization/updateCompany",
+      o_deleteOrganization: "cloudservice/api/organization/deleteOrganization",
+      o_queryMemberByOrgId: "cloudservice/api/organization/queryMemberByOrgId",
+      o_getOrganization: "cloudservice/api/organization/getOrganization",
+      o_createOrganization: "cloudservice/api/organization/createOrganization",
+      o_updateOrganization: "cloudservice/api/organization/updateOrganization",
+      o_getOrgListByPid: "cloudservice/api/organization/getOrgListByPid",
+      o_transferContacts: "cloudservice/api/organization/transferContacts",
+      o_queryMember: "cloudservice/api/member/queryMember",
+      o_getUserByPhone: "cloudservice/api/member/getUserByPhone",
+      o_addIsExistMember: "cloudservice/api/member/addMember",
+      o_addMember: "cloudservice/api/member/createMember",
+      o_updateMember: "cloudservice/api/member/updateMember",
+      o_deleteMember: "cloudservice/api/member/deleteMember",
+      o_createRoleModel: "cloudservice/api/roleOrg/createRoleModel",
+      o_getRoleModelById: "cloudservice/api/roleModel/getRoleModelById",
+      o_updateRoleModel: "cloudservice/api/roleOrg/updateRoleModel",
+      o_deleteRole: "cloudservice/api/roleOrg/deleteRole",
+      o_queryMemberByRoleId: "cloudservice/api/roleOrg/queryMemberByRoleId",
+      o_getRoleOrgList: "cloudservice/api/roleOrg/getRoleOrgList",
+      o_queryRolePage: "cloudservice/api/roleOrg/queryRolePage",
+      checkInfo: "cloudservice/api/adminUser/getUserByUserIdNotDesensitized",

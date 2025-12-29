@@ -1,0 +1,12 @@
+{
+  "domain": "warmlink",
+  "name": "Warmlink Heat Pump",
+  "codeowners": ["@rochowiak86"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/rochowiak86/warmlink",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/rochowiak86/warmlink/issues",
+  "requirements": ["aiohttp>=3.8.0"],
+  "version": "0.1.0"
+}
