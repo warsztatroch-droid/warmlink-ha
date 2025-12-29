@@ -64,7 +64,9 @@ class WarmLinkConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     password=user_input[CONF_PASSWORD],
                 )
                 
+                _LOGGER.debug("Attempting login for user: %s", user_input[CONF_USERNAME])
                 await self._api.login()
+                _LOGGER.info("Login successful, fetching devices...")
                 
                 # Set unique ID based on username
                 await self.async_set_unique_id(user_input[CONF_USERNAME].lower())
@@ -73,21 +75,34 @@ class WarmLinkConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 # Store user input for later
                 self._user_input = user_input
                 
-                # Fetch devices
+                # Fetch devices (owned + shared)
                 self._devices = await self._api.get_devices()
                 
+                _LOGGER.info(
+                    "Device discovery complete: found %d device(s)", 
+                    len(self._devices) if self._devices else 0
+                )
+                
                 if not self._devices:
+                    _LOGGER.warning(
+                        "No devices found for user %s. "
+                        "Check if devices are registered in Warmlink app (appId=16). "
+                        "Aqua Temp devices (appId=1) won't appear here.",
+                        user_input[CONF_USERNAME]
+                    )
                     errors["base"] = "no_devices"
                 else:
                     # Go to device selection step
                     return await self.async_step_devices()
 
-            except WarmLinkAuthError:
+            except WarmLinkAuthError as ex:
+                _LOGGER.error("Authentication failed: %s", ex)
                 errors["base"] = "invalid_auth"
-            except WarmLinkConnectionError:
+            except WarmLinkConnectionError as ex:
+                _LOGGER.error("Connection failed: %s", ex)
                 errors["base"] = "cannot_connect"
             except Exception:  # pylint: disable=broad-except
-                _LOGGER.exception("Unexpected exception")
+                _LOGGER.exception("Unexpected exception during setup")
                 errors["base"] = "unknown"
 
         return self.async_show_form(

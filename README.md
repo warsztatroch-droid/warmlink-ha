@@ -77,35 +77,35 @@ The integration reads the following data from your heat pump:
 
 ### Number Controls (Setpoints)
 
-| Entity          | Description                | Range      |
-| --------------- | -------------------------- | ---------- |
-| R01 DHW Target  | Hot water tank temperature | 15-70°C    |
-| R02 Heating     | Heating setpoint           | 15-75°C    |
-| R03 Cooling     | Cooling setpoint           | 9-28°C     |
-| R70 Room        | Room temperature setpoint  | 5-27°C     |
-| Zone 1-3 Temps  | Multi-zone control         | 15-60°C    |
-| Fan Speeds      | F18-F26 fan parameters     | 0-1000 RPM |
+| Entity         | Description                | Range      |
+| -------------- | -------------------------- | ---------- |
+| R01 DHW Target | Hot water tank temperature | 15-70°C    |
+| R02 Heating    | Heating setpoint           | 15-75°C    |
+| R03 Cooling    | Cooling setpoint           | 9-28°C     |
+| R70 Room       | Room temperature setpoint  | 5-27°C     |
+| Zone 1-3 Temps | Multi-zone control         | 15-60°C    |
+| Fan Speeds     | F18-F26 fan parameters     | 0-1000 RPM |
 
 ### Switch Controls
 
-| Entity        | Code | Description                   |
-| ------------- | ---- | ----------------------------- |
-| Power         | -    | Main power on/off             |
-| Silent Mode   | H22  | Reduce noise (lower fan)      |
-| Cooling Mode  | H05  | Enable cooling function       |
-| Disinfection  | G05  | Anti-legionella (manual)      |
-| Power Memory  | H01  | Restore state after power cut |
+| Entity       | Code | Description                   |
+| ------------ | ---- | ----------------------------- |
+| Power        | -    | Main power on/off             |
+| Silent Mode  | H22  | Reduce noise (lower fan)      |
+| Cooling Mode | H05  | Enable cooling function       |
+| Disinfection | G05  | Anti-legionella (manual)      |
+| Power Memory | H01  | Restore state after power cut |
 
 ### Select Controls
 
-| Entity       | Code | Options                             |
-| ------------ | ---- | ----------------------------------- |
-| Mode         | Mode | Heating/Cooling/Hot Water/Combined  |
-| Control Mode | H07  | Outlet temp / Delta T / Room temp   |
-| Temp Unit    | H21  | Celsius / Fahrenheit                |
-| Temp Control | H25  | Outlet / Room / Ext thermostat      |
-| EVI Function | H27  | Enable enhanced vapor injection     |
-| DHW Function | H28  | Quick / Eco / Floor Heating / Zone  |
+| Entity       | Code | Options                            |
+| ------------ | ---- | ---------------------------------- |
+| Mode         | Mode | Heating/Cooling/Hot Water/Combined |
+| Control Mode | H07  | Outlet temp / Delta T / Room temp  |
+| Temp Unit    | H21  | Celsius / Fahrenheit               |
+| Temp Control | H25  | Outlet / Room / Ext thermostat     |
+| EVI Function | H27  | Enable enhanced vapor injection    |
+| DHW Function | H28  | Quick / Eco / Floor Heating / Zone |
 
 ## Troubleshooting
 

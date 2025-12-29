@@ -27,8 +27,10 @@ ENDPOINT_DEVICE_STATUS: Final = "app/device/getDeviceStatus"
 ENDPOINT_DEVICE_CONTROL: Final = "app/device/control"
 ENDPOINT_DEVICE_DATA: Final = "app/device/getDataByCode"
 ENDPOINT_DEVICE_FAULT: Final = "app/device/getFaultDataByDeviceCode"
-# Shared/authorized devices endpoint (for devices shared with user)
+# Shared/authorized devices endpoints (for devices shared with user)
+# Try multiple paths as API may use different routes
 ENDPOINT_AUTH_DEVICE_LIST: Final = "app/device/getAuthDeviceList"
+ENDPOINT_AUTH_DEVICE_LIST_ALT: Final = "device/getAuthDeviceList"
 
 # Warmlink Product ID - VERIFIED
 WARMLINK_PRODUCT_ID: Final = "1501438265440362496"

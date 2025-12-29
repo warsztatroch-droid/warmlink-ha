@@ -19,11 +19,11 @@
       }
     },
     "error": {
-      "cannot_connect": "Nie można połączyć z API Warmlink",
+      "cannot_connect": "Nie można połączyć z API Warmlink (port 449)",
       "invalid_auth": "Nieprawidłowy email lub hasło",
-      "no_devices": "Nie znaleziono urządzeń na tym koncie",
+      "no_devices": "Nie znaleziono urządzeń. Upewnij się, że urządzenia są zarejestrowane w aplikacji Warmlink (nie Aqua Temp). Sprawdź logi Home Assistant.",
       "no_devices_selected": "Wybierz przynajmniej jedno urządzenie",
-      "unknown": "Nieoczekiwany błąd"
+      "unknown": "Nieoczekiwany błąd - sprawdź logi Home Assistant"
     },
     "abort": {
       "already_configured": "To konto jest już skonfigurowane"

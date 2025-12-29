@@ -19,11 +19,11 @@
       }
     },
     "error": {
-      "cannot_connect": "Failed to connect to Warmlink API",
+      "cannot_connect": "Failed to connect to Warmlink API (port 449)",
       "invalid_auth": "Invalid email or password",
-      "no_devices": "No devices found on this account",
+      "no_devices": "No devices found. Make sure devices are registered in Warmlink app (not Aqua Temp). Check Home Assistant logs for details.",
       "no_devices_selected": "Please select at least one device",
-      "unknown": "Unexpected error"
+      "unknown": "Unexpected error - check Home Assistant logs"
     },
     "abort": {
       "already_configured": "This account is already configured"
