@@ -1,0 +1,505 @@
+# Dashboard Warmlink - Automatyczne wykrywanie encji
+# Wymaga karty auto-entities z HACS: https://github.com/thomasloven/lovelace-auto-entities
+# 
+# Instalacja auto-entities:
+# 1. HACS → Frontend → Search "auto-entities" → Install
+# 2. Restart Home Assistant
+# 3. Skopiuj ten dashboard
+
+title: Pompa Ciepła Warmlink
+views:
+  # ============================================================================
+  # PRZEGLĄD
+  # ============================================================================
+  - title: Przegląd
+    path: przeglad
+    icon: mdi:heat-pump
+    cards:
+      # Główne sterowanie - automatyczne wykrywanie
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "🎛️ Sterowanie"
+        filter:
+          include:
+            - entity_id: "switch.*_power"
+              integration: warmlink
+            - entity_id: "select.*_mode"
+              integration: warmlink
+            - entity_id: "climate.warmlink_*"
+            - entity_id: "water_heater.warmlink_*"
+
+      # Status - binary sensors
+      - type: custom:auto-entities
+        card:
+          type: glance
+          title: "📊 Status"
+          columns: 4
+        filter:
+          include:
+            - entity_id: "binary_sensor.*_online"
+              integration: warmlink
+            - entity_id: "binary_sensor.*_power"
+              integration: warmlink
+            - entity_id: "binary_sensor.*_fault"
+              integration: warmlink
+            - entity_id: "binary_sensor.*_defrost"
+              integration: warmlink
+
+      # Temperatury główne
+      - type: custom:auto-entities
+        card:
+          type: glance
+          title: "🌡️ Temperatury główne"
+          columns: 4
+        filter:
+          include:
+            - entity_id: "sensor.*_t01"
+              integration: warmlink
+            - entity_id: "sensor.*_t02"
+              integration: warmlink
+            - entity_id: "sensor.*_t04"
+              integration: warmlink
+            - entity_id: "sensor.*_t08"
+              integration: warmlink
+
+      # Wydajność
+      - type: custom:auto-entities
+        card:
+          type: glance
+          title: "⚡ Wydajność"
+          columns: 4
+        filter:
+          include:
+            - entity_id: "sensor.*_power_in_total"
+              integration: warmlink
+            - entity_id: "sensor.*_capacity_out_total"
+              integration: warmlink
+            - entity_id: "sensor.*_cop_eer_total"
+              integration: warmlink
+            - entity_id: "sensor.*_t30"
+              integration: warmlink
+
+  # ============================================================================
+  # T - TEMPERATURY
+  # ============================================================================
+  - title: T - Temperatury
+    path: t-temperatury
+    icon: mdi:thermometer
+    cards:
+      # Wszystkie sensory T01-T09
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "💧 Temperatury wody (T01-T09)"
+        filter:
+          include:
+            - entity_id: "/sensor\\.[a-z0-9]+_t0[1-9]$/"
+              integration: warmlink
+        sort:
+          method: entity_id
+
+      # Temperatury T10-T19
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "🌡️ Temperatury (T10-T19)"
+        filter:
+          include:
+            - entity_id: "/sensor\\.[a-z0-9]+_t1[0-9]$/"
+              integration: warmlink
+        sort:
+          method: entity_id
+
+      # Wentylator T27-T29
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "🌀 Wentylator (T27-T29)"
+        filter:
+          include:
+            - entity_id: "/sensor\\.[a-z0-9]+_t2[7-9]$/"
+              integration: warmlink
+        sort:
+          method: entity_id
+
+      # Sprężarka i elektryka T30-T39
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "⚡ Elektryka (T30-T39)"
+        filter:
+          include:
+            - entity_id: "/sensor\\.[a-z0-9]+_t3[0-9]$/"
+              integration: warmlink
+        sort:
+          method: entity_id
+
+      # Pozostałe T40+
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "🔧 Pozostałe (T40+)"
+        filter:
+          include:
+            - entity_id: "/sensor\\.[a-z0-9]+_t[4-9][0-9]$/"
+              integration: warmlink
+        sort:
+          method: entity_id
+
+      # Indoor sensors DP4-DP6
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "🏠 Klimat wewnętrzny (DP)"
+        filter:
+          include:
+            - entity_id: "sensor.*_indoor_temp"
+              integration: warmlink
+            - entity_id: "sensor.*_indoor_humidity"
+              integration: warmlink
+            - entity_id: "sensor.*_dew_point_temp"
+              integration: warmlink
+
+  # ============================================================================
+  # R - SETPOINTS
+  # ============================================================================
+  - title: R - Setpoints
+    path: r-setpoints
+    icon: mdi:target
+    cards:
+      # Number entities (edytowalne)
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "🎯 Temperatury zadane (edytowalne)"
+        filter:
+          include:
+            - entity_id: "/number\\.[a-z0-9]+_r[0-9]+$/"
+              integration: warmlink
+        sort:
+          method: entity_id
+
+      # Sensor entities (odczyty)
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "📊 Odczyty setpointów"
+        filter:
+          include:
+            - entity_id: "/sensor\\.[a-z0-9]+_r[0-9]+$/"
+              integration: warmlink
+        sort:
+          method: entity_id
+
+  # ============================================================================
+  # H - SYSTEM
+  # ============================================================================
+  - title: H - System
+    path: h-system
+    icon: mdi:cog
+    cards:
+      # Switches H
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "🔘 Funkcje systemu (H - przełączniki)"
+        filter:
+          include:
+            - entity_id: "/switch\\.[a-z0-9]+_h[0-9]+$/"
+              integration: warmlink
+        sort:
+          method: entity_id
+
+      # Selects H
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "📝 Ustawienia systemu (H - wybór)"
+        filter:
+          include:
+            - entity_id: "/select\\.[a-z0-9]+_h[0-9]+$/"
+              integration: warmlink
+        sort:
+          method: entity_id
+
+      # Numbers H
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "🎚️ Parametry systemu (H - wartości)"
+        filter:
+          include:
+            - entity_id: "/number\\.[a-z0-9]+_h[0-9]+$/"
+              integration: warmlink
+        sort:
+          method: entity_id
+
+  # ============================================================================
+  # C - SPRĘŻARKA
+  # ============================================================================
+  - title: C - Sprężarka
+    path: c-sprezarka
+    icon: mdi:cog-sync
+    cards:
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "⚙️ Sprężarka (C)"
+        filter:
+          include:
+            - entity_id: "/number\\.[a-z0-9]+_c[0-9]+$/"
+              integration: warmlink
+            - entity_id: "/select\\.[a-z0-9]+_c[0-9]+$/"
+              integration: warmlink
+            - entity_id: "/switch\\.[a-z0-9]+_c[0-9]+$/"
+              integration: warmlink
+        sort:
+          method: entity_id
+
+  # ============================================================================
+  # D - ODSZRANIANIE
+  # ============================================================================
+  - title: D - Odszranianie
+    path: d-odszranianie
+    icon: mdi:snowflake-melt
+    cards:
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "❄️ Odszranianie (D)"
+        filter:
+          include:
+            - entity_id: "binary_sensor.*_defrost"
+              integration: warmlink
+            - entity_id: "/number\\.[a-z0-9]+_d[0-9]+$/"
+              integration: warmlink
+            - entity_id: "/switch\\.[a-z0-9]+_d[0-9]+$/"
+              integration: warmlink
+            - entity_id: "/select\\.[a-z0-9]+_d[0-9]+$/"
+              integration: warmlink
+        sort:
+          method: entity_id
+
+  # ============================================================================
+  # G - DEZYNFEKCJA
+  # ============================================================================
+  - title: G - Dezynfekcja
+    path: g-dezynfekcja
+    icon: mdi:shield-bug
+    cards:
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "🦠 Dezynfekcja Anti-Legionella (G)"
+        filter:
+          include:
+            - entity_id: "/switch\\.[a-z0-9]+_g[0-9]+$/"
+              integration: warmlink
+            - entity_id: "/number\\.[a-z0-9]+_g[0-9]+$/"
+              integration: warmlink
+            - entity_id: "/select\\.[a-z0-9]+_g[0-9]+$/"
+              integration: warmlink
+        sort:
+          method: entity_id
+
+  # ============================================================================
+  # A - OCHRONA
+  # ============================================================================
+  - title: A - Ochrona
+    path: a-ochrona
+    icon: mdi:shield-check
+    cards:
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "🛡️ Parametry ochrony (A)"
+        filter:
+          include:
+            - entity_id: "/number\\.[a-z0-9]+_a[0-9]+$/"
+              integration: warmlink
+            - entity_id: "/switch\\.[a-z0-9]+_a[0-9]+$/"
+              integration: warmlink
+            - entity_id: "/select\\.[a-z0-9]+_a[0-9]+$/"
+              integration: warmlink
+        sort:
+          method: entity_id
+
+  # ============================================================================
+  # F - WENTYLATOR
+  # ============================================================================
+  - title: F - Wentylator
+    path: f-wentylator
+    icon: mdi:fan
+    cards:
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "🌀 Wentylator (F)"
+        filter:
+          include:
+            - entity_id: "/select\\.[a-z0-9]+_f[0-9]+$/"
+              integration: warmlink
+            - entity_id: "/switch\\.[a-z0-9]+_f[0-9]+$/"
+              integration: warmlink
+            - entity_id: "/number\\.[a-z0-9]+_f[0-9]+$/"
+              integration: warmlink
+        sort:
+          method: entity_id
+
+  # ============================================================================
+  # E - EEV
+  # ============================================================================
+  - title: E - EEV
+    path: e-eev
+    icon: mdi:valve
+    cards:
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "🔧 Zawór rozprężny EEV (E)"
+        filter:
+          include:
+            - entity_id: "/select\\.[a-z0-9]+_e[0-9]+$/"
+              integration: warmlink
+            - entity_id: "/number\\.[a-z0-9]+_e[0-9]+$/"
+              integration: warmlink
+            - entity_id: "/switch\\.[a-z0-9]+_e[0-9]+$/"
+              integration: warmlink
+        sort:
+          method: entity_id
+
+  # ============================================================================
+  # P - POMPA
+  # ============================================================================
+  - title: P - Pompa
+    path: p-pompa
+    icon: mdi:pump
+    cards:
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "💧 Pompa obiegowa (P)"
+        filter:
+          include:
+            - entity_id: "/select\\.[a-z0-9]+_p[0-9]+$/"
+              integration: warmlink
+            - entity_id: "/switch\\.[a-z0-9]+_p[0-9]+$/"
+              integration: warmlink
+            - entity_id: "/number\\.[a-z0-9]+_p[0-9]+$/"
+              integration: warmlink
+            - entity_id: "sensor.*_t39"
+              integration: warmlink
+        sort:
+          method: entity_id
+
+  # ============================================================================
+  # Z - STREFY
+  # ============================================================================
+  - title: Z - Strefy
+    path: z-strefy
+    icon: mdi:home-floor-1
+    cards:
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "🏠 Strefy grzewcze (Z)"
+        filter:
+          include:
+            - entity_id: "sensor.*_zone1_*"
+              integration: warmlink
+            - entity_id: "sensor.*_zone2_*"
+              integration: warmlink
+            - entity_id: "/switch\\.[a-z0-9]+_z[0-9]+$/"
+              integration: warmlink
+            - entity_id: "/number\\.[a-z0-9]+_z[0-9]+$/"
+              integration: warmlink
+            - entity_id: "/select\\.[a-z0-9]+_z[0-9]+$/"
+              integration: warmlink
+        sort:
+          method: entity_id
+
+  # ============================================================================
+  # ENERGIA
+  # ============================================================================
+  - title: Energia
+    path: energia
+    icon: mdi:lightning-bolt
+    cards:
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "⚡ Wydajność bieżąca"
+        filter:
+          include:
+            - entity_id: "sensor.*_power_in_*"
+              integration: warmlink
+            - entity_id: "sensor.*_capacity_out_*"
+              integration: warmlink
+            - entity_id: "sensor.*_cop_eer_*"
+              integration: warmlink
+        sort:
+          method: entity_id
+
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "📊 Zużycie energii"
+        filter:
+          include:
+            - entity_id: "sensor.*_heating_*"
+              integration: warmlink
+            - entity_id: "sensor.*_cooling_*"
+              integration: warmlink
+            - entity_id: "sensor.*_dhw_*"
+              integration: warmlink
+            - entity_id: "sensor.*_consumption_*"
+              integration: warmlink
+        sort:
+          method: entity_id
+
+  # ============================================================================
+  # INFO
+  # ============================================================================
+  - title: Info
+    path: info
+    icon: mdi:information
+    cards:
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "ℹ️ Wersje oprogramowania"
+        filter:
+          include:
+            - entity_id: "sensor.*_code_version"
+              integration: warmlink
+            - entity_id: "sensor.*_mainboard_version"
+              integration: warmlink
+            - entity_id: "sensor.*_display_version"
+              integration: warmlink
+
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "📊 Status"
+        filter:
+          include:
+            - entity_id: "sensor.*_mode_state"
+              integration: warmlink
+
+  # ============================================================================
+  # WSZYSTKIE ENCJE
+  # ============================================================================
+  - title: Wszystkie
+    path: wszystkie
+    icon: mdi:format-list-bulleted
+    cards:
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: "📋 Wszystkie encje Warmlink"
+        filter:
+          include:
+            - integration: warmlink
+        sort:
+          method: entity_id
