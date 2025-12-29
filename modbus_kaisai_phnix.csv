@@ -1,3 +1,40 @@
+# ============================================
+# MODBUS RTU SPECIFICATION - Kaisai/Phinx Heat Pumps
+# ============================================
+#
+# 1. TRANSMISSION FORMAT
+# ----------------------
+# Baud Rate:     9600 bps
+# Start bit:     1
+# Byte width:    8
+# Parity:        None (N)
+# Stop bits:     1
+# Slave address: 0x10 (16 decimal)
+#
+# 2. PACKET FORMAT
+# ----------------
+# | Address (16bit) | Function (16bit) | Data (N*16bit) | CRC Checksum (16bit) |
+#
+# Function codes:
+#   03 - Read multiple registers
+#   16 - Write (preset) multiple registers
+#
+# 3. DATA TYPES
+# -------------
+# TEMP  - Signed, 0.1°C resolution. Formula: T*10. Range: -30~97°C
+#         Example: 25°C = 250, -25°C = -250 (bit15=1 for negative)
+#         Value 32767 indicates sensor fault
+# DIGI1 - Unsigned, unit 1. Display 123 = data 123
+# DIGI2 - Unsigned, unit 10. Display 1230 = data 123
+# DIGI3 - Unsigned, unit 100. Display 12300 = data 123
+# DIGI4 - Unsigned, unit 100. Display 12300 = data 123
+# DIGI5 - Unsigned, unit 0.1. Display 12.3 = data 123
+# DIGI6 - Unsigned, unit 0.001. Display 0.123 = data 123
+# DIGI9 - Unsigned, unit 0.01. Display 0.12 = data 12
+# ENUM  - Enumeration, discrete values
+# BINARY- Bitfield, each bit has meaning
+#
+# ============================================
 Parameter address,Parameter name,Parameter code,Standard num,Mode,Description,Data type,Setting range
 1011,Power,Power,--,Read-write,0-OFF/1-ON,ENUM,0~1
 1012,Mode,Mode,--,Read-write,0-Hot Water/1-Heating/2-Cooling/3-Hot Water+Heating/4-Hot Water+Cooling,ENUM,--
