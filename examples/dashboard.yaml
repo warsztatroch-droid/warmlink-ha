@@ -1,0 +1,256 @@
+# Warmlink Heat Pump Dashboard Example
+# Copy this content to your Home Assistant dashboards
+
+# To use this dashboard:
+# 1. Go to Settings → Dashboards
+# 2. Create new dashboard or edit existing
+# 3. Click three dots → Edit in YAML
+# 4. Replace entity IDs with your actual entity IDs
+
+# Find your entity IDs:
+# Settings → Devices & Services → Warmlink → click on device
+
+title: Pompa Ciepła Warmlink
+views:
+  - title: Przegląd
+    path: overview
+    icon: mdi:heat-pump
+    cards:
+      # Main Status Card
+      - type: entities
+        title: Status
+        entities:
+          - entity: binary_sensor.warmlink_DEVICE_CODE_online
+            name: Status połączenia
+          - entity: binary_sensor.warmlink_DEVICE_CODE_power
+            name: Zasilanie
+          - entity: sensor.warmlink_DEVICE_CODE_modestate
+            name: Tryb pracy
+          - entity: binary_sensor.warmlink_DEVICE_CODE_fault
+            name: Awaria
+
+      # Climate Control Card
+      - type: thermostat
+        entity: climate.warmlink_DEVICE_CODE
+        name: Pompa Ciepła
+
+      # Temperature Gauges
+      - type: horizontal-stack
+        cards:
+          - type: gauge
+            entity: sensor.warmlink_DEVICE_CODE_t01
+            name: Wlot
+            min: 0
+            max: 70
+            severity:
+              green: 25
+              yellow: 45
+              red: 55
+          - type: gauge
+            entity: sensor.warmlink_DEVICE_CODE_t02
+            name: Wylot
+            min: 0
+            max: 70
+            severity:
+              green: 25
+              yellow: 45
+              red: 55
+          - type: gauge
+            entity: sensor.warmlink_DEVICE_CODE_t04
+            name: Zewn.
+            min: -30
+            max: 40
+            severity:
+              green: 0
+              yellow: -10
+              red: -20
+
+      # DHW Tank
+      - type: entities
+        title: Zasobnik CWU
+        entities:
+          - entity: water_heater.warmlink_DEVICE_CODE_dhw
+            name: Podgrzewacz wody
+          - entity: sensor.warmlink_DEVICE_CODE_t08
+            name: Temperatura zasobnika
+          - entity: sensor.warmlink_DEVICE_CODE_r01
+            name: Temperatura zadana
+
+      # Performance Metrics
+      - type: entities
+        title: Wydajność
+        entities:
+          - entity: sensor.warmlink_DEVICE_CODE_cop_eer_total
+            name: COP/EER
+          - entity: sensor.warmlink_DEVICE_CODE_power_in_total
+            name: Pobór mocy
+          - entity: sensor.warmlink_DEVICE_CODE_capacity_out_total
+            name: Moc grzewcza
+
+      # Compressor Status
+      - type: entities
+        title: Sprężarka
+        entities:
+          - entity: sensor.warmlink_DEVICE_CODE_t30
+            name: Częstotliwość
+          - entity: sensor.warmlink_DEVICE_CODE_t12
+            name: Temp. tłoczenia
+          - entity: sensor.warmlink_DEVICE_CODE_t39
+            name: Przepływ wody
+
+  - title: Wykresy
+    path: charts
+    icon: mdi:chart-line
+    cards:
+      # Temperature History
+      - type: history-graph
+        title: Historia temperatur
+        hours_to_show: 24
+        entities:
+          - entity: sensor.warmlink_DEVICE_CODE_t01
+            name: Wlot
+          - entity: sensor.warmlink_DEVICE_CODE_t02
+            name: Wylot
+          - entity: sensor.warmlink_DEVICE_CODE_t04
+            name: Zewnętrzna
+          - entity: sensor.warmlink_DEVICE_CODE_t08
+            name: Zasobnik CWU
+
+      # Energy History
+      - type: history-graph
+        title: Moc i wydajność
+        hours_to_show: 24
+        entities:
+          - entity: sensor.warmlink_DEVICE_CODE_power_in_total
+            name: Pobór mocy
+          - entity: sensor.warmlink_DEVICE_CODE_capacity_out_total
+            name: Moc grzewcza
+
+      # COP History
+      - type: history-graph
+        title: COP/EER
+        hours_to_show: 48
+        entities:
+          - entity: sensor.warmlink_DEVICE_CODE_cop_eer_total
+            name: COP
+
+      # Compressor Frequency
+      - type: history-graph
+        title: Sprężarka
+        hours_to_show: 24
+        entities:
+          - entity: sensor.warmlink_DEVICE_CODE_t30
+            name: Częstotliwość
+
+  - title: Szczegóły
+    path: details
+    icon: mdi:cog
+    cards:
+      # All Temperature Sensors
+      - type: entities
+        title: Wszystkie temperatury
+        entities:
+          - entity: sensor.warmlink_DEVICE_CODE_t01
+            name: T01 - Woda wlotowa
+          - entity: sensor.warmlink_DEVICE_CODE_t02
+            name: T02 - Woda wylotowa
+          - entity: sensor.warmlink_DEVICE_CODE_t03
+            name: T03 - Wężownica
+          - entity: sensor.warmlink_DEVICE_CODE_t04
+            name: T04 - Zewnętrzna
+          - entity: sensor.warmlink_DEVICE_CODE_t05
+            name: T05 - Ssanie
+          - entity: sensor.warmlink_DEVICE_CODE_t07
+            name: T07 - Bufor
+          - entity: sensor.warmlink_DEVICE_CODE_t08
+            name: T08 - Zasobnik CWU
+          - entity: sensor.warmlink_DEVICE_CODE_t09
+            name: T09 - Pokojowa
+          - entity: sensor.warmlink_DEVICE_CODE_t12
+            name: T12 - Tłoczenie
+
+      # Setpoints
+      - type: entities
+        title: Temperatury zadane
+        entities:
+          - entity: sensor.warmlink_DEVICE_CODE_r01
+            name: R01 - CWU
+          - entity: sensor.warmlink_DEVICE_CODE_r02
+            name: R02 - Grzanie
+          - entity: sensor.warmlink_DEVICE_CODE_r03
+            name: R03 - Chłodzenie
+          - entity: sensor.warmlink_DEVICE_CODE_r70
+            name: R70 - Pokój
+
+      # Electrical
+      - type: entities
+        title: Parametry elektryczne
+        entities:
+          - entity: sensor.warmlink_DEVICE_CODE_t34
+            name: Napięcie AC
+          - entity: sensor.warmlink_DEVICE_CODE_t35
+            name: Prąd AC
+          - entity: sensor.warmlink_DEVICE_CODE_t37
+            name: Napięcie DC
+          - entity: sensor.warmlink_DEVICE_CODE_t38
+            name: Temp. IPM
+
+      # System Info
+      - type: entities
+        title: Informacje systemowe
+        entities:
+          - entity: sensor.warmlink_DEVICE_CODE_code_version
+            name: Wersja firmware
+          - entity: sensor.warmlink_DEVICE_CODE_mainboard_version
+            name: Wersja płyty głównej
+          - entity: sensor.warmlink_DEVICE_CODE_display_version
+            name: Wersja wyświetlacza
+
+
+# ============================================================
+# ENERGY DASHBOARD - Statistics for energy monitoring
+# ============================================================
+# Add to configuration.yaml for energy dashboard:
+#
+# sensor:
+#   - platform: integration
+#     source: sensor.warmlink_DEVICE_CODE_power_in_total
+#     name: Warmlink Energy Consumption
+#     unit_prefix: k
+#     round: 2
+#     method: left
+#
+# Then add to Energy Dashboard:
+# Settings → Dashboards → Energy → Add consumption → Choose integrated sensor
+
+
+# ============================================================
+# AUTOMATIONS EXAMPLES
+# ============================================================
+# Example automation - Notify on fault:
+#
+# automation:
+#   - alias: "Warmlink - Powiadom o awarii"
+#     trigger:
+#       - platform: state
+#         entity_id: binary_sensor.warmlink_DEVICE_CODE_fault
+#         to: "on"
+#     action:
+#       - service: notify.mobile_app
+#         data:
+#           title: "Awaria pompy ciepła!"
+#           message: "Wykryto awarię pompy ciepła Warmlink"
+#
+# Example automation - Low COP warning:
+#
+#   - alias: "Warmlink - Niski COP"
+#     trigger:
+#       - platform: numeric_state
+#         entity_id: sensor.warmlink_DEVICE_CODE_cop_eer_total
+#         below: 2.5
+#         for: "00:30:00"
+#     action:
+#       - service: notify.mobile_app
+#         data:
+#           title: "Niski COP pompy ciepła"
+#           message: "COP spadł poniżej 2.5 od 30 minut"

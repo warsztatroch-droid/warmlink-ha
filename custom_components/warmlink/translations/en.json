@@ -6,17 +6,18 @@
         "description": "Enter your Warmlink account credentials",
         "data": {
           "username": "Email",
-          "password": "Password"
+          "password": "Password",
+          "language": "Sensor names language"
         }
       }
     },
     "error": {
-      "invalid_auth": "Invalid username or password",
-      "cannot_connect": "Cannot connect to Warmlink API",
-      "unknown": "Unknown error occurred"
+      "cannot_connect": "Failed to connect to Warmlink API",
+      "invalid_auth": "Invalid email or password",
+      "unknown": "Unexpected error"
     },
     "abort": {
-      "already_configured": "Account already configured"
+      "already_configured": "This account is already configured"
     }
   },
   "options": {
@@ -24,35 +25,96 @@
       "init": {
         "title": "Warmlink Options",
         "data": {
-          "update_interval": "Update interval (seconds)"
+          "scan_interval": "Update interval (seconds)",
+          "language": "Sensor names language"
         }
       }
     }
   },
   "entity": {
     "sensor": {
-      "inlet_temperature": {
-        "name": "Inlet Temperature"
-      },
-      "outlet_temperature": {
-        "name": "Outlet Temperature"
-      },
-      "ambient_temperature": {
-        "name": "Ambient Temperature"
-      },
-      "tank_temperature": {
-        "name": "Tank Temperature"
-      },
-      "cop": {
-        "name": "COP"
-      }
+      "t01": { "name": "Inlet Water Temperature" },
+      "t02": { "name": "Outlet Water Temperature" },
+      "t03": { "name": "Coil Temperature" },
+      "t04": { "name": "Ambient Temperature" },
+      "t05": { "name": "Suction Temperature" },
+      "t06": { "name": "Antifreeze Temperature" },
+      "t07": { "name": "Buffer Tank Temperature" },
+      "t08": { "name": "DHW Tank Temperature" },
+      "t09": { "name": "Room Temperature" },
+      "t10": { "name": "EVI Inlet Temperature" },
+      "t11": { "name": "EVI Outlet Temperature" },
+      "t12": { "name": "Exhaust Temperature" },
+      "t14": { "name": "Distributor Tube Temperature" },
+      "t15": { "name": "Low Pressure" },
+      "t27": { "name": "Fan Motor 1 Speed" },
+      "t28": { "name": "Fan Motor 2 Speed" },
+      "t29": { "name": "Target Fan Speed" },
+      "t30": { "name": "Compressor Frequency" },
+      "t31": { "name": "Compressor Operating Frequency" },
+      "t32": { "name": "Max Compressor Frequency" },
+      "t33": { "name": "IPM High Fault Temperature" },
+      "t34": { "name": "AC Input Voltage" },
+      "t35": { "name": "AC Input Current" },
+      "t36": { "name": "Compressor Phase Current" },
+      "t37": { "name": "DC Bus Voltage" },
+      "t38": { "name": "IPM Temperature" },
+      "t39": { "name": "Water Flow Rate" },
+      "t46": { "name": "External Fan Driver IPM Temp" },
+      "t47": { "name": "External Fan Driver Power" },
+      "t48": { "name": "External Fan Driver Current" },
+      "t49": { "name": "Evaporation Temperature" },
+      "t50": { "name": "Exhaust Superheat" },
+      "t51": { "name": "Superheat" },
+      "t55": { "name": "Outlet Temp After Heater" },
+      "r01": { "name": "DHW Target Temperature" },
+      "r02": { "name": "Heating Target Temperature" },
+      "r03": { "name": "Cooling Target Temperature" },
+      "r70": { "name": "Room Target Temperature" },
+      "power_in_total": { "name": "Total Power Input" },
+      "capacity_out_total": { "name": "Total Heat Output" },
+      "cop_eer_total": { "name": "COP/EER" },
+      "power_in_odu": { "name": "ODU Power Input" },
+      "capacity_out_odu": { "name": "ODU Heat Output" },
+      "heating_consumption": { "name": "Heating Energy Consumed" },
+      "heating_generated": { "name": "Heating Energy Generated" },
+      "cooling_consumption": { "name": "Cooling Energy Consumed" },
+      "cooling_generated": { "name": "Cooling Energy Generated" },
+      "dhw_consumption": { "name": "DHW Energy Consumed" },
+      "dhw_generated": { "name": "DHW Energy Generated" },
+      "consumption_power": { "name": "Total Energy Consumption" },
+      "mode_state": { "name": "Operating Mode" },
+      "code_version": { "name": "Firmware Version" },
+      "mainboard_version": { "name": "Mainboard Version" },
+      "display_version": { "name": "Display Version" },
+      "zone1_room_temp": { "name": "Zone 1 Room Temperature" },
+      "zone2_room_temp": { "name": "Zone 2 Room Temperature" },
+      "zone2_mixing_temp": { "name": "Zone 2 Mixing Temperature" },
+      "zone2_mixing_valve": { "name": "Zone 2 Mixing Valve" },
+      "indoor_temp": { "name": "Indoor Temperature" },
+      "indoor_humidity": { "name": "Indoor Humidity" },
+      "dew_point_temp": { "name": "Dew Point Temperature" }
     },
     "binary_sensor": {
-      "fault": {
-        "name": "Fault"
-      },
-      "online": {
-        "name": "Online"
+      "online": { "name": "Online Status" },
+      "power": { "name": "Power Status" },
+      "fault": { "name": "Fault Status" },
+      "defrost": { "name": "Defrost Active" },
+      "silent_mode": { "name": "Silent Mode" },
+      "electric_heater": { "name": "Electric Heater" }
+    },
+    "climate": {
+      "warmlink": { "name": "Heat Pump" }
+    },
+    "water_heater": {
+      "warmlink": { "name": "DHW Tank" }
+    }
+  },
+  "selector": {
+    "language": {
+      "options": {
+        "en": "English",
+        "pl": "Polish"
       }
     }
   }

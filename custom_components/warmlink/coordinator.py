@@ -11,7 +11,7 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 from .api import WarmLinkAPI, WarmLinkAPIError, is_device_online
 from .const import (
     DOMAIN,
-    PROTOCOL_CODES_COMMON,
+    PROTOCOL_CODES_ALL,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -56,8 +56,8 @@ class WarmLinkCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                     _LOGGER.debug("Skipping offline device: %s", device_code)
                     continue
                 
-                # Fetch data using common protocol codes for efficiency
-                data = await self.api.get_device_data(device_code, PROTOCOL_CODES_COMMON)
+                # Fetch data using all protocol codes for comprehensive monitoring
+                data = await self.api.get_device_data(device_code, PROTOCOL_CODES_ALL)
                 
                 # Parse data into device info
                 # API returns: {"code": "T01", "value": "27.0", "rangeStart": "0", "rangeEnd": "70"}

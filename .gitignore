@@ -38,3 +38,6 @@ capture_warmlink.py
 AndroidManifest.xml
 *.bks
 *.list
+*.bin
+classes.dex
+warmlink_api_responses.json

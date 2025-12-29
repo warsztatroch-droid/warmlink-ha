@@ -4,6 +4,10 @@ from typing import Final
 DOMAIN: Final = "warmlink"
 DEFAULT_NAME: Final = "Warmlink"
 
+# Configuration keys
+CONF_LANGUAGE: Final = "language"
+SUPPORTED_LANGUAGES: Final = ["en", "pl"]
+
 # API Configuration - VERIFIED via API testing
 API_BASE_URL: Final = "https://cloud.linked-go.com:449/crmservice/api"
 API_TIMEOUT: Final = 30

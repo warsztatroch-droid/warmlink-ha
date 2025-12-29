@@ -2,21 +2,22 @@
   "config": {
     "step": {
       "user": {
-        "title": "Warmlink Pompa Ciepła",
-        "description": "Wprowadź dane logowania do konta Warmlink",
+        "title": "Pompa ciepła Warmlink",
+        "description": "Podaj dane logowania do konta Warmlink",
         "data": {
           "username": "Email",
-          "password": "Hasło"
+          "password": "Hasło",
+          "language": "Język nazw czujników"
         }
       }
     },
     "error": {
+      "cannot_connect": "Nie można połączyć z API Warmlink",
       "invalid_auth": "Nieprawidłowy email lub hasło",
-      "cannot_connect": "Nie można połączyć się z API Warmlink",
-      "unknown": "Wystąpił nieznany błąd"
+      "unknown": "Nieoczekiwany błąd"
     },
     "abort": {
-      "already_configured": "Konto już skonfigurowane"
+      "already_configured": "To konto jest już skonfigurowane"
     }
   },
   "options": {
@@ -24,35 +25,96 @@
       "init": {
         "title": "Opcje Warmlink",
         "data": {
-          "update_interval": "Interwał odświeżania (sekundy)"
+          "scan_interval": "Interwał odświeżania (sekundy)",
+          "language": "Język nazw czujników"
         }
       }
     }
   },
   "entity": {
     "sensor": {
-      "inlet_temperature": {
-        "name": "Temperatura na wejściu"
-      },
-      "outlet_temperature": {
-        "name": "Temperatura na wyjściu"
-      },
-      "ambient_temperature": {
-        "name": "Temperatura zewnętrzna"
-      },
-      "tank_temperature": {
-        "name": "Temperatura zasobnika"
-      },
-      "cop": {
-        "name": "COP"
-      }
+      "t01": { "name": "Temperatura wody wlotowej" },
+      "t02": { "name": "Temperatura wody wylotowej" },
+      "t03": { "name": "Temperatura wężownicy" },
+      "t04": { "name": "Temperatura zewnętrzna" },
+      "t05": { "name": "Temperatura ssania" },
+      "t06": { "name": "Temperatura przeciwzamrożeniowa" },
+      "t07": { "name": "Temperatura bufora" },
+      "t08": { "name": "Temperatura zasobnika CWU" },
+      "t09": { "name": "Temperatura pokojowa" },
+      "t10": { "name": "Temperatura wlotu EVI" },
+      "t11": { "name": "Temperatura wylotu EVI" },
+      "t12": { "name": "Temperatura tłoczenia" },
+      "t14": { "name": "Temperatura rozdzielacza" },
+      "t15": { "name": "Niskie ciśnienie" },
+      "t27": { "name": "Prędkość wentylatora 1" },
+      "t28": { "name": "Prędkość wentylatora 2" },
+      "t29": { "name": "Docelowa prędkość wentylatora" },
+      "t30": { "name": "Częstotliwość sprężarki" },
+      "t31": { "name": "Robocza częstotliwość sprężarki" },
+      "t32": { "name": "Max częstotliwość sprężarki" },
+      "t33": { "name": "Temperatura awarii IPM" },
+      "t34": { "name": "Napięcie wejściowe AC" },
+      "t35": { "name": "Prąd wejściowy AC" },
+      "t36": { "name": "Prąd fazowy sprężarki" },
+      "t37": { "name": "Napięcie szyny DC" },
+      "t38": { "name": "Temperatura IPM" },
+      "t39": { "name": "Przepływ wody" },
+      "t46": { "name": "Temp IPM zewn. wentylatora" },
+      "t47": { "name": "Moc zewn. wentylatora" },
+      "t48": { "name": "Prąd zewn. wentylatora" },
+      "t49": { "name": "Temperatura parowania" },
+      "t50": { "name": "Przegrzew tłoczenia" },
+      "t51": { "name": "Przegrzew" },
+      "t55": { "name": "Temp za grzałką" },
+      "r01": { "name": "Temperatura zadana CWU" },
+      "r02": { "name": "Temperatura zadana ogrzewania" },
+      "r03": { "name": "Temperatura zadana chłodzenia" },
+      "r70": { "name": "Temperatura zadana pokoju" },
+      "power_in_total": { "name": "Całkowity pobór mocy" },
+      "capacity_out_total": { "name": "Całkowita moc grzewcza" },
+      "cop_eer_total": { "name": "COP/EER" },
+      "power_in_odu": { "name": "Pobór mocy ODU" },
+      "capacity_out_odu": { "name": "Moc grzewcza ODU" },
+      "heating_consumption": { "name": "Energia zużyta - grzanie" },
+      "heating_generated": { "name": "Energia wytworzona - grzanie" },
+      "cooling_consumption": { "name": "Energia zużyta - chłodzenie" },
+      "cooling_generated": { "name": "Energia wytworzona - chłodzenie" },
+      "dhw_consumption": { "name": "Energia zużyta - CWU" },
+      "dhw_generated": { "name": "Energia wytworzona - CWU" },
+      "consumption_power": { "name": "Całkowite zużycie energii" },
+      "mode_state": { "name": "Tryb pracy" },
+      "code_version": { "name": "Wersja firmware" },
+      "mainboard_version": { "name": "Wersja płyty głównej" },
+      "display_version": { "name": "Wersja wyświetlacza" },
+      "zone1_room_temp": { "name": "Strefa 1 temp. pokojowa" },
+      "zone2_room_temp": { "name": "Strefa 2 temp. pokojowa" },
+      "zone2_mixing_temp": { "name": "Strefa 2 temp. mieszania" },
+      "zone2_mixing_valve": { "name": "Strefa 2 zawór mieszający" },
+      "indoor_temp": { "name": "Temperatura wewnętrzna" },
+      "indoor_humidity": { "name": "Wilgotność wewnętrzna" },
+      "dew_point_temp": { "name": "Temperatura punktu rosy" }
     },
     "binary_sensor": {
-      "fault": {
-        "name": "Awaria"
-      },
-      "online": {
-        "name": "Online"
+      "online": { "name": "Status połączenia" },
+      "power": { "name": "Status zasilania" },
+      "fault": { "name": "Status awarii" },
+      "defrost": { "name": "Odszranianie aktywne" },
+      "silent_mode": { "name": "Tryb cichy" },
+      "electric_heater": { "name": "Grzałka elektryczna" }
+    },
+    "climate": {
+      "warmlink": { "name": "Pompa ciepła" }
+    },
+    "water_heater": {
+      "warmlink": { "name": "Zasobnik CWU" }
+    }
+  },
+  "selector": {
+    "language": {
+      "options": {
+        "en": "Angielski",
+        "pl": "Polski"
       }
     }
   }
