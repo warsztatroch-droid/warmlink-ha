@@ -1,6 +1,7 @@
 # Warmlink Heat Pump Integration for Home Assistant
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/integration)
+[![version](https://img.shields.io/badge/version-1.6.0-blue.svg)](https://github.com/warsztatroch-droid/warmlink-ha/releases)
 
 Custom integration for Phinx/Warmlink heat pumps connected via cloud.linked-go.com.
 
@@ -8,14 +9,26 @@ Custom integration for Phinx/Warmlink heat pumps connected via cloud.linked-go.c
 
 - **Climate entity** - Control heating/cooling modes and target temperature
 - **Water heater entity** - Control hot water tank
-- **Temperature sensors** - Inlet (T01), Outlet (T02), Ambient (T03), Tank (T04), Coil (T05)
-- **Setpoint sensors** - Water (R01), Room (R02), Cooling (R03)
-- **Binary sensors** - Online status, Power state, Fault detection
-- **Number controls** - Setpoint sliders for DHW, heating, cooling, room, zones 🆕
-- **Switch controls** - Power, Silent Mode, Cooling Mode, Disinfection 🆕
-- **Select controls** - Operating Mode, Control Mode, Temperature unit 🆕
-- **Shared devices support** - Access devices shared with you from other accounts 👥
+- **550+ entities** - Complete Modbus parameter coverage 🆕
+- **Temperature sensors** - T01-T55 (inlet, outlet, ambient, tank, coil, EVI, etc.)
+- **Energy sensors** - Power input, heat output, COP/EER
+- **Setpoint controls** - R01-R70 with sliders (DHW, heating, cooling, room, zones)
+- **Switch controls** - Power, Silent Mode, Cooling, Disinfection, etc.
+- **Select controls** - Operating Mode, Control Mode, Temperature unit, etc.
+- **Parameter code prefixes** - Entity names show code: `[R01] DHW Target Temperature` 🆕
 - **Multi-language** - Polish and English sensor names
+
+## Entity Examples
+
+```
+[T01] Inlet Water Temperature     - Temperatura wody wlotowej
+[T02] Outlet Water Temperature    - Temperatura wody wylotowej
+[T04] Ambient Temperature         - Temperatura zewnętrzna
+[R01] DHW Target Temperature      - Temperatura zadana CWU
+[R02] Heating Target Temperature  - Temperatura zadana ogrzewania
+[G05] Disinfection Enable         - Włączenie dezynfekcji
+[H07] Control Mode                - Tryb sterowania
+```
 
 ## Installation
 
@@ -40,7 +53,8 @@ Custom integration for Phinx/Warmlink heat pumps connected via cloud.linked-go.c
 1. Go to **Settings → Devices & Services → Add Integration**
 2. Search for "Warmlink"
 3. Enter your Warmlink app email and password
-4. Your heat pump devices will be automatically discovered
+4. Select which devices to add
+5. Your heat pump entities will be automatically created
 
 ## Supported Devices
 
@@ -56,56 +70,49 @@ This integration works with heat pumps using the Warmlink mobile app, including:
 - **App ID**: 16 (Warmlink)
 - Based on reverse engineering of the Warmlink Android app
 
-## Protocol Codes
+## Protocol Codes (v1.6.0)
 
-The integration reads the following data from your heat pump:
+### Temperature Sensors (Read-only)
 
-| Code  | Description                                |
-| ----- | ------------------------------------------ |
-| Power | On/Off state                               |
-| Mode  | Operating mode (Heating/Cooling/Hot Water) |
-| T01   | Inlet water temperature                    |
-| T02   | Outlet water temperature                   |
-| T03   | Ambient temperature                        |
-| T04   | Tank temperature                           |
-| T05   | Coil temperature                           |
-| R01   | Water setpoint                             |
-| R02   | Room setpoint                              |
-| R03   | Cooling setpoint                           |
+| Code | Description              | Unit |
+| ---- | ------------------------ | ---- |
+| T01  | Inlet Water Temperature  | °C   |
+| T02  | Outlet Water Temperature | °C   |
+| T03  | Coil Temperature         | °C   |
+| T04  | Ambient Temperature      | °C   |
+| T05  | Suction Temperature      | °C   |
+| T08  | DHW Tank Temperature     | °C   |
+| T09  | Room Temperature         | °C   |
+| T30  | Compressor Frequency     | Hz   |
+| T39  | Water Flow Rate          | L/min|
 
-## Control Entities (v1.4.0+)
+### Setpoint Controls (Read-Write)
 
-### Number Controls (Setpoints)
-
-| Entity         | Description                | Range      |
-| -------------- | -------------------------- | ---------- |
-| R01 DHW Target | Hot water tank temperature | 15-70°C    |
-| R02 Heating    | Heating setpoint           | 15-75°C    |
-| R03 Cooling    | Cooling setpoint           | 9-28°C     |
-| R70 Room       | Room temperature setpoint  | 5-27°C     |
-| Zone 1-3 Temps | Multi-zone control         | 15-60°C    |
-| Fan Speeds     | F18-F26 fan parameters     | 0-1000 RPM |
+| Code | Description           | Range    |
+| ---- | --------------------- | -------- |
+| R01  | DHW Target Temp       | 15-70°C  |
+| R02  | Heating Target Temp   | 15-75°C  |
+| R03  | Cooling Target Temp   | 9-28°C   |
+| R70  | Room Target Temp      | 5-27°C   |
 
 ### Switch Controls
 
-| Entity       | Code | Description                   |
-| ------------ | ---- | ----------------------------- |
-| Power        | -    | Main power on/off             |
-| Silent Mode  | H22  | Reduce noise (lower fan)      |
-| Cooling Mode | H05  | Enable cooling function       |
-| Disinfection | G05  | Anti-legionella (manual)      |
-| Power Memory | H01  | Restore state after power cut |
+| Code  | Description              |
+| ----- | ------------------------ |
+| Power | Main power on/off        |
+| H01   | Power-off Memory         |
+| H05   | Enable Cooling Function  |
+| H22   | Silent Mode              |
+| G05   | Disinfection Enable      |
 
 ### Select Controls
 
-| Entity       | Code | Options                            |
-| ------------ | ---- | ---------------------------------- |
-| Mode         | Mode | Heating/Cooling/Hot Water/Combined |
-| Control Mode | H07  | Outlet temp / Delta T / Room temp  |
-| Temp Unit    | H21  | Celsius / Fahrenheit               |
-| Temp Control | H25  | Outlet / Room / Ext thermostat     |
-| EVI Function | H27  | Enable enhanced vapor injection    |
-| DHW Function | H28  | Quick / Eco / Floor Heating / Zone |
+| Code | Description        | Options                    |
+| ---- | ------------------ | -------------------------- |
+| Mode | Operating Mode     | Heating/Cooling/Hot Water  |
+| H07  | Control Mode       | Display / Remote           |
+| H21  | Temperature Unit   | Celsius / Fahrenheit       |
+| H25  | Temp Control       | Outlet / Room / Buffer     |
 
 ## Troubleshooting
 
@@ -117,14 +124,14 @@ The API on port 449 may have certificate issues. The integration uses SSL verifi
 
 Make sure you're using credentials from the Warmlink app (not Aqua Temp). Warmlink requires `appId: 16`.
 
-### Shared Devices Not Visible
+### Entities Not Showing Values
 
-If someone shared a device with you through the Warmlink app, the integration will automatically fetch it using the `getAuthDeviceList` API. Shared devices are marked with 👥 icon during setup.
+Some entities only appear if your heat pump model supports them. The integration creates entities for all available parameters.
 
 ## Credits
 
 - Based on research from [aquatemp integration](https://github.com/radical-squared/aquatemp)
-- Modbus register mapping from Kaisai/Phinx documentation
+- Modbus register mapping from Kaisai/Phinx documentation (635 parameters)
 
 ## License
 
