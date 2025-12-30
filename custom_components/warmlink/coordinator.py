@@ -11,7 +11,7 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 from .api import WarmLinkAPI, WarmLinkAPIError, is_device_online
 from .const import (
     DOMAIN,
-    PROTOCOL_CODES_ALL,
+    ALL_PROTOCOL_CODES,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -67,8 +67,9 @@ class WarmLinkCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                     _LOGGER.debug("Skipping offline device: %s", device_code)
                     continue
                 
-                # Fetch data using all protocol codes for comprehensive monitoring
-                data = await self.api.get_device_data(device_code, PROTOCOL_CODES_ALL)
+                # Fetch data using ALL protocol codes from Modbus CSV
+                # This includes all 550+ parameters for comprehensive monitoring
+                data = await self.api.get_device_data(device_code, ALL_PROTOCOL_CODES)
                 
                 # Parse data into device info
                 # API returns: {"code": "T01", "value": "27.0", "rangeStart": "0", "rangeEnd": "70"}
@@ -84,13 +85,6 @@ class WarmLinkCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                             device_info["_parsed_data"][code] = float_value
                         except (ValueError, TypeError):
                             device_info["_parsed_data"][code] = value
-                
-                # Log energy parameters for debugging
-                energy_codes = ["Power In(Total)", "Capacity Out(Total)", "COP/EER(Total)", 
-                               "Power In(ODU)", "Capacity Out(ODU)"]
-                for ec in energy_codes:
-                    if ec in device_info["_parsed_data"]:
-                        _LOGGER.info("Energy data %s: %s", ec, device_info["_parsed_data"][ec])
                     
                     # Store range info for setpoints
                     range_start = code_data.get("range_start")
@@ -103,6 +97,13 @@ class WarmLinkCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                             }
                         except (ValueError, TypeError):
                             pass
+                
+                # Log energy parameters for debugging
+                energy_codes = ["Power In(Total)", "Capacity Out(Total)", "COP/EER(Total)", 
+                               "Power In(ODU)", "Capacity Out(ODU)"]
+                for ec in energy_codes:
+                    if ec in device_info["_parsed_data"]:
+                        _LOGGER.info("Energy data %s: %s", ec, device_info["_parsed_data"][ec])
                 
                 _LOGGER.debug(
                     "Device %s: Power=%s, Mode=%s, T01=%.1f, T02=%.1f, T04=%.1f, R01=%.1f", 

@@ -11,7 +11,10 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .api import is_device_online
-from .const import DOMAIN, CONF_LANGUAGE, SWITCH_PARAMS
+from .const import DOMAIN, CONF_LANGUAGE, ALL_SWITCH_PARAMS
+
+# Use ALL_SWITCH_PARAMS from modbus_params.py (46+ parameters)
+SWITCH_PARAMS = ALL_SWITCH_PARAMS
 from .coordinator import WarmLinkCoordinator
 
 _LOGGER = logging.getLogger(__name__)

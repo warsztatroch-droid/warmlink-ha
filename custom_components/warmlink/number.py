@@ -16,10 +16,13 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .api import is_device_online
-from .const import DOMAIN, CONF_LANGUAGE, WRITABLE_PARAMS
+from .const import DOMAIN, CONF_LANGUAGE, ALL_WRITABLE_PARAMS
 from .coordinator import WarmLinkCoordinator
 
 _LOGGER = logging.getLogger(__name__)
+
+# Use ALL_WRITABLE_PARAMS from modbus_params.py (550+ parameters)
+WRITABLE_PARAMS = ALL_WRITABLE_PARAMS
 
 # Translation keys for number entities
 NUMBER_TRANSLATIONS = {

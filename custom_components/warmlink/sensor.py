@@ -27,7 +27,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .api import is_device_online
-from .const import DOMAIN, CONF_LANGUAGE
+from .const import DOMAIN, CONF_LANGUAGE, ALL_SENSOR_PARAMS
 from .coordinator import WarmLinkCoordinator
 
 _LOGGER = logging.getLogger(__name__)
@@ -507,14 +507,36 @@ async def async_setup_entry(
     language = entry.data.get(CONF_LANGUAGE, "en")
     
     entities = []
+    
+    # Track which keys we've added from SENSOR_DESCRIPTIONS
+    added_keys = set()
+    
     for device_code, device_data in coordinator.data.items():
+        # Add predefined sensors with full descriptions
         for description in SENSOR_DESCRIPTIONS:
+            added_keys.add(description.key)
             entities.append(
                 WarmLinkSensor(
                     coordinator=coordinator,
                     device_code=device_code,
                     device_data=device_data,
                     description=description,
+                    language=language,
+                )
+            )
+        
+        # Add dynamic sensors from ALL_SENSOR_PARAMS that aren't in SENSOR_DESCRIPTIONS
+        for code, param_info in ALL_SENSOR_PARAMS.items():
+            if code in added_keys:
+                continue  # Skip if already added with predefined description
+            
+            entities.append(
+                WarmLinkDynamicSensor(
+                    coordinator=coordinator,
+                    device_code=device_code,
+                    device_data=device_data,
+                    param_code=code,
+                    param_info=param_info,
                     language=language,
                 )
             )
@@ -607,3 +629,156 @@ class WarmLinkSensor(CoordinatorEntity[WarmLinkCoordinator], SensorEntity):
         # Check if we have data for this sensor
         data = device.get("_parsed_data", {})
         return self.entity_description.key in data and super().available
+
+
+class WarmLinkDynamicSensor(CoordinatorEntity[WarmLinkCoordinator], SensorEntity):
+    """Dynamic sensor created from ALL_SENSOR_PARAMS (Modbus CSV).
+    
+    Creates sensors for all parameters from modbus_params.py that don't have
+    explicit SENSOR_DESCRIPTIONS entries.
+    """
+
+    _attr_has_entity_name = True
+
+    def __init__(
+        self,
+        coordinator: WarmLinkCoordinator,
+        device_code: str,
+        device_data: dict[str, Any],
+        param_code: str,
+        param_info: dict[str, Any],
+        language: str = "en",
+    ) -> None:
+        """Initialize the dynamic sensor."""
+        super().__init__(coordinator)
+        
+        self._device_code = device_code
+        self._param_code = param_code
+        self._param_info = param_info
+        self._language = language
+        
+        device_name = device_data.get("device_nick_name") or device_data.get("deviceNickName") or device_code
+        model = device_data.get("custModel") or device_data.get("productId") or "Heat Pump"
+        
+        self._attr_unique_id = f"{DOMAIN}_{device_code}_{param_code}"
+        
+        # Create name with code prefix: "(T01) Inlet Water Temp"
+        param_name = param_info.get("name", param_code)
+        self._attr_name = f"({param_code}) {param_name}"
+        
+        # Determine device class and unit from param_info
+        unit = param_info.get("unit", "")
+        data_type = param_info.get("data_type", "")
+        category = param_info.get("category", "")
+        
+        self._setup_sensor_properties(unit, data_type, category)
+        
+        self._attr_device_info = {
+            "identifiers": {(DOMAIN, device_code)},
+            "name": device_name,
+            "manufacturer": "Phinx/Warmlink",
+            "model": model,
+        }
+
+    def _setup_sensor_properties(self, unit: str, data_type: str, category: str) -> None:
+        """Set up sensor properties based on param info."""
+        # Map units to HA units and device classes
+        if unit == "°C" or data_type == "TEMP":
+            self._attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
+            self._attr_device_class = SensorDeviceClass.TEMPERATURE
+            self._attr_state_class = SensorStateClass.MEASUREMENT
+        elif unit == "Hz":
+            self._attr_native_unit_of_measurement = UnitOfFrequency.HERTZ
+            self._attr_state_class = SensorStateClass.MEASUREMENT
+            self._attr_icon = "mdi:sine-wave"
+        elif unit == "V":
+            self._attr_native_unit_of_measurement = UnitOfElectricPotential.VOLT
+            self._attr_device_class = SensorDeviceClass.VOLTAGE
+            self._attr_state_class = SensorStateClass.MEASUREMENT
+        elif unit == "A":
+            self._attr_native_unit_of_measurement = UnitOfElectricCurrent.AMPERE
+            self._attr_device_class = SensorDeviceClass.CURRENT
+            self._attr_state_class = SensorStateClass.MEASUREMENT
+        elif unit == "kW":
+            self._attr_native_unit_of_measurement = UnitOfPower.KILO_WATT
+            self._attr_device_class = SensorDeviceClass.POWER
+            self._attr_state_class = SensorStateClass.MEASUREMENT
+        elif unit == "kWh":
+            self._attr_native_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
+            self._attr_device_class = SensorDeviceClass.ENERGY
+            self._attr_state_class = SensorStateClass.TOTAL_INCREASING
+        elif unit == "L/min":
+            self._attr_native_unit_of_measurement = "L/min"
+            self._attr_state_class = SensorStateClass.MEASUREMENT
+            self._attr_icon = "mdi:water-pump"
+        elif unit == "bar":
+            self._attr_native_unit_of_measurement = "bar"
+            self._attr_device_class = SensorDeviceClass.PRESSURE
+            self._attr_state_class = SensorStateClass.MEASUREMENT
+        elif unit == "rpm":
+            self._attr_native_unit_of_measurement = "rpm"
+            self._attr_state_class = SensorStateClass.MEASUREMENT
+            self._attr_icon = "mdi:fan"
+        elif unit == "%":
+            self._attr_native_unit_of_measurement = PERCENTAGE
+            self._attr_state_class = SensorStateClass.MEASUREMENT
+        elif unit == "min":
+            self._attr_native_unit_of_measurement = "min"
+            self._attr_state_class = SensorStateClass.MEASUREMENT
+            self._attr_icon = "mdi:timer-outline"
+        elif unit == "steps":
+            self._attr_native_unit_of_measurement = "steps"
+            self._attr_state_class = SensorStateClass.MEASUREMENT
+            self._attr_icon = "mdi:stairs"
+        else:
+            # Default for unknown units
+            self._attr_state_class = SensorStateClass.MEASUREMENT
+            if category == "temperatures":
+                self._attr_icon = "mdi:thermometer"
+            elif category == "compressor":
+                self._attr_icon = "mdi:engine"
+            elif category == "fan":
+                self._attr_icon = "mdi:fan"
+            elif category == "pump":
+                self._attr_icon = "mdi:water-pump"
+            elif category == "defrost":
+                self._attr_icon = "mdi:snowflake"
+            elif category == "zones":
+                self._attr_icon = "mdi:home-thermometer"
+
+    def _get_parsed_data(self) -> dict[str, Any]:
+        """Get parsed data from coordinator."""
+        device = self.coordinator.data.get(self._device_code, {})
+        return device.get("_parsed_data", {})
+
+    @property
+    def native_value(self) -> float | str | None:
+        """Return the sensor value."""
+        data = self._get_parsed_data()
+        value = data.get(self._param_code)
+        
+        if value is None:
+            return None
+        
+        # Values are already floats from coordinator
+        if isinstance(value, (int, float)):
+            return value
+        
+        # Try to convert string to float
+        try:
+            return float(value)
+        except (ValueError, TypeError):
+            return value
+
+    @property
+    def available(self) -> bool:
+        """Return if entity is available."""
+        device = self.coordinator.data.get(self._device_code, {})
+        
+        # Check if device is online
+        if not is_device_online(device):
+            return False
+        
+        # Check if we have data for this sensor
+        data = device.get("_parsed_data", {})
+        return self._param_code in data and super().available
