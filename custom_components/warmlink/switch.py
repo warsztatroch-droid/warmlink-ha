@@ -36,6 +36,7 @@ SWITCH_TRANSLATIONS = {
         "H15": "(H15) Frost Protection",
         "H16": "(H16) DHW Priority",
         "H17": "(H17) Quiet Mode",
+        "H45": "(H45) Show COP and Heating Output",
         # Disinfection (G)
         "G05": "(G05) Disinfection Enable",
         # Fan (F)
@@ -94,6 +95,7 @@ SWITCH_TRANSLATIONS = {
         "H15": "(H15) Ochrona przed mrozem",
         "H16": "(H16) Priorytet CWU",
         "H17": "(H17) Tryb cichy",
+        "H45": "(H45) Pokaż COP i moc grzewczą",
         # Dezynfekcja (G)
         "G05": "(G05) Włącz dezynfekcję",
         # Wentylator (F)

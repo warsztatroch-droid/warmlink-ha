@@ -210,6 +210,7 @@ PROTOCOL_CODES_H_CONFIG: Final = [
     "H31",  # Circulation Pump Type (Modbus 1041)
     "H33",  # Fan+Comp Driver Integrated (Modbus 1019)
     "H36",  # Enable Weather Compensation (Modbus 1236)
+    "H45",  # Enable Showing COP and Heating Output (Modbus 1404)
 ]
 
 # Alias for backward compatibility
@@ -713,6 +714,7 @@ SWITCH_PARAMS: Final = {
     "H27": {"name": "EVI Function", "icon": "mdi:molecule", "category": "system"},
     "H33": {"name": "Fan+Comp Driver Integrated", "icon": "mdi:chip", "category": "system"},
     "H36": {"name": "Weather Compensation", "icon": "mdi:weather-cloudy", "category": "system"},
+    "H45": {"name": "Show COP and Heating Output", "icon": "mdi:gauge", "category": "system"},
     # Disinfection (G)
     "G05": {"name": "Disinfection", "icon": "mdi:bacteria", "category": "disinfection"},
     # Protection (A)
